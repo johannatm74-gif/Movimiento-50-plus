@@ -1,11 +1,31 @@
 {
-  "name": "Movimiento 50+ Pro v4",
-  "short_name": "Movimiento50",
-  "description": "Rutinas adaptativas de bajo impacto para mujeres 50+ con movilidad limitada.",
+  "name": "Movimiento 50+ Pro",
+  "short_name": "Movimiento 50+",
+  "description": "Movimiento seguro, progresivo y adaptado para mujeres 50+.",
   "start_url": "./index.html",
   "scope": "./",
   "display": "standalone",
-  "background_color": "#f6f4f7",
-  "theme_color": "#705a8f",
-  "icons": []
+  "background_color": "#f7effb",
+  "theme_color": "#8d73ad",
+  "icons": [
+    {
+      "src": "icons/icon-192.png",
+      "sizes": "192x192",
+      "type": "image/png",
+      "purpose": "any"
+    },
+    {
+      "src": "icons/icon-512.png",
+      "sizes": "512x512",
+      "type": "image/png",
+      "purpose": "any"
+    },
+    {
+      "src": "icons/icon-maskable-512.png",
+      "sizes": "512x512",
+      "type": "image/png",
+      "purpose": "maskable"
+    }
+  ],
+  "orientation": "portrait-primary"
 }
