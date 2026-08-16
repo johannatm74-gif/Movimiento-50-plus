@@ -1,0 +1,151 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="theme-color" content="#ffffff">
+<title>Movimiento 50+</title>
+<link rel="manifest" href="manifest.json">
+<style>
+:root{--bg:#f7f7f8;--card:#fff;--text:#202124;--muted:#666;--accent:#6b5b95;--ok:#2d7a4b;--warn:#a35b00}
+*{box-sizing:border-box} body{margin:0;font-family:system-ui,-apple-system,Segoe UI,Roboto,sans-serif;background:var(--bg);color:var(--text)}
+header{padding:22px 18px;background:var(--card);border-bottom:1px solid #e8e8e8}
+h1{margin:0;font-size:1.55rem} .sub{color:var(--muted);margin-top:5px}
+main{max-width:760px;margin:auto;padding:16px}.card{background:var(--card);border-radius:18px;padding:18px;margin:14px 0;box-shadow:0 2px 12px #0000000b}
+button,select,input{font:inherit} button{border:0;border-radius:14px;padding:12px 15px;background:var(--accent);color:white;font-weight:700}
+button.secondary{background:#ece9f3;color:#3a3153}.grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:10px}
+label{display:block;font-weight:650;margin:9px 0 5px}.small{font-size:.9rem;color:var(--muted)} .pill{display:inline-block;background:#efedf5;padding:5px 9px;border-radius:999px;margin:2px}
+.exercise{border-top:1px solid #eee;padding:13px 0}.exercise:first-child{border-top:0}.timer{font-size:2rem;font-weight:800;text-align:center;margin:14px}
+.notice{border-left:4px solid var(--warn);padding-left:12px}.good{border-left:4px solid var(--ok);padding-left:12px}
+nav{position:sticky;bottom:0;background:#fffffff2;backdrop-filter:blur(10px);display:flex;gap:8px;justify-content:center;padding:10px;border-top:1px solid #eee}
+nav button{padding:10px 12px;font-size:.9rem}
+.hidden{display:none}
+</style>
+</head>
+<body>
+<header>
+<h1>Movimiento 50+</h1>
+<div class="sub">Rutinas suaves, progresivas y adaptables</div>
+</header>
+<main>
+<section id="inicio" class="card">
+<h2>Antes de comenzar</h2>
+<div class="notice">
+<p>Esta app no sustituye la valoración médica. Si tienes dolor en el pecho, falta de aire intensa o inesperada, desmayo, debilidad súbita u otro síntoma alarmante, no inicies la rutina y busca atención médica.</p>
+<p>Si tu médico te ha indicado límites específicos de presión arterial, frecuencia cardiaca o movimiento, esos límites tienen prioridad.</p>
+</div>
+<label>Nivel de movilidad</label>
+<select id="mobility">
+<option value="sentada">Principalmente sentada</option>
+<option value="apoyo">Puedo estar de pie con apoyo</option>
+<option value="pie">Puedo caminar distancias cortas</option>
+</select>
+<label>¿Cómo te sientes hoy?</label>
+<select id="feeling">
+<option value="bien">Bien, sin síntomas nuevos</option>
+<option value="cansada">Cansada, pero estable</option>
+<option value="mal">Tengo síntomas nuevos o importantes</option>
+</select>
+<label>Presión arterial de hoy (opcional)</label>
+<div class="grid">
+<input id="sys" inputmode="numeric" placeholder="Sistólica">
+<input id="dia" inputmode="numeric" placeholder="Diastólica">
+</div>
+<p class="small">La app registra el dato para tu seguimiento, pero no diagnostica ni sustituye las indicaciones de tu profesional de salud.</p>
+<button onclick="prepare()">Preparar rutina</button>
+</section>
+
+<section id="rutina" class="card hidden">
+<h2 id="routineTitle">Rutina</h2>
+<div id="tags"></div>
+<div id="exerciseList"></div>
+<div class="timer" id="timer">00:30</div>
+<div class="grid">
+<button onclick="startTimer()">Iniciar temporizador</button>
+<button class="secondary" onclick="resetTimer()">Reiniciar</button>
+</div>
+<p class="small">Intensidad sugerida: suave a moderada. Debes poder hablar durante el ejercicio; evita aguantar la respiración.</p>
+</section>
+
+<section id="progreso" class="card">
+<h2>Mi progreso</h2>
+<p><strong>Rutinas completadas:</strong> <span id="done">0</span></p>
+<p><strong>Minutos acumulados:</strong> <span id="mins">0</span></p>
+<button onclick="completeRoutine()">Marcar rutina como completada</button>
+</section>
+
+<section class="card">
+<h2>Plan de progresión</h2>
+<p><span class="pill">Semanas 1–2</span> 8–12 min, 4–5 días/semana.</p>
+<p><span class="pill">Semanas 3–4</span> 12–18 min, 5 días/semana.</p>
+<p><span class="pill">Semanas 5–8</span> aumentar poco a poco hacia 20–30 min según tolerancia y autorización médica.</p>
+<div class="good"><p>El objetivo no es “aguantar más”, sino moverse con regularidad, conservar fuerza, equilibrio y confianza.</p></div>
+</section>
+</main>
+
+<nav>
+<button onclick="scrollToId('inicio')">Inicio</button>
+<button onclick="scrollToId('rutina')">Rutina</button>
+<button onclick="scrollToId('progreso')">Progreso</button>
+</nav>
+
+<script>
+const routines={
+sentada:[
+["Respiración y postura","60 s","Sentada, espalda apoyada. Respira lento y natural, sin contener el aire."],
+["Marcha sentada","45 s","Eleva un pie y luego el otro a un ritmo cómodo."],
+["Extensión de rodilla","8 por lado","Estira una pierna sin bloquear la rodilla; baja despacio."],
+["Talones y puntas","10 repeticiones","Eleva talones y luego puntas manteniendo los pies apoyados."],
+["Remo sin peso","10 repeticiones","Lleva codos suavemente hacia atrás y junta escápulas."],
+["Elevación de brazos","8 repeticiones","Eleva hasta donde sea cómodo; no es necesario llegar por encima de la cabeza."],
+["Movilidad de tobillos","8 círculos por lado","Movimientos lentos y pequeños."],
+["Relajación","60 s","Respira con normalidad y afloja hombros."]
+],
+apoyo:[
+["Calentamiento con apoyo","2 min","Marcha muy suave junto a una silla o superficie estable."],
+["Sentarse y levantarse parcial","5–8 repeticiones","Usa brazos si lo necesitas. Haz un recorrido cómodo."],
+["Elevación de talones","8–10 repeticiones","Sujétate de una silla estable."],
+["Paso lateral","6 por lado","Pasos cortos, manteniendo apoyo cercano."],
+["Remo sin peso","10 repeticiones","Codos atrás, hombros relajados."],
+["Marcha con apoyo","60 s","Ritmo en el que puedas hablar con comodidad."],
+["Estiramiento suave de pantorrilla","20 s por lado","Sin rebotes y sin dolor."],
+["Respiración final","60 s","Camina o permanece sentada hasta recuperar comodidad."]
+],
+pie:[
+["Caminata suave","3 min","Ritmo cómodo, terreno plano."],
+["Sentarse y levantarse","6–10 repeticiones","Desde una silla firme; usa brazos si lo necesitas."],
+["Paso lateral","8 por lado","Pasos controlados."],
+["Elevación de talones","10 repeticiones","Con apoyo disponible."],
+["Caminata suave","3–5 min","Debes poder conversar."],
+["Movilidad de hombros","8 repeticiones","Círculos pequeños, sin dolor."],
+["Equilibrio con apoyo","15 s por lado","Un pie ligeramente delante del otro; sujeta una silla."],
+["Enfriamiento","2 min","Reduce gradualmente el ritmo."]
+]};
+
+let seconds=30, ticker=null;
+function prepare(){
+ const feeling=document.getElementById('feeling').value;
+ if(feeling==='mal'){ alert('Hoy es mejor no iniciar una rutina automática. Si los síntomas son importantes o nuevos, busca orientación médica.'); return; }
+ const m=document.getElementById('mobility').value;
+ document.getElementById('routineTitle').textContent=m==='sentada'?'Rutina sentada':m==='apoyo'?'Rutina de pie con apoyo':'Rutina de movilidad básica';
+ document.getElementById('tags').innerHTML=`<span class="pill">Bajo impacto</span><span class="pill">Sin saltos</span><span class="pill">Progresiva</span>`;
+ document.getElementById('exerciseList').innerHTML=routines[m].map(x=>`<div class="exercise"><strong>${x[0]}</strong> · ${x[1]}<div class="small">${x[2]}</div></div>`).join('');
+ document.getElementById('rutina').classList.remove('hidden');
+ scrollToId('rutina');
+}
+function fmt(n){return String(n).padStart(2,'0')}
+function draw(){document.getElementById('timer').textContent=`${fmt(Math.floor(seconds/60))}:${fmt(seconds%60)}`}
+function startTimer(){ if(ticker)return; ticker=setInterval(()=>{if(seconds>0){seconds--;draw()}else{clearInterval(ticker);ticker=null;alert('Tiempo completado. Descansa y continúa solo si te sientes bien.')}},1000)}
+function resetTimer(){clearInterval(ticker);ticker=null;seconds=30;draw()}
+function completeRoutine(){
+ let d=Number(localStorage.getItem('done')||0)+1;
+ let m=Number(localStorage.getItem('mins')||0)+10;
+ localStorage.setItem('done',d); localStorage.setItem('mins',m); refresh();
+}
+function refresh(){document.getElementById('done').textContent=localStorage.getItem('done')||0;document.getElementById('mins').textContent=localStorage.getItem('mins')||0}
+function scrollToId(id){document.getElementById(id).scrollIntoView({behavior:'smooth'})}
+refresh();
+if('serviceWorker' in navigator) navigator.serviceWorker.register('sw.js');
+</script>
+</body>
+</html>
