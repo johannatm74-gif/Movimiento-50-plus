@@ -66,7 +66,10 @@ input:focus,select:focus{border-color:var(--primary);box-shadow:0 0 0 3px #705a8
 
 .splash{position:fixed;inset:0;z-index:9999;background:
 radial-gradient(circle at 50% 25%,#fff7ff 0 18%,#ead7f5 44%,#ae91ca 75%,#8064a4 100%);
-display:flex;align-items:center;justify-content:center;padding:28px;transition:opacity .5s ease,visibility .5s ease}
+display:flex;align-items:center;justify-content:center;padding:28px;
+transition:opacity .5s ease,visibility .5s ease;
+animation:splashAutoHide .55s ease 1.8s forwards}
+@keyframes splashAutoHide{to{opacity:0;visibility:hidden;pointer-events:none}}
 .splash.hide{opacity:0;visibility:hidden}
 .splashInner{text-align:center;max-width:430px;color:#57406e}
 .splashIcon{width:150px;height:150px;border-radius:34px;box-shadow:0 18px 45px rgba(78,54,96,.24);margin-bottom:22px}
@@ -348,8 +351,12 @@ function renderTrends(){
  if(document.getElementById("trendBP")) trendBP.innerHTML=spark(ss,"Presión sistólica"," mmHg")+(ds.length?spark(ds,"Presión diastólica"," mmHg"):"");
 }
 
-loadProfile();updateSuggestion();refresh();makeWeeks();renderLogs();renderSettings();renderCalendar();renderTrends();
-setTimeout(()=>{const s=document.getElementById("splash");if(s)s.classList.add("hide")},1800);
+setTimeout(()=>{const splashEl=document.getElementById("splash");if(splashEl)splashEl.classList.add("hide")},1800);
+try{
+  loadProfile();updateSuggestion();refresh();makeWeeks();renderLogs();renderSettings();renderCalendar();renderTrends();
+}catch(err){
+  console.error("Movimiento50 init:",err);
+}
 if("serviceWorker"in navigator)navigator.serviceWorker.register("sw.js");
 </script>
 </body>
