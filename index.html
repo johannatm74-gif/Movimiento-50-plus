@@ -2,150 +2,332 @@
 <html lang="es">
 <head>
 <meta charset="utf-8">
-<meta name="viewport" content="width=device-width,initial-scale=1">
-<meta name="theme-color" content="#ffffff">
-<title>Movimiento 50+</title>
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<meta name="theme-color" content="#705a8f">
+<title>Movimiento 50+ Pro</title>
 <link rel="manifest" href="manifest.json">
 <style>
-:root{--bg:#f7f7f8;--card:#fff;--text:#202124;--muted:#666;--accent:#6b5b95;--ok:#2d7a4b;--warn:#a35b00}
-*{box-sizing:border-box} body{margin:0;font-family:system-ui,-apple-system,Segoe UI,Roboto,sans-serif;background:var(--bg);color:var(--text)}
-header{padding:22px 18px;background:var(--card);border-bottom:1px solid #e8e8e8}
-h1{margin:0;font-size:1.55rem} .sub{color:var(--muted);margin-top:5px}
-main{max-width:760px;margin:auto;padding:16px}.card{background:var(--card);border-radius:18px;padding:18px;margin:14px 0;box-shadow:0 2px 12px #0000000b}
-button,select,input{font:inherit} button{border:0;border-radius:14px;padding:12px 15px;background:var(--accent);color:white;font-weight:700}
-button.secondary{background:#ece9f3;color:#3a3153}.grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:10px}
-label{display:block;font-weight:650;margin:9px 0 5px}.small{font-size:.9rem;color:var(--muted)} .pill{display:inline-block;background:#efedf5;padding:5px 9px;border-radius:999px;margin:2px}
-.exercise{border-top:1px solid #eee;padding:13px 0}.exercise:first-child{border-top:0}.timer{font-size:2rem;font-weight:800;text-align:center;margin:14px}
-.notice{border-left:4px solid var(--warn);padding-left:12px}.good{border-left:4px solid var(--ok);padding-left:12px}
-nav{position:sticky;bottom:0;background:#fffffff2;backdrop-filter:blur(10px);display:flex;gap:8px;justify-content:center;padding:10px;border-top:1px solid #eee}
-nav button{padding:10px 12px;font-size:.9rem}
-.hidden{display:none}
+:root{
+ --bg:#f6f4f7;--card:#fff;--ink:#27232b;--muted:#77707d;--primary:#705a8f;--primary2:#9077ae;
+ --soft:#efeaf4;--line:#e9e4ec;--good:#397654;--warn:#9a641b;--danger:#a84343;
+ --shadow:0 12px 34px rgba(65,47,75,.09);--radius:22px
+}
+*{box-sizing:border-box} html{scroll-behavior:smooth}
+body{margin:0;background:var(--bg);color:var(--ink);font-family:Inter,system-ui,-apple-system,Segoe UI,Roboto,Arial,sans-serif}
+button,input,select{font:inherit}.app{max-width:850px;margin:auto;padding-bottom:96px;min-height:100vh}
+header{background:linear-gradient(145deg,var(--primary),var(--primary2));color:white;padding:26px 20px 24px;border-radius:0 0 30px 30px;box-shadow:var(--shadow)}
+.brand{display:flex;align-items:center;gap:13px}.mark{width:54px;height:54px;border-radius:18px;background:#ffffff26;display:grid;place-items:center;font-size:26px}
+h1{margin:0;font-size:1.65rem}.subtitle{margin-top:5px;color:#f4eef8}.heroStats{display:grid;grid-template-columns:repeat(3,1fr);gap:8px;margin-top:19px}
+.hstat{background:#ffffff18;border:1px solid #ffffff22;border-radius:16px;padding:10px;text-align:center}.hstat strong{font-size:1.2rem;display:block}
+main{padding:16px}.card{background:var(--card);border-radius:var(--radius);padding:18px;margin:14px 0;box-shadow:var(--shadow);border:1px solid #fff}
+.card h2,.card h3{margin-top:0}.small{font-size:.9rem;color:var(--muted);line-height:1.48}.sectionHead{display:flex;align-items:center;justify-content:space-between;gap:10px}
+label{display:block;font-weight:780;margin:12px 0 6px}
+input,select{width:100%;padding:13px 14px;border:1px solid #ddd7e1;border-radius:14px;background:white;outline:none;color:var(--ink)}
+input:focus,select:focus{border-color:var(--primary);box-shadow:0 0 0 3px #705a8f14}
+.grid2{display:grid;grid-template-columns:1fr 1fr;gap:10px}.grid3{display:grid;grid-template-columns:repeat(3,1fr);gap:10px}
+.btn{border:0;border-radius:15px;padding:13px 16px;background:var(--primary);color:#fff;font-weight:820;cursor:pointer}.btn.secondary{background:var(--soft);color:#4e3f61}.btn.ghost{background:white;color:var(--primary);border:1px solid #dfd6e7}.btn.full{width:100%}
+.chips{display:flex;flex-wrap:wrap;gap:7px}.chip{padding:7px 10px;border-radius:999px;background:var(--soft);color:#574769;font-weight:750;font-size:.82rem}
+.notice{padding:14px;border-radius:16px;background:#fff8e9;border:1px solid #efd8ad;color:#6c4a18}.notice.good{background:#eef8f2;border-color:#c7e1d0;color:#315f46}.notice.danger{background:#fff0f0;border-color:#e7b8b8;color:#7c3030}
+.painGrid{display:grid;grid-template-columns:repeat(2,1fr);gap:9px}.painBtn{border:1px solid var(--line);background:#faf9fb;border-radius:15px;padding:12px;text-align:left;color:var(--ink)}.painBtn.active{border-color:var(--primary);background:#f6f1fa;color:#4e3f61}
+.planCards{display:grid;grid-template-columns:repeat(3,1fr);gap:9px}.planCard{border:1px solid var(--line);border-radius:16px;padding:13px;background:#fbfafc}.planCard strong{font-size:1.15rem;display:block}
+.exercise{display:grid;grid-template-columns:50px 1fr auto;align-items:center;gap:11px;padding:13px 0;border-top:1px solid var(--line)}.exercise:first-child{border-top:0}
+.exIcon{width:48px;height:48px;border-radius:15px;background:var(--soft);display:grid;place-items:center;font-size:22px}.exName{font-weight:850}.exMeta{font-size:.86rem;color:var(--muted);margin-top:3px}.badge{font-size:.76rem;background:#f4f2f6;padding:6px 8px;border-radius:999px;white-space:nowrap}
+.player{background:linear-gradient(180deg,#fbf8fd,#f3edf8);border:1px solid #e8deef;border-radius:23px;padding:18px;text-align:center}
+.stage{height:230px;border-radius:20px;background:radial-gradient(circle at 50% 38%,#fff 0 25%,#f2ecf7 80%);position:relative;overflow:hidden;margin:8px 0 14px}
+.floor{position:absolute;left:15%;right:15%;bottom:32px;height:3px;background:#d9cfdf;border-radius:999px}
+.person{position:absolute;left:50%;bottom:35px;width:90px;height:160px;transform:translateX(-50%)}
+.head{position:absolute;left:33px;top:0;width:28px;height:28px;border-radius:50%;background:#765d91}
+.torso{position:absolute;left:31px;top:30px;width:32px;height:62px;border-radius:15px;background:#8f79aa}
+.arm,.leg{position:absolute;width:13px;background:#765d91;border-radius:999px;transform-origin:6px 6px}
+.arm{height:58px;top:36px}.arm.l{left:26px;transform:rotate(15deg)}.arm.r{right:20px;transform:rotate(-15deg)}
+.leg{height:70px;top:86px}.leg.l{left:34px}.leg.r{right:30px}
+.chairShape{position:absolute;left:calc(50% - 62px);bottom:35px;width:124px;height:88px;border-left:7px solid #b8a9c4;border-bottom:7px solid #b8a9c4;border-right:7px solid #b8a9c4;border-radius:8px;display:none}
+.anim-march .leg.l{animation:marchL 1s infinite ease-in-out}.anim-march .leg.r{animation:marchR 1s infinite ease-in-out}
+.anim-arms .arm.l{animation:armL 1.4s infinite ease-in-out}.anim-arms .arm.r{animation:armR 1.4s infinite ease-in-out}
+.anim-calf .person{animation:calf 1.2s infinite ease-in-out}.anim-balance .person{animation:sway 2s infinite ease-in-out}
+.anim-chair .chairShape{display:block}.anim-chair .person{bottom:65px}.anim-chair .leg{top:88px;height:55px;transform-origin:6px 5px}.anim-chair .leg.l{animation:chairKnee 1.4s infinite ease-in-out}
+.anim-side .person{animation:side 2s infinite ease-in-out}
+@keyframes marchL{0%,100%{transform:rotate(0)}50%{transform:rotate(-35deg)}}@keyframes marchR{0%,100%{transform:rotate(-35deg)}50%{transform:rotate(0)}}
+@keyframes armL{0%,100%{transform:rotate(15deg)}50%{transform:rotate(115deg)}}@keyframes armR{0%,100%{transform:rotate(-15deg)}50%{transform:rotate(-115deg)}}
+@keyframes calf{0%,100%{transform:translateX(-50%) translateY(0)}50%{transform:translateX(-50%) translateY(-10px)}}
+@keyframes sway{0%,100%{transform:translateX(-50%) rotate(-2deg)}50%{transform:translateX(-50%) rotate(2deg)}}@keyframes chairKnee{0%,100%{transform:rotate(60deg)}50%{transform:rotate(5deg)}}
+@keyframes side{0%,100%{transform:translateX(-62%)}50%{transform:translateX(-38%)}}
+.timer{font-size:3rem;font-weight:920;letter-spacing:-2px;margin:8px}.playerTitle{font-size:1.25rem;font-weight:880}.bar{height:10px;background:#e6dfeb;border-radius:999px;overflow:hidden;margin:13px 0}.bar span{display:block;height:100%;background:var(--primary);width:0;transition:.3s}
+.controls{display:flex;justify-content:center;flex-wrap:wrap;gap:8px}
+.metric{background:#faf9fb;border-radius:16px;padding:13px}.metric strong{font-size:1.3rem;display:block}
+.weekRow{display:flex;gap:6px;overflow:auto}.weekRow button{min-width:44px;border:0;border-radius:13px;padding:9px;background:#f0ecf3;color:#554b5f;font-weight:800}.weekRow button.active{background:var(--primary);color:white}
+.history{padding:9px 0;border-top:1px solid var(--line)}.history:first-child{border-top:0}
+.switch{display:flex;justify-content:space-between;align-items:center;gap:12px;padding:12px 0;border-top:1px solid var(--line)}.switch:first-child{border-top:0}.toggle{width:48px;height:28px;border-radius:999px;background:#d8d1dc;position:relative}.toggle:after{content:"";position:absolute;width:22px;height:22px;background:#fff;border-radius:50%;top:3px;left:3px;box-shadow:0 2px 5px #0002;transition:.2s}.toggle.on{background:var(--primary)}.toggle.on:after{left:23px}
+.view{display:none}.view.active{display:block}.hidden{display:none!important}
+.bottom{position:fixed;bottom:0;left:0;right:0;background:#fffffff3;backdrop-filter:blur(14px);border-top:1px solid var(--line);display:flex;justify-content:center;z-index:50;padding-bottom:env(safe-area-inset-bottom)}
+.bottomInner{width:min(850px,100%);display:grid;grid-template-columns:repeat(4,1fr)}.nav{border:0;background:transparent;padding:10px 3px 9px;color:#756e79;font-size:.78rem}.nav span{display:block;font-size:1.25rem}.nav.active{color:var(--primary);font-weight:850}
+@media(max-width:560px){.grid3,.planCards{grid-template-columns:1fr}.grid2{grid-template-columns:1fr 1fr}.exercise{grid-template-columns:48px 1fr}.badge{grid-column:2}.stage{height:210px}.painGrid{grid-template-columns:1fr 1fr}}
 </style>
 </head>
 <body>
+<div class="app">
 <header>
-<h1>Movimiento 50+</h1>
-<div class="sub">Rutinas suaves, progresivas y adaptables</div>
+ <div class="brand"><div class="mark">♥</div><div><h1>Movimiento 50+ Pro</h1><div class="subtitle">Movimiento seguro, progresivo y adaptado</div></div></div>
+ <div class="heroStats"><div class="hstat"><strong id="hsessions">0</strong>sesiones</div><div class="hstat"><strong id="hminutes">0</strong>minutos</div><div class="hstat"><strong id="hstreak">0</strong>días seguidos</div></div>
 </header>
+
 <main>
-<section id="inicio" class="card">
-<h2>Antes de comenzar</h2>
-<div class="notice">
-<p>Esta app no sustituye la valoración médica. Si tienes dolor en el pecho, falta de aire intensa o inesperada, desmayo, debilidad súbita u otro síntoma alarmante, no inicies la rutina y busca atención médica.</p>
-<p>Si tu médico te ha indicado límites específicos de presión arterial, frecuencia cardiaca o movimiento, esos límites tienen prioridad.</p>
-</div>
-<label>Nivel de movilidad</label>
-<select id="mobility">
-<option value="sentada">Principalmente sentada</option>
-<option value="apoyo">Puedo estar de pie con apoyo</option>
-<option value="pie">Puedo caminar distancias cortas</option>
-</select>
-<label>¿Cómo te sientes hoy?</label>
-<select id="feeling">
-<option value="bien">Bien, sin síntomas nuevos</option>
-<option value="cansada">Cansada, pero estable</option>
-<option value="mal">Tengo síntomas nuevos o importantes</option>
-</select>
-<label>Presión arterial de hoy (opcional)</label>
-<div class="grid">
-<input id="sys" inputmode="numeric" placeholder="Sistólica">
-<input id="dia" inputmode="numeric" placeholder="Diastólica">
-</div>
-<p class="small">La app registra el dato para tu seguimiento, pero no diagnostica ni sustituye las indicaciones de tu profesional de salud.</p>
-<button onclick="prepare()">Preparar rutina</button>
+<section id="home" class="view active">
+ <div class="card">
+  <div class="sectionHead"><div><h2>Mi perfil</h2><div class="small">Se guarda únicamente en este dispositivo.</div></div><div id="avatar" style="font-size:38px">👩‍🦳</div></div>
+  <div class="grid3">
+   <div><label>Nombre</label><input id="personName" placeholder="Tu nombre"></div><div><label>Edad</label><input id="age" inputmode="numeric" placeholder="Ej. 55"></div>
+   <div><label>Peso (lb)</label><input id="weightProfile" inputmode="decimal" placeholder="Ej. 200"></div>
+   <div><label>Estatura (cm)</label><input id="height" inputmode="numeric" placeholder="Ej. 165"></div>
+  </div>
+  <label>Movilidad habitual</label>
+  <select id="mobility">
+   <option value="chair">Principalmente sentada</option>
+   <option value="support">Puedo estar de pie con apoyo</option>
+   <option value="walk">Puedo caminar distancias cortas</option>
+  </select>
+  <button class="btn ghost full" style="margin-top:10px" onclick="saveProfile()">Guardar perfil</button>
+ </div>
+
+ <div class="card">
+  <h2>¿Cómo te sientes hoy?</h2>
+  <label>Energía</label><select id="energy"><option value="low">Baja — muy suave</option><option value="medium" selected>Media — estable</option><option value="good">Buena — puedo un poco más</option></select>
+  <label>¿Tienes síntomas nuevos o importantes?</label><select id="symptoms"><option value="no">No</option><option value="yes">Sí</option></select>
+  <label>¿Qué te molesta hoy?</label>
+  <div class="painGrid">
+   <button class="painBtn" data-pain="knee" onclick="togglePain(this)">🦵 Rodillas</button>
+   <button class="painBtn" data-pain="back" onclick="togglePain(this)">🧍‍♀️ Espalda</button>
+   <button class="painBtn" data-pain="shoulder" onclick="togglePain(this)">💪 Hombros</button>
+   <button class="painBtn" data-pain="none" onclick="clearPain()">🌿 Nada especial</button>
+  </div>
+ </div>
+
+ <div class="card">
+  <div class="sectionHead"><div><h2>Presión antes de entrenar</h2><div class="small">Opcional, recomendada si tienes hipertensión.</div></div><div>🩺</div></div>
+  <div class="grid2"><input id="sys" inputmode="numeric" placeholder="Sistólica"><input id="dia" inputmode="numeric" placeholder="Diastólica"></div>
+  <div id="bpMessage" style="margin-top:10px"></div>
+ </div>
+
+ <div class="card">
+  <h2>Opciones rápidas</h2>
+  <div class="planCards">
+   <button class="painBtn" onclick="quickRoutine('express')">⚡ <strong>Express 5 min</strong><div class="small">Para días con poco tiempo o energía.</div></button>
+   <button class="painBtn" onclick="quickRoutine('joints')">🌿 <strong>Articulaciones</strong><div class="small">Movilidad suave y bajo impacto.</div></button>
+   <button class="painBtn" onclick="quickRoutine('chair')">🪑 <strong>100% sentada</strong><div class="small">Para movilidad muy limitada.</div></button>
+  </div>
+ </div>
+
+ <div class="card">
+  <h2>Calendario semanal</h2>
+  <div id="calendarWeek" class="weekRow"></div>
+  <p class="small">Cada día marcado representa una sesión completada. La constancia vale más que la intensidad.</p>
+  <div id="medalBox" class="notice good"></div>
+ </div>
+
+ <div class="card">
+  <h2>Plan para hoy</h2>
+  <div class="planCards">
+   <div class="planCard"><span class="small">Duración</span><strong id="suggestedTime">8–12 min</strong></div>
+   <div class="planCard"><span class="small">Intensidad</span><strong id="suggestedIntensity">Muy suave</strong></div>
+   <div class="planCard"><span class="small">Enfoque</span><strong id="suggestedFocus">Movilidad</strong></div>
+  </div>
+  <div class="chips" style="margin:13px 0"><span class="chip">Sin saltos</span><span class="chip">Ritmo conversacional</span><span class="chip">Pausas libres</span><span class="chip">Sin aguantar la respiración</span></div>
+  <button class="btn full" onclick="buildRoutine()">Crear mi rutina de hoy</button>
+ </div>
+ <div class="notice"><strong>Detén el ejercicio</strong> ante dolor en el pecho, falta de aire intensa o inesperada, desmayo, debilidad o entumecimiento súbito, alteraciones de la visión o dificultad para hablar.</div>
 </section>
 
-<section id="rutina" class="card hidden">
-<h2 id="routineTitle">Rutina</h2>
-<div id="tags"></div>
-<div id="exerciseList"></div>
-<div class="timer" id="timer">00:30</div>
-<div class="grid">
-<button onclick="startTimer()">Iniciar temporizador</button>
-<button class="secondary" onclick="resetTimer()">Reiniciar</button>
-</div>
-<p class="small">Intensidad sugerida: suave a moderada. Debes poder hablar durante el ejercicio; evita aguantar la respiración.</p>
+<section id="routine" class="view">
+ <div class="card">
+  <div class="sectionHead"><div><h2 id="routineTitle">Rutina adaptada</h2><div class="small" id="routineSub"></div></div><button class="btn ghost" onclick="buildRoutine()">↻</button></div>
+  <div id="exerciseList"></div>
+ </div>
+
+ <div class="card player">
+  <div class="stage" id="stage">
+   <div class="chairShape"></div><div class="floor"></div>
+   <div class="person"><div class="head"></div><div class="torso"></div><div class="arm l"></div><div class="arm r"></div><div class="leg l"></div><div class="leg r"></div></div>
+  </div>
+  <div class="small">Ahora</div><div class="playerTitle" id="currentName">Lista para comenzar</div><div class="small" id="currentCue">Presiona Iniciar cuando estés cómoda.</div>
+  <div class="timer" id="timer">00:00</div><div class="bar"><span id="barFill"></span></div>
+  <div class="controls"><button class="btn secondary" onclick="prevEx()">◀</button><button class="btn" id="play" onclick="toggleTimer()">▶ Iniciar</button><button class="btn secondary" onclick="nextEx()">▶</button></div>
+  <div class="controls" style="margin-top:8px"><button class="btn ghost" onclick="rest30()">+ 30 s descanso</button><button class="btn ghost" onclick="finishRoutine()">✓ Terminar</button></div>
+ </div>
+
+ <div class="card"><h3>Escala de esfuerzo</h3><div class="small">Busca un esfuerzo aproximado de <strong>2–4 sobre 10</strong>: notas que estás trabajando, pero todavía puedes hablar. Si hoy el esfuerzo se siente claramente mayor, reduce el ritmo o pasa a la versión sentada.</div></div>
 </section>
 
-<section id="progreso" class="card">
-<h2>Mi progreso</h2>
-<p><strong>Rutinas completadas:</strong> <span id="done">0</span></p>
-<p><strong>Minutos acumulados:</strong> <span id="mins">0</span></p>
-<button onclick="completeRoutine()">Marcar rutina como completada</button>
+<section id="progress" class="view">
+ <div class="card"><h2>Mi progreso</h2><div class="grid3"><div class="metric"><span class="small">Sesiones</span><strong id="sessions">0</strong></div><div class="metric"><span class="small">Minutos</span><strong id="minutes">0</strong></div><div class="metric"><span class="small">Semana sugerida</span><strong id="weekNum">1</strong></div></div></div>
+ <div class="card"><h3>Programa de 12 semanas</h3><div class="weekRow" id="weeks"></div><div id="weekText" class="notice good" style="margin-top:12px"></div><p class="small">No hay obligación de avanzar cada semana. Repetir una semana es parte del programa si todavía representa un reto.</p></div>
+ <div class="card">
+  <h3>Tendencias</h3>
+  <div class="small">Resumen visual de tus últimos registros.</div>
+  <div id="trendWeight" style="margin-top:12px"></div>
+  <div id="trendBP" style="margin-top:12px"></div>
+ </div>
+ <div class="card"><h3>Registro de salud</h3><div class="grid3"><input id="logWeight" inputmode="decimal" placeholder="Peso (lb)"><input id="logSys" inputmode="numeric" placeholder="Sistólica"><input id="logDia" inputmode="numeric" placeholder="Diastólica"></div><button class="btn full" style="margin-top:10px" onclick="saveLog()">Guardar</button><div id="logHistory" style="margin-top:10px"></div></div>
 </section>
 
-<section class="card">
-<h2>Plan de progresión</h2>
-<p><span class="pill">Semanas 1–2</span> 8–12 min, 4–5 días/semana.</p>
-<p><span class="pill">Semanas 3–4</span> 12–18 min, 5 días/semana.</p>
-<p><span class="pill">Semanas 5–8</span> aumentar poco a poco hacia 20–30 min según tolerancia y autorización médica.</p>
-<div class="good"><p>El objetivo no es “aguantar más”, sino moverse con regularidad, conservar fuerza, equilibrio y confianza.</p></div>
+<section id="settings" class="view">
+ <div class="card"><h2>Guía durante el ejercicio</h2>
+  <div class="switch"><div><strong>Voz</strong><div class="small">Dice el ejercicio y las instrucciones.</div></div><div id="voiceToggle" class="toggle on" onclick="toggleSetting('voice')"></div></div>
+  <div class="switch"><div><strong>Vibración</strong><div class="small">Aviso al cambiar de ejercicio.</div></div><div id="vibrateToggle" class="toggle on" onclick="toggleSetting('vibrate')"></div></div>
+  <div class="switch"><div><strong>Sonido</strong><div class="small">Señal breve al finalizar.</div></div><div id="soundToggle" class="toggle on" onclick="toggleSetting('sound')"></div></div>
+ </div>
+ <div class="card"><h3>Seguridad</h3><div class="notice danger"><strong>Esta app no diagnostica ni sustituye una evaluación médica.</strong> Si tu profesional de salud te indicó límites particulares de presión, frecuencia cardiaca, esfuerzo o movimiento, esos límites tienen prioridad.</div><p class="small">Si la presión es mayor de 180/120 mmHg, espera al menos 1 minuto y repite la medición. La app no iniciará una rutina automática. Si permanece así, contacta a tu profesional; si además hay síntomas de alarma, busca atención de emergencia.</p></div>
 </section>
 </main>
+</div>
 
-<nav>
-<button onclick="scrollToId('inicio')">Inicio</button>
-<button onclick="scrollToId('rutina')">Rutina</button>
-<button onclick="scrollToId('progreso')">Progreso</button>
-</nav>
+<nav class="bottom"><div class="bottomInner">
+<button class="nav active" data-view="home" onclick="show('home',this)"><span>⌂</span>Inicio</button>
+<button class="nav" data-view="routine" onclick="show('routine',this)"><span>▶</span>Rutina</button>
+<button class="nav" data-view="progress" onclick="show('progress',this)"><span>▥</span>Progreso</button>
+<button class="nav" data-view="settings" onclick="show('settings',this)"><span>⚙</span>Ajustes</button>
+</div></nav>
 
 <script>
-const routines={
-sentada:[
-["Respiración y postura","60 s","Sentada, espalda apoyada. Respira lento y natural, sin contener el aire."],
-["Marcha sentada","45 s","Eleva un pie y luego el otro a un ritmo cómodo."],
-["Extensión de rodilla","8 por lado","Estira una pierna sin bloquear la rodilla; baja despacio."],
-["Talones y puntas","10 repeticiones","Eleva talones y luego puntas manteniendo los pies apoyados."],
-["Remo sin peso","10 repeticiones","Lleva codos suavemente hacia atrás y junta escápulas."],
-["Elevación de brazos","8 repeticiones","Eleva hasta donde sea cómodo; no es necesario llegar por encima de la cabeza."],
-["Movilidad de tobillos","8 círculos por lado","Movimientos lentos y pequeños."],
-["Relajación","60 s","Respira con normalidad y afloja hombros."]
+let pains=new Set();
+let settings=JSON.parse(localStorage.getItem("m50settings")||'{"voice":true,"vibrate":true,"sound":true}');
+const weeks=[
+["8–12 min","4–5 días/semana. Movilidad suave, respiración, marcha sentada y fuerza básica."],
+["10–12 min","4–5 días/semana. Repite la base y añade pequeñas tandas de marcha o caminata."],
+["12–15 min","4–5 días/semana. Introduce más movimientos de piernas y brazos sin perder el ritmo conversacional."],
+["12–15 min","4–5 días/semana. Mantén pausas libres y consolida fuerza funcional."],
+["15–18 min","5 días/semana. Combina movilidad, aeróbico suave y equilibrio asistido."],
+["15–18 min","5 días/semana. Aumenta solo si recuperas cómodamente después de cada bloque."],
+["18–22 min","5 días/semana. Añade pequeños bloques continuos de caminata o marcha."],
+["18–22 min","5 días/semana. Mantén fuerza y equilibrio al menos 2 días."],
+["22–25 min","5 días/semana. Progresión pequeña, siempre de bajo impacto."],
+["22–25 min","5 días/semana. Mantén esfuerzo suave–moderado."],
+["25–30 min","5 días/semana si lo toleras y está acorde con tus indicaciones médicas."],
+["25–30 min","Consolida la rutina semanal: aeróbico, fuerza, movilidad y equilibrio."]
+];
+const base={
+chair:[
+["Respiración y postura",60,"🌬️","Espalda apoyada. Respira continuamente y relaja hombros.","arms"],
+["Marcha sentada",60,"🪑","Alterna un pie y otro a ritmo cómodo.","chair"],
+["Talones y puntas",45,"🦶","Eleva talones y puntas sin prisa.","calf"],
+["Extensión de rodilla",45,"🦵","Estira una pierna y luego la otra sin bloquear la rodilla.","chair"],
+["Remo sin peso",45,"💪","Lleva los codos suavemente hacia atrás.","arms"],
+["Apertura de brazos",45,"🙆‍♀️","Abre y cierra dentro de un rango cómodo.","arms"],
+["Movilidad de tobillos",45,"🔄","Círculos pequeños alternando lados.","calf"],
+["Recuperación",60,"🌿","Respira, relaja hombros y revisa cómo te sientes.","balance"]
 ],
-apoyo:[
-["Calentamiento con apoyo","2 min","Marcha muy suave junto a una silla o superficie estable."],
-["Sentarse y levantarse parcial","5–8 repeticiones","Usa brazos si lo necesitas. Haz un recorrido cómodo."],
-["Elevación de talones","8–10 repeticiones","Sujétate de una silla estable."],
-["Paso lateral","6 por lado","Pasos cortos, manteniendo apoyo cercano."],
-["Remo sin peso","10 repeticiones","Codos atrás, hombros relajados."],
-["Marcha con apoyo","60 s","Ritmo en el que puedas hablar con comodidad."],
-["Estiramiento suave de pantorrilla","20 s por lado","Sin rebotes y sin dolor."],
-["Respiración final","60 s","Camina o permanece sentada hasta recuperar comodidad."]
+support:[
+["Marcha con apoyo",75,"🚶‍♀️","Sujétate de una superficie estable.","march"],
+["Sentarse y levantarse asistido",50,"🪑","Usa los brazos si los necesitas. Recorrido corto está bien.","chair"],
+["Elevación de talones",45,"🦶","Con apoyo estable. Sube y baja lentamente.","calf"],
+["Paso lateral",50,"↔️","Pasos cortos con apoyo cerca.","side"],
+["Remo sin peso",45,"💪","Codos hacia atrás, sin contener la respiración.","arms"],
+["Marcha suave",75,"🚶‍♀️","Mantén un ritmo en el que puedas conversar.","march"],
+["Equilibrio asistido",40,"⚖️","Un pie ligeramente delante del otro, siempre con apoyo.","balance"],
+["Enfriamiento",60,"🌿","Reduce el ritmo gradualmente.","balance"]
 ],
-pie:[
-["Caminata suave","3 min","Ritmo cómodo, terreno plano."],
-["Sentarse y levantarse","6–10 repeticiones","Desde una silla firme; usa brazos si lo necesitas."],
-["Paso lateral","8 por lado","Pasos controlados."],
-["Elevación de talones","10 repeticiones","Con apoyo disponible."],
-["Caminata suave","3–5 min","Debes poder conversar."],
-["Movilidad de hombros","8 repeticiones","Círculos pequeños, sin dolor."],
-["Equilibrio con apoyo","15 s por lado","Un pie ligeramente delante del otro; sujeta una silla."],
-["Enfriamiento","2 min","Reduce gradualmente el ritmo."]
+walk:[
+["Caminata suave",100,"🚶‍♀️","Terreno plano, zancada cómoda.","march"],
+["Sentarse y levantarse",55,"🪑","Desde una silla firme; usa los brazos si hace falta.","chair"],
+["Paso lateral",50,"↔️","Pasos controlados, sin cruzar los pies.","side"],
+["Elevación de talones",45,"🦶","Ten un apoyo disponible.","calf"],
+["Caminata continua",120,"🚶‍♀️","Ritmo conversacional; baja la velocidad si hace falta.","march"],
+["Movilidad de hombros",45,"🙆‍♀️","Círculos pequeños y sin dolor.","arms"],
+["Equilibrio con apoyo",40,"⚖️","Mantén apoyo cercano en todo momento.","balance"],
+["Enfriamiento",75,"🌿","Camina cada vez más lento.","balance"]
 ]};
+function show(id,btn){document.querySelectorAll(".view").forEach(v=>v.classList.remove("active"));document.getElementById(id).classList.add("active");document.querySelectorAll(".nav").forEach(n=>n.classList.remove("active"));(btn||document.querySelector(`[data-view="${id}"]`))?.classList.add("active");window.scrollTo({top:0,behavior:"smooth"})}
+function saveProfile(){const p={name:personName.value,age:age.value,weight:weightProfile.value,height:height.value,mobility:mobility.value};localStorage.setItem("m50profile",JSON.stringify(p));alert("Perfil guardado en este dispositivo.");updateSuggestion()}
+function loadProfile(){const p=JSON.parse(localStorage.getItem("m50profile")||"{}");if(p.name)personName.value=p.name;if(p.age)age.value=p.age;if(p.weight)weightProfile.value=p.weight;if(p.height)height.value=p.height;if(p.mobility)mobility.value=p.mobility}
+function togglePain(b){if(pains.has(b.dataset.pain)){pains.delete(b.dataset.pain);b.classList.remove("active")}else{pains.add(b.dataset.pain);b.classList.add("active")}updateSuggestion()}
+function clearPain(){pains.clear();document.querySelectorAll(".painBtn").forEach(b=>b.classList.remove("active"));updateSuggestion()}
+function updateSuggestion(){let e=energy.value,m=mobility.value; suggestedTime.textContent=e==="low"?"8–10 min":e==="good"?"12–16 min":"10–12 min";suggestedIntensity.textContent=e==="low"?"Muy suave":"Suave–moderada";suggestedFocus.textContent=pains.has("knee")?"Sin carga de rodilla":pains.has("back")?"Movilidad controlada":m==="chair"?"Movilidad sentada":"Movilidad + fuerza"}
+energy.onchange=updateSuggestion;mobility.onchange=updateSuggestion;
+function bpOk(){let s=Number(sys.value||0),d=Number(dia.value||0);if(!s&&!d){bpMessage.innerHTML="";return true}if(s>180||d>120){bpMessage.innerHTML='<div class="notice danger"><strong>Lectura severamente elevada.</strong> Espera al menos 1 minuto y repite la presión. No inicies la rutina automática. Si sigue así, contacta a tu profesional de salud; si además hay síntomas de alarma, busca atención de emergencia.</div>';return false}bpMessage.innerHTML='<div class="notice good">Lectura registrada. Respeta siempre los límites específicos indicados por tu profesional de salud.</div>';return true}
+sys.oninput=bpOk;dia.oninput=bpOk;
 
-let seconds=30, ticker=null;
-function prepare(){
- const feeling=document.getElementById('feeling').value;
- if(feeling==='mal'){ alert('Hoy es mejor no iniciar una rutina automática. Si los síntomas son importantes o nuevos, busca orientación médica.'); return; }
- const m=document.getElementById('mobility').value;
- document.getElementById('routineTitle').textContent=m==='sentada'?'Rutina sentada':m==='apoyo'?'Rutina de pie con apoyo':'Rutina de movilidad básica';
- document.getElementById('tags').innerHTML=`<span class="pill">Bajo impacto</span><span class="pill">Sin saltos</span><span class="pill">Progresiva</span>`;
- document.getElementById('exerciseList').innerHTML=routines[m].map(x=>`<div class="exercise"><strong>${x[0]}</strong> · ${x[1]}<div class="small">${x[2]}</div></div>`).join('');
- document.getElementById('rutina').classList.remove('hidden');
- scrollToId('rutina');
+let routine=[],idx=0,remain=0,timerId=null,elapsed=0;
+function adaptedList(){
+ let m=mobility.value, e=energy.value, factor=e==="low"?.75:e==="good"?1.1:1;
+ let arr=base[m].map(x=>({n:x[0],s:Math.max(30,Math.round(x[1]*factor/15)*15),i:x[2],c:x[3],a:x[4]}));
+ if(pains.has("knee")) arr=arr.filter(x=>!x.n.toLowerCase().includes("sentarse")&&!x.n.toLowerCase().includes("paso lateral")).map(x=>x.n.includes("Marcha")?{...x,s:Math.max(30,x.s-15)}:x);
+ if(pains.has("back")) arr=arr.map(x=>x.n.includes("Remo")?{...x,c:"Movimiento pequeño. Mantén el tronco erguido y detente si aumenta la molestia."}:x);
+ if(pains.has("shoulder")) arr=arr.filter(x=>!x.n.includes("Apertura")&&!x.n.includes("hombros")).map(x=>x.n.includes("Remo")?{...x,c:"Mantén los codos bajos y usa un rango pequeño, sin dolor."}:x);
+ return arr;
 }
-function fmt(n){return String(n).padStart(2,'0')}
-function draw(){document.getElementById('timer').textContent=`${fmt(Math.floor(seconds/60))}:${fmt(seconds%60)}`}
-function startTimer(){ if(ticker)return; ticker=setInterval(()=>{if(seconds>0){seconds--;draw()}else{clearInterval(ticker);ticker=null;alert('Tiempo completado. Descansa y continúa solo si te sientes bien.')}},1000)}
-function resetTimer(){clearInterval(ticker);ticker=null;seconds=30;draw()}
-function completeRoutine(){
- let d=Number(localStorage.getItem('done')||0)+1;
- let m=Number(localStorage.getItem('mins')||0)+10;
- localStorage.setItem('done',d); localStorage.setItem('mins',m); refresh();
+function buildRoutine(){
+ if(symptoms.value==="yes"){alert("No iniciaré una rutina automática porque indicaste síntomas nuevos o importantes. Busca orientación médica según el tipo e intensidad del síntoma.");show("home");return}
+ if(!bpOk()){show("home");return}
+ routine=adaptedList();idx=0;remain=routine[0]?.s||0;elapsed=0;clearInterval(timerId);timerId=null;
+ routineTitle.textContent=mobility.value==="chair"?"Rutina sentada":mobility.value==="support"?"Rutina con apoyo":"Rutina de movilidad y caminata";
+ routineSub.textContent=(energy.value==="low"?"Día de energía baja · ":"")+(pains.size?"Adaptada a molestias seleccionadas · ":"")+"Bajo impacto";
+ renderList();renderPlayer();show("routine")
 }
-function refresh(){document.getElementById('done').textContent=localStorage.getItem('done')||0;document.getElementById('mins').textContent=localStorage.getItem('mins')||0}
-function scrollToId(id){document.getElementById(id).scrollIntoView({behavior:'smooth'})}
-refresh();
-if('serviceWorker' in navigator) navigator.serviceWorker.register('sw.js');
+function renderList(){exerciseList.innerHTML=routine.map((x,i)=>`<div class="exercise"><div class="exIcon">${x.i}</div><div><div class="exName">${i+1}. ${x.n}</div><div class="exMeta">${x.c}</div></div><div class="badge">${Math.ceil(x.s/60)} min</div></div>`).join("")}
+function fmt(s){return String(Math.floor(s/60)).padStart(2,"0")+":"+String(s%60).padStart(2,"0")}
+function animClass(a){return {"march":"anim-march","arms":"anim-arms","calf":"anim-calf","balance":"anim-balance","chair":"anim-chair","side":"anim-side"}[a]||"anim-balance"}
+function renderPlayer(){if(!routine.length){timer.textContent="00:00";return}let x=routine[idx];currentName.textContent=x.n;currentCue.textContent=x.c;timer.textContent=fmt(remain);barFill.style.width=((idx/routine.length)*100)+"%";play.textContent=timerId?"⏸ Pausar":"▶ Iniciar";stage.className="stage "+animClass(x.a)}
+function speak(t){if(settings.voice&&"speechSynthesis"in window){speechSynthesis.cancel();let u=new SpeechSynthesisUtterance(t);u.lang="es-GT";u.rate=.9;speechSynthesis.speak(u)}}
+function cue(){if(settings.vibrate&&navigator.vibrate)navigator.vibrate(120);if(settings.sound){try{let a=new AudioContext(),o=a.createOscillator(),g=a.createGain();o.connect(g);g.connect(a.destination);o.frequency.value=640;g.gain.value=.04;o.start();o.stop(a.currentTime+.12)}catch(e){}}}
+function toggleTimer(){if(!routine.length){buildRoutine();return}if(timerId){clearInterval(timerId);timerId=null;renderPlayer();return}speak(routine[idx].n+". "+routine[idx].c);timerId=setInterval(()=>{remain--;elapsed++;if(remain===10)speak("Diez segundos.");if(remain<=0){clearInterval(timerId);timerId=null;cue();if(idx<routine.length-1){idx++;remain=routine[idx].s;speak("Muy bien. Siguiente: "+routine[idx].n);setTimeout(toggleTimer,850)}else finishRoutine(true)}renderPlayer()},1000);renderPlayer()}
+function nextEx(){if(!routine.length)return;clearInterval(timerId);timerId=null;if(idx<routine.length-1)idx++;remain=routine[idx].s;renderPlayer();speak(routine[idx].n)}
+function prevEx(){if(!routine.length)return;clearInterval(timerId);timerId=null;if(idx>0)idx--;remain=routine[idx].s;renderPlayer()}
+function rest30(){if(!routine.length)return;clearInterval(timerId);timerId=null;remain+=30;renderPlayer();speak("Tómate treinta segundos más. Respira con calma.")}
+function finishRoutine(){clearInterval(timerId);timerId=null;if(!routine.length)return;let mins=Math.max(1,Math.round((elapsed||routine.reduce((a,x)=>a+x.s,0))/60));let p=JSON.parse(localStorage.getItem("m50progress")||'{"sessions":0,"minutes":0,"dates":[]}');p.sessions++;p.minutes+=mins;let d=new Date().toISOString().slice(0,10);if(!p.dates.includes(d))p.dates.push(d);localStorage.setItem("m50progress",JSON.stringify(p));routine=[];refresh();speak("Rutina completada. Muy bien. Recupera con calma.");alert("Rutina completada. Sumaste "+mins+" minutos de movimiento.");show("progress")}
+function streak(ds){if(!ds.length)return 0;let set=new Set(ds),d=new Date(),n=0;while(set.has(d.toISOString().slice(0,10))){n++;d.setDate(d.getDate()-1)}return n}
+function refresh(){let p=JSON.parse(localStorage.getItem("m50progress")||'{"sessions":0,"minutes":0,"dates":[]}');sessions.textContent=hsessions.textContent=p.sessions;minutes.textContent=hminutes.textContent=p.minutes;hstreak.textContent=streak(p.dates||[]);weekNum.textContent=Math.min(12,Math.max(1,Math.ceil((p.sessions||1)/4)));renderCalendar()}
+function makeWeeks(){for(let i=1;i<=12;i++){let b=document.createElement("button");b.textContent=i;b.onclick=()=>showWeek(i,b);weeks.appendChild(b)}showWeek(1,weeks.firstChild)}
+function showWeek(i,b){document.querySelectorAll("#weeks button").forEach(x=>x.classList.remove("active"));b?.classList.add("active");weekText.innerHTML=`<strong>Semana ${i}: ${weeksData(i)[0]}</strong><br>${weeksData(i)[1]}`}
+function weeksData(i){return weeks[i-1]}
+function saveLog(){let w=logWeight.value.trim(),s=logSys.value.trim(),d=logDia.value.trim();if(!w&&!s&&!d){alert("Ingresa al menos un dato.");return}let a=JSON.parse(localStorage.getItem("m50logs")||"[]");a.unshift({date:new Date().toLocaleDateString("es-GT"),w,s,d});a=a.slice(0,30);localStorage.setItem("m50logs",JSON.stringify(a));logWeight.value=logSys.value=logDia.value="";renderLogs();renderTrends()}
+function renderLogs(){let a=JSON.parse(localStorage.getItem("m50logs")||"[]");logHistory.innerHTML=a.length?a.slice(0,7).map(x=>`<div class="history"><strong>${x.date}</strong><div class="small">${x.w?"Peso: "+x.w+" lb ":""}${x.s||x.d?" · PA: "+(x.s||"—")+"/"+(x.d||"—"):""}</div></div>`).join(""):'<div class="small">Aún no hay registros.</div>'}
+function toggleSetting(k){settings[k]=!settings[k];localStorage.setItem("m50settings",JSON.stringify(settings));renderSettings()}
+function renderSettings(){["voice","vibrate","sound"].forEach(k=>document.getElementById(k+"Toggle").classList.toggle("on",!!settings[k]))}
+
+function quickRoutine(kind){
+  symptoms.value="no";
+  if(kind==="chair"){mobility.value="chair";energy.value="low";pains.clear();}
+  if(kind==="joints"){energy.value="low";pains.add("knee");}
+  buildRoutine();
+  if(kind==="express" && routine.length){
+    routine=routine.slice(0,5).map(x=>({...x,s:45}));
+    idx=0;remain=routine[0].s;renderList();renderPlayer();
+    routineTitle.textContent="Rutina Express 5";
+    routineSub.textContent="Una dosis corta de movimiento suave";
+  }
+  if(kind==="joints") routineTitle.textContent="Movilidad articular suave";
+}
+function renderCalendar(){
+  const p=JSON.parse(localStorage.getItem("m50progress")||'{"sessions":0,"minutes":0,"dates":[]}');
+  const set=new Set(p.dates||[]), box=document.getElementById("calendarWeek"); if(!box)return;
+  box.innerHTML="";
+  const names=["D","L","M","X","J","V","S"];
+  for(let k=6;k>=0;k--){
+    let d=new Date(); d.setDate(d.getDate()-k); let iso=d.toISOString().slice(0,10);
+    let b=document.createElement("button"); b.innerHTML=names[d.getDay()]+"<br>"+d.getDate();
+    if(set.has(iso)) b.classList.add("active"); box.appendChild(b);
+  }
+  let medals=[];
+  if(p.sessions>=1) medals.push("🌱 Primer paso");
+  if(p.sessions>=5) medals.push("⭐ 5 sesiones");
+  if(p.sessions>=10) medals.push("🏅 10 sesiones");
+  if(p.minutes>=150) medals.push("💜 150 minutos");
+  medalBox.innerHTML="<strong>Mis logros</strong><br>"+(medals.length?medals.join(" · "):"Completa tu primera rutina para obtener tu primera medalla.");
+}
+function spark(values,label,suffix){
+  if(!values.length)return `<div class="small">${label}: aún no hay suficientes datos.</div>`;
+  let max=Math.max(...values),min=Math.min(...values),range=Math.max(1,max-min),w=300,h=90;
+  let pts=values.map((v,i)=>`${10+i*(280/Math.max(1,values.length-1))},${75-(v-min)/range*55}`).join(" ");
+  return `<div><strong>${label}</strong><svg viewBox="0 0 ${w} ${h}" width="100%" height="100" aria-label="${label}"><polyline points="${pts}" fill="none" stroke="currentColor" stroke-width="4" stroke-linecap="round" stroke-linejoin="round"/><line x1="10" y1="78" x2="290" y2="78" stroke="currentColor" opacity=".15"/></svg><div class="small">Último: ${values[values.length-1]}${suffix}</div></div>`;
+}
+function renderTrends(){
+ let a=JSON.parse(localStorage.getItem("m50logs")||"[]").slice(0,10).reverse();
+ let ws=a.map(x=>Number(x.w)).filter(Boolean), ss=a.map(x=>Number(x.s)).filter(Boolean), ds=a.map(x=>Number(x.d)).filter(Boolean);
+ if(document.getElementById("trendWeight")) trendWeight.innerHTML=spark(ws,"Peso"," lb");
+ if(document.getElementById("trendBP")) trendBP.innerHTML=spark(ss,"Presión sistólica"," mmHg")+(ds.length?spark(ds,"Presión diastólica"," mmHg"):"");
+}
+
+loadProfile();updateSuggestion();refresh();makeWeeks();renderLogs();renderSettings();renderCalendar();renderTrends();
+if("serviceWorker"in navigator)navigator.serviceWorker.register("sw.js");
 </script>
 </body>
 </html>

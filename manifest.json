@@ -1,9 +1,11 @@
 {
-  "name": "Movimiento 50+",
+  "name": "Movimiento 50+ Pro v4",
   "short_name": "Movimiento50",
+  "description": "Rutinas adaptativas de bajo impacto para mujeres 50+ con movilidad limitada.",
   "start_url": "./index.html",
+  "scope": "./",
   "display": "standalone",
-  "background_color": "#f7f7f8",
-  "theme_color": "#ffffff",
+  "background_color": "#f6f4f7",
+  "theme_color": "#705a8f",
   "icons": []
 }
