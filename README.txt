@@ -66,3 +66,12 @@ VERSIÓN 8
 - Escala de esfuerzo al terminar.
 - Adaptación local de la siguiente rutina según esfuerzo percibido.
 - Registro de sesiones, minutos y progreso conservado.
+
+
+VERSIÓN 9
+- Avatares de ejercicio más claros.
+- Demostración visual de posición inicial y posición de movimiento.
+- Flechas de dirección.
+- Silla o apoyo representados cuando corresponde.
+- Texto breve bajo la ilustración explicando el gesto principal.
+- Conserva voz, temporizador, descansos y adaptación de la versión 8.
