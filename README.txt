@@ -1,4 +1,4 @@
-MOVIMIENTO 50+ PRO — VERSIÓN 14
+MOVIMIENTO 50+ PRO — VERSIÓN 16
 
 MEJORAS
 - Perfil: edad, peso, estatura y nivel de movilidad.
@@ -122,3 +122,23 @@ VERSIÓN 14
 - Avatar 2D desactivado en todos los ejercicios.
 - Sistema humano 3D universal.
 - Torsión, cuello, brazos, marcha, bicicleta, sentadilla, rodilla, talones, paso lateral, equilibrio y respiración con animación específica.
+
+
+VERSIÓN 15 · HUMANO ARTICULADO ANIMADO
+- Elimina la fotografía humana estática como demostración principal.
+- Nuevo humano 3D estilizado y articulado.
+- Torsión sentada mueve tronco y cabeza de izquierda a derecha.
+- Cuello, brazos, marcha, sentadilla, rodilla, talones, equilibrio, respiración, bicicleta y paso lateral tienen movimiento propio.
+- Conserva temporizador, voz, instrucciones y biblioteca.
+
+
+VERSIÓN 16 · MOTOR DE MOVIMIENTO JAVASCRIPT
+- Corrige el problema de figuras humanas congeladas en Android/Chrome.
+- Las articulaciones se animan con requestAnimationFrame, no con CSS.
+- Funciona aunque el dispositivo tenga activada la reducción de animaciones.
+- Torsión: gira tronco y cabeza.
+- Cuello: inclinación lateral.
+- Brazos: elevación visible.
+- Marcha: alternancia real de piernas.
+- Sentadilla: desplazamiento del cuerpo y flexión de piernas.
+- Rodilla, talones, equilibrio, bicicleta, paso lateral y respiración con movimiento propio.

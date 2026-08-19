@@ -754,6 +754,228 @@ background:linear-gradient(90deg,#5e4473,#8b68a5 32%,#c8b1d6 52%,#795a94 72%,#5a
 
 @media(prefers-reduced-motion:reduce){.v14human,.v14human *,.v14arrow{animation:none!important}}
 
+
+/* ===== V15 · HUMANO 3D ARTICULADO REALMENTE ANIMADO ===== */
+
+/* desactiva sistemas anteriores */
+.exerciseVisual .stick,
+.exerciseVisual .avatar3d,
+.exerciseVisual .human3d,
+.exerciseVisual .exerciseHumanWrap,
+.exerciseVisual .v14stage,
+.exerciseVisual .chairViz,
+.exerciseVisual .chair3d,
+.exerciseVisual .chairV12{
+  display:none!important;
+}
+
+/* nuevo escenario */
+.v15stage{
+  position:absolute;inset:14px 18px 20px;
+  border-radius:28px;overflow:hidden;
+  background:
+    radial-gradient(circle at 50% 18%,#ffffff 0 12%,#faf5fd 38%,#efe4f7 100%);
+  perspective:1100px;
+}
+.v15label{
+  position:absolute;left:14px;top:10px;z-index:20;
+  padding:7px 12px;border-radius:999px;
+  background:rgba(255,255,255,.96);
+  border:1px solid #e5d8ec;
+  color:#674f7d;font-size:.78rem;font-weight:850;
+}
+.v15arrow{
+  position:absolute;right:18px;top:45%;z-index:20;
+  color:#d46c9f;font-size:2rem;font-weight:900;
+  animation:v15Pulse 1.4s ease-in-out infinite;
+}
+@keyframes v15Pulse{0%,100%{opacity:.35;transform:scale(.9)}50%{opacity:1;transform:scale(1.15)}}
+.v15floor{
+  position:absolute;left:11%;right:11%;bottom:28px;height:4px;border-radius:999px;background:#ccb9d8;
+}
+.v15shadow{
+  position:absolute;left:50%;bottom:18px;width:165px;height:24px;transform:translateX(-50%);
+  border-radius:50%;background:radial-gradient(ellipse,rgba(74,49,90,.25),rgba(74,49,90,0) 72%);
+}
+
+/* silla */
+.v15chair{position:absolute;left:12%;bottom:32px;width:116px;height:130px;transform:rotateY(-8deg)}
+.v15chair.hidden{display:none!important}
+.v15chair .back{position:absolute;left:9px;top:0;width:90px;height:76px;border-radius:15px;
+ background:linear-gradient(90deg,#694d7d,#9e81b2 50%,#73558b);
+ box-shadow:inset 6px 6px 10px rgba(255,255,255,.2),0 8px 13px rgba(75,49,90,.14)}
+.v15chair .seat{position:absolute;left:1px;top:72px;width:100px;height:20px;border-radius:8px;
+ background:linear-gradient(#cbb6d8,#8b6ba3);transform:skewX(-6deg)}
+.v15chair .leg{position:absolute;top:90px;width:10px;height:54px;border-radius:5px;background:#7c5c92}
+.v15chair .leg.a{left:15px}.v15chair .leg.b{right:20px}
+
+/* cuerpo */
+.v15human{
+  position:absolute;left:50%;top:30px;width:190px;height:240px;
+  transform:translateX(-50%);
+  transform-origin:50% 82%;
+  transform-style:preserve-3d;
+  filter:drop-shadow(0 18px 15px rgba(76,50,92,.18));
+}
+.v15human .head{
+  position:absolute;left:69px;top:0;width:52px;height:55px;border-radius:50%;
+  background:radial-gradient(circle at 35% 28%,#fff 0 8%,#eadff0 27%,#c3a8d3 56%,#75558e 100%);
+  box-shadow:inset 7px 6px 10px rgba(255,255,255,.34),inset -8px -8px 11px rgba(52,32,66,.2);
+  transform-origin:50% 86%;
+}
+.v15human .neck{
+  position:absolute;left:84px;top:45px;width:22px;height:20px;border-radius:9px;
+  background:linear-gradient(90deg,#76588c,#c7aed4 50%,#73548a)
+}
+.v15human .torso{
+  position:absolute;left:55px;top:58px;width:80px;height:76px;border-radius:42px 42px 29px 29px;
+  background:
+    radial-gradient(circle at 38% 27%,rgba(255,255,255,.4),transparent 24%),
+    linear-gradient(90deg,#5f4574,#8b68a5 30%,#c9b2d7 52%,#7d5d98 72%,#59416d);
+  box-shadow:inset 8px 6px 11px rgba(255,255,255,.2),inset -8px -7px 11px rgba(48,29,61,.22);
+  transform-origin:50% 88%;
+}
+.v15human .waist{
+  position:absolute;left:72px;top:121px;width:48px;height:28px;border-radius:14px;
+  background:linear-gradient(90deg,#684d7b,#b39bc3 52%,#715387)
+}
+.v15human .pelvis{
+  position:absolute;left:67px;top:140px;width:56px;height:30px;border-radius:45%;
+  background:linear-gradient(90deg,#5c4271,#906ca8 36%,#c1a6d1 55%,#704f86)
+}
+
+/* segmentos con joints */
+.v15human .upperArm,.v15human .foreArm,.v15human .thigh,.v15human .shin{
+  position:absolute;border-radius:999px;
+  background:linear-gradient(90deg,#5b426f,#8a67a3 38%,#c6aed4 59%,#6d4f83);
+  box-shadow:inset 4px 3px 7px rgba(255,255,255,.18),inset -5px -6px 8px rgba(47,29,60,.2);
+  transform-origin:50% 8%;
+}
+.v15human .upperArm{width:22px;height:66px;top:66px}
+.v15human .foreArm{width:18px;height:59px;top:121px}
+.v15human .thigh{width:29px;height:78px;top:158px}
+.v15human .shin{width:23px;height:76px;top:221px}
+
+.v15human .upperArm.l{left:37px;transform:rotate(23deg)}
+.v15human .upperArm.r{right:37px;transform:rotate(-23deg)}
+.v15human .foreArm.l{left:23px;transform:rotate(16deg)}
+.v15human .foreArm.r{right:23px;transform:rotate(-16deg)}
+.v15human .thigh.l{left:60px;transform:rotate(7deg)}
+.v15human .thigh.r{right:60px;transform:rotate(-7deg)}
+.v15human .shin.l{left:49px;transform:rotate(3deg)}
+.v15human .shin.r{right:49px;transform:rotate(-3deg)}
+
+.v15human .hand{position:absolute;left:-2px;bottom:-10px;width:21px;height:23px;border-radius:50%;
+ background:radial-gradient(circle at 35% 30%,#eadff0,#b39ac5 62%,#725387)}
+.v15human .foot{position:absolute;left:-7px;bottom:-7px;width:38px;height:18px;border-radius:60%;
+ background:radial-gradient(circle at 35% 30%,#e6d8ed,#ad90be 60%,#6f5086)}
+
+/* ===== movimientos reales por articulación ===== */
+
+/* torsión sentada */
+.exerciseVisual.v15-twist .v15human .torso{animation:v15TwistTorso 3s ease-in-out infinite}
+.exerciseVisual.v15-twist .v15human .head{animation:v15TwistHead 3s ease-in-out infinite}
+.exerciseVisual.v15-twist .v15human .upperArm.l{animation:v15TwistArmL 3s ease-in-out infinite}
+.exerciseVisual.v15-twist .v15human .upperArm.r{animation:v15TwistArmR 3s ease-in-out infinite}
+@keyframes v15TwistTorso{
+  0%,100%{transform:rotateY(-28deg)}
+  50%{transform:rotateY(28deg)}
+}
+@keyframes v15TwistHead{
+  0%,100%{transform:rotateY(-22deg)}
+  50%{transform:rotateY(22deg)}
+}
+@keyframes v15TwistArmL{
+  0%,100%{transform:rotate(34deg) translateZ(8px)}
+  50%{transform:rotate(12deg) translateZ(-7px)}
+}
+@keyframes v15TwistArmR{
+  0%,100%{transform:rotate(-12deg) translateZ(-7px)}
+  50%{transform:rotate(-34deg) translateZ(8px)}
+}
+
+/* cuello */
+.exerciseVisual.v15-neck .v15human .head{animation:v15Neck 2.8s ease-in-out infinite}
+@keyframes v15Neck{0%,100%{transform:rotate(-17deg)}50%{transform:rotate(17deg)}}
+
+/* brazos/hombros */
+.exerciseVisual.v15-arms .v15human .upperArm.l{animation:v15ArmL 2.2s ease-in-out infinite}
+.exerciseVisual.v15-arms .v15human .upperArm.r{animation:v15ArmR 2.2s ease-in-out infinite}
+.exerciseVisual.v15-arms .v15human .foreArm.l{animation:v15ForeL 2.2s ease-in-out infinite}
+.exerciseVisual.v15-arms .v15human .foreArm.r{animation:v15ForeR 2.2s ease-in-out infinite}
+@keyframes v15ArmL{0%,100%{transform:rotate(23deg)}50%{transform:rotate(112deg)}}
+@keyframes v15ArmR{0%,100%{transform:rotate(-23deg)}50%{transform:rotate(-112deg)}}
+@keyframes v15ForeL{0%,100%{transform:rotate(16deg)}50%{transform:rotate(87deg)}}
+@keyframes v15ForeR{0%,100%{transform:rotate(-16deg)}50%{transform:rotate(-87deg)}}
+
+/* marcha */
+.exerciseVisual.v15-march .v15human .thigh.l{animation:v15MarchTL 1.5s ease-in-out infinite}
+.exerciseVisual.v15-march .v15human .thigh.r{animation:v15MarchTR 1.5s ease-in-out infinite}
+.exerciseVisual.v15-march .v15human .shin.l{animation:v15MarchSL 1.5s ease-in-out infinite}
+.exerciseVisual.v15-march .v15human .shin.r{animation:v15MarchSR 1.5s ease-in-out infinite}
+@keyframes v15MarchTL{0%,100%{transform:rotate(7deg)}50%{transform:rotate(58deg) translateY(-8px)}}
+@keyframes v15MarchTR{0%,100%{transform:rotate(-58deg) translateY(-8px)}50%{transform:rotate(-7deg)}}
+@keyframes v15MarchSL{0%,100%{transform:rotate(3deg)}50%{transform:rotate(-30deg)}}
+@keyframes v15MarchSR{0%,100%{transform:rotate(30deg)}50%{transform:rotate(-3deg)}}
+
+/* sentadilla */
+.exerciseVisual.v15-squat .v15human{animation:v15SquatBody 3.2s ease-in-out infinite}
+.exerciseVisual.v15-squat .v15human .torso{animation:v15SquatTorso 3.2s ease-in-out infinite}
+.exerciseVisual.v15-squat .v15human .thigh.l{animation:v15SquatTL 3.2s ease-in-out infinite}
+.exerciseVisual.v15-squat .v15human .thigh.r{animation:v15SquatTR 3.2s ease-in-out infinite}
+@keyframes v15SquatBody{0%,15%,85%,100%{transform:translateX(-35%) translateY(34px) scale(.92)}45%,60%{transform:translateX(-22%) translateY(-24px) scale(1)}}
+@keyframes v15SquatTorso{0%,15%,85%,100%{transform:rotate(14deg)}45%,60%{transform:rotate(0deg)}}
+@keyframes v15SquatTL{0%,15%,85%,100%{transform:rotate(67deg)}45%,60%{transform:rotate(7deg)}}
+@keyframes v15SquatTR{0%,15%,85%,100%{transform:rotate(-67deg)}45%,60%{transform:rotate(-7deg)}}
+
+/* rodilla */
+.exerciseVisual.v15-knee .v15human .thigh.l{transform:rotate(60deg)}
+.exerciseVisual.v15-knee .v15human .shin.l{animation:v15Knee 2s ease-in-out infinite}
+@keyframes v15Knee{0%,100%{transform:rotate(-48deg)}50%{transform:rotate(-92deg)}}
+
+/* talones */
+.exerciseVisual.v15-heels .v15human{animation:v15Heel 1.8s ease-in-out infinite}
+@keyframes v15Heel{0%,100%{transform:translateX(-50%) translateY(0)}50%{transform:translateX(-50%) translateY(-18px)}}
+
+/* equilibrio */
+.exerciseVisual.v15-balance .v15human .thigh.r{animation:v15BalTh 2.8s ease-in-out infinite}
+.exerciseVisual.v15-balance .v15human .shin.r{animation:v15BalSh 2.8s ease-in-out infinite}
+@keyframes v15BalTh{0%,18%,82%,100%{transform:rotate(-7deg)}45%,58%{transform:rotate(-63deg)}}
+@keyframes v15BalSh{0%,18%,82%,100%{transform:rotate(-3deg)}45%,58%{transform:rotate(25deg)}}
+
+/* respiración */
+.exerciseVisual.v15-breath .v15human{animation:v15BreathBody 3.8s ease-in-out infinite}
+.exerciseVisual.v15-breath .v15human .torso{animation:v15BreathTorso 3.8s ease-in-out infinite}
+@keyframes v15BreathBody{0%,100%{transform:translateX(-50%) scale(.97)}50%{transform:translateX(-50%) scale(1.035)}}
+@keyframes v15BreathTorso{0%,100%{transform:scaleX(.96)}50%{transform:scaleX(1.07)}}
+
+/* bicicleta */
+.exerciseVisual.v15-bike .v15human .thigh.l{animation:v15BikeL 1.4s linear infinite}
+.exerciseVisual.v15-bike .v15human .thigh.r{animation:v15BikeR 1.4s linear infinite}
+@keyframes v15BikeL{0%,100%{transform:rotate(62deg)}50%{transform:rotate(18deg)}}
+@keyframes v15BikeR{0%,100%{transform:rotate(-18deg)}50%{transform:rotate(-62deg)}}
+
+/* paso lateral */
+.exerciseVisual.v15-side .v15human{animation:v15Side 2.6s ease-in-out infinite}
+@keyframes v15Side{0%,100%{transform:translateX(-72%)}50%{transform:translateX(-28%)}}
+
+
+
+
+/* ===== V16 · MOTOR DE ANIMACIÓN JAVASCRIPT ===== */
+.v15stage.v16js .v15human,
+.v15stage.v16js .v15human *,
+.v15stage.v16js .v15arrow{
+  animation:none!important;
+}
+.v16status{
+  position:absolute;right:14px;bottom:10px;z-index:30;
+  padding:5px 9px;border-radius:999px;
+  background:rgba(255,255,255,.86);
+  color:#76598c;font-size:.66rem;font-weight:800;
+  border:1px solid rgba(118,89,140,.12);
+}
+
 </style>
 </head>
 <body>
@@ -897,10 +1119,6 @@ background:linear-gradient(90deg,#5e4473,#8b68a5 32%,#c8b1d6 52%,#795a94 72%,#5a
   <div class="shadow"></div>
 </div>
 
-<div class="exerciseHumanWrap" id="exerciseHumanWrap">
-  <img class="exerciseHumanImg" id="exerciseHumanImg" src="human_march.jpg" alt="Demostración humana 3D del ejercicio">
-</div>
-
 <div class="v14stage" id="v14stage">
   <div class="v14label" id="v14label">Demostración humana 3D</div>
   <div class="v14arrow" id="v14arrow">↕</div>
@@ -913,6 +1131,25 @@ background:linear-gradient(90deg,#5e4473,#8b68a5 32%,#c8b1d6 52%,#795a94 72%,#5a
     <div class="sh l"><div class="foot"></div></div><div class="sh r"><div class="foot"></div></div>
   </div>
   <div class="v14floor"></div>
+</div>
+
+<div class="v15stage" id="v15stage">
+  <div class="v15label" id="v15label">Demostración humana animada</div>
+  <div class="v15arrow" id="v15arrow">↕</div>
+  <div class="v15chair hidden" id="v15chair">
+    <div class="back"></div><div class="seat"></div><div class="leg a"></div><div class="leg b"></div>
+  </div>
+  <div class="v15human" id="v15human">
+    <div class="head"></div><div class="neck"></div><div class="torso"></div><div class="waist"></div><div class="pelvis"></div>
+    <div class="upperArm l"><div class="hand"></div></div>
+    <div class="upperArm r"><div class="hand"></div></div>
+    <div class="foreArm l"></div><div class="foreArm r"></div>
+    <div class="thigh l"></div><div class="thigh r"></div>
+    <div class="shin l"><div class="foot"></div></div>
+    <div class="shin r"><div class="foot"></div></div>
+  </div>
+  <div class="v15shadow"></div>
+  <div class="v15floor"></div><div class="v16status">Animación activa</div>
 </div>
 <div class="restOverlay" id="restOverlay">
       <div>
@@ -1397,7 +1634,28 @@ function v14Motion(x){
  return ["v14breath",false,"Movimiento lento, estable y controlado","↕"];
 }
 
+
+function v15Motion(x){
+ const n=(x.n||"").toLowerCase();
+ if(n.includes("torsión")||n.includes("torsion")) return ["v15-twist",true,"Gira tronco y cabeza suavemente de lado a lado","↔"];
+ if(n.includes("cuello")) return ["v15-neck",true,"Inclina la cabeza hacia cada lado","↔"];
+ if(n.includes("hombro")||n.includes("brazo")||n.includes("apertura")) return ["v15-arms",false,"Eleva y baja los brazos lentamente","↗"];
+ if(n.includes("marcha sentada")) return ["v15-march",true,"Alterna una rodilla y luego la otra","↕"];
+ if(n.includes("marcha")||n.includes("caminata")) return ["v15-march",false,"Alterna las piernas a ritmo cómodo","↕"];
+ if(n.includes("bicicleta")) return ["v15-bike",true,"Pedalea de forma circular y continua","↻"];
+ if(n.includes("sentadilla")||n.includes("sentarse y levantarse")) return ["v15-squat",true,"Levántate y vuelve a sentarte con control","↕"];
+ if(n.includes("extensión de rodilla")||n.includes("extension de rodilla")) return ["v15-knee",true,"Estira una pierna y regresa lentamente","→"];
+ if(n.includes("talón")||n.includes("talon")) return ["v15-heels",false,"Sube sobre las puntas y baja despacio","↕"];
+ if(n.includes("paso lateral")) return ["v15-side",false,"Da pasos cortos de lado a lado","↔"];
+ if(n.includes("equilibrio")||n.includes("apoyo en un pie")||n.includes("flamenco")) return ["v15-balance",false,"Eleva un pie manteniendo apoyo cercano","↑"];
+ if(n.includes("respiración")||n.includes("respiracion")||n.includes("recuperación")||n.includes("recuperacion")||n.includes("enfriamiento")) return ["v15-breath",true,"Inhala lento y exhala con control","↕"];
+ return ["v15-breath",false,"Movimiento lento, estable y controlado","↕"];
+}
+
 function updateGuidedPanel(){
+  const current15 = routine[idx] || routine[0];
+  if(!current15) return;
+
   const current14 = routine[idx] || routine[0];
   if(!current14) return;
 
@@ -1430,6 +1688,13 @@ function updateGuidedPanel(){
   v14chair.classList.toggle("hidden",!mv14[1]);
   v14label.textContent=mv14[2];
   v14arrow.textContent=mv14[3];
+
+  v16SetMotion(current15);
+  const mv15=v15Motion(current15);
+  exerciseVisual.className="exerciseVisual "+mv15[0];
+  v15chair.classList.toggle("hidden",!mv15[1]);
+  v15label.textContent=mv15[2];
+  v15arrow.textContent=mv15[3];
 }
 
 function startAutoRest(seconds=20){
@@ -1672,6 +1937,138 @@ try{
   console.error("Movimiento50 init:",err);
 }
 if("serviceWorker"in navigator)navigator.serviceWorker.register("sw.js");
+
+let v16MotionName="v15-breath";
+let v16Started=performance.now();
+
+function v16SetMotion(x){
+  if(!x) return;
+  const m=v15Motion(x);
+  v16MotionName=m[0];
+  v16Started=performance.now();
+  const st=document.getElementById("v15stage");
+  if(st) st.classList.add("v16js");
+}
+
+function v16ResetParts(){
+  const h=document.querySelector(".v15human");
+  if(!h) return null;
+  const q=s=>h.querySelector(s);
+  const p={
+    h,
+    head:q(".head"), torso:q(".torso"),
+    ual:q(".upperArm.l"), uar:q(".upperArm.r"),
+    fal:q(".foreArm.l"), far:q(".foreArm.r"),
+    tl:q(".thigh.l"), tr:q(".thigh.r"),
+    sl:q(".shin.l"), sr:q(".shin.r")
+  };
+  h.style.transform="translateX(-50%)";
+  if(p.head) p.head.style.transform="";
+  if(p.torso) p.torso.style.transform="";
+  if(p.ual) p.ual.style.transform="rotate(23deg)";
+  if(p.uar) p.uar.style.transform="rotate(-23deg)";
+  if(p.fal) p.fal.style.transform="rotate(16deg)";
+  if(p.far) p.far.style.transform="rotate(-16deg)";
+  if(p.tl) p.tl.style.transform="rotate(7deg)";
+  if(p.tr) p.tr.style.transform="rotate(-7deg)";
+  if(p.sl) p.sl.style.transform="rotate(3deg)";
+  if(p.sr) p.sr.style.transform="rotate(-3deg)";
+  return p;
+}
+
+function v16Frame(now){
+  const p=v16ResetParts();
+  if(p){
+    const t=(now-v16Started)/1000;
+    const s=Math.sin(t*Math.PI*2/3);         // ~3 s cycle
+    const sFast=Math.sin(t*Math.PI*2/1.5);   // ~1.5 s cycle
+    const cFast=Math.cos(t*Math.PI*2/1.5);
+    const up=(1-Math.cos(t*Math.PI*2/3.2))/2;
+
+    switch(v16MotionName){
+      case "v15-twist":{
+        const a=28*s;
+        p.torso.style.transform=`rotateY(${a}deg)`;
+        p.head.style.transform=`rotateY(${22*s}deg)`;
+        p.ual.style.transform=`rotate(${23+12*s}deg) translateZ(${7*s}px)`;
+        p.uar.style.transform=`rotate(${-23+12*s}deg) translateZ(${-7*s}px)`;
+        break;
+      }
+      case "v15-neck":{
+        p.head.style.transform=`rotate(${17*s}deg)`;
+        break;
+      }
+      case "v15-arms":{
+        const a=(1-Math.cos(t*Math.PI*2/2.2))/2;
+        p.ual.style.transform=`rotate(${23+87*a}deg)`;
+        p.uar.style.transform=`rotate(${-23-87*a}deg)`;
+        p.fal.style.transform=`rotate(${16+70*a}deg)`;
+        p.far.style.transform=`rotate(${-16-70*a}deg)`;
+        break;
+      }
+      case "v15-march":{
+        const liftL=Math.max(0,sFast), liftR=Math.max(0,-sFast);
+        p.tl.style.transform=`rotate(${7+52*liftL}deg) translateY(${-9*liftL}px)`;
+        p.tr.style.transform=`rotate(${-7-52*liftR}deg) translateY(${-9*liftR}px)`;
+        p.sl.style.transform=`rotate(${3-33*liftL}deg)`;
+        p.sr.style.transform=`rotate(${-3+33*liftR}deg)`;
+        p.h.style.transform=`translateX(-50%) translateY(${-3*Math.abs(sFast)}px)`;
+        break;
+      }
+      case "v15-squat":{
+        const down=(1+Math.cos(t*Math.PI*2/3.2))/2;
+        p.h.style.transform=`translateX(${-50+15*down}%) translateY(${34*down-24*(1-down)}px) scale(${1-.08*down})`;
+        p.torso.style.transform=`rotate(${14*down}deg)`;
+        p.tl.style.transform=`rotate(${7+60*down}deg)`;
+        p.tr.style.transform=`rotate(${-7-60*down}deg)`;
+        p.sl.style.transform=`rotate(${3-44*down}deg)`;
+        p.sr.style.transform=`rotate(${-3+44*down}deg)`;
+        break;
+      }
+      case "v15-knee":{
+        const a=(1-Math.cos(t*Math.PI*2/2))/2;
+        p.tl.style.transform="rotate(60deg)";
+        p.sl.style.transform=`rotate(${-48-44*a}deg)`;
+        break;
+      }
+      case "v15-heels":{
+        const a=(1-Math.cos(t*Math.PI*2/1.8))/2;
+        p.h.style.transform=`translateX(-50%) translateY(${-18*a}px)`;
+        break;
+      }
+      case "v15-balance":{
+        const a=(1-Math.cos(t*Math.PI*2/2.8))/2;
+        p.tr.style.transform=`rotate(${-7-56*a}deg)`;
+        p.sr.style.transform=`rotate(${-3+28*a}deg)`;
+        p.h.style.transform=`translateX(-50%) rotateZ(${1.4*s}deg)`;
+        break;
+      }
+      case "v15-bike":{
+        const a=(1+sFast)/2;
+        p.tl.style.transform=`rotate(${18+44*a}deg)`;
+        p.tr.style.transform=`rotate(${-62+44*a}deg)`;
+        p.sl.style.transform=`rotate(${-88+40*a}deg)`;
+        p.sr.style.transform=`rotate(${48+40*a}deg)`;
+        break;
+      }
+      case "v15-side":{
+        p.h.style.transform=`translateX(${-50+22*s}%)`;
+        break;
+      }
+      case "v15-breath":
+      default:{
+        const a=(1+s)/2;
+        const sc=.97+.065*a;
+        p.h.style.transform=`translateX(-50%) scale(${sc})`;
+        p.torso.style.transform=`scaleX(${.96+.11*a})`;
+        break;
+      }
+    }
+  }
+  requestAnimationFrame(v16Frame);
+}
+requestAnimationFrame(v16Frame);
+
 </script>
 </body>
 </html>
