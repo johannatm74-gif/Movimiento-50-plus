@@ -36,3 +36,11 @@ NOVEDADES V5
 - Pantalla de bienvenida con identidad lavanda/violeta/rosa.
 - Icono integrado en cabecera y perfil.
 - Manifest y caché actualizados.
+
+NOVEDADES V6
+- Biblioteca de rutinas basada en rutinas_vitalidad50.xlsx.
+- Fuerza suave, equilibrio, flexibilidad-relajación y cardio ligero.
+- Adaptación automática según movilidad, rodillas, espalda y hombros.
+- Sustituciones sentadas y exclusión de ejercicios de suelo cuando corresponde.
+- Acceso directo a la biblioteca desde Inicio.
+- Conserva seguridad previa por síntomas y presión arterial.

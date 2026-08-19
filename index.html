@@ -77,6 +77,15 @@ animation:splashAutoHide .55s ease 1.8s forwards}
 .splash p{font-size:1.05rem;margin:0;color:#6d5d77}
 .splashTag{margin-top:42px;font-style:italic;color:#805e91}
 
+
+.libraryGrid{display:grid;grid-template-columns:repeat(2,1fr);gap:10px}
+.libraryCard{border:1px solid var(--line);background:#fff;border-radius:18px;padding:14px;text-align:left;box-shadow:0 6px 18px rgba(65,47,75,.05)}
+.libraryCard strong{display:block;font-size:1rem;margin-top:5px}.libraryCard .small{margin-top:4px}
+.exerciseDetail{padding:12px 0;border-top:1px solid var(--line)}.exerciseDetail:first-child{border-top:0}
+.exerciseDetail .title{font-weight:850;margin-bottom:4px}.exerciseDetail .meta{font-size:.84rem;color:var(--muted);margin-top:4px}
+.safetyTag{display:inline-block;padding:5px 8px;border-radius:999px;background:#f4eef8;color:#604c74;font-size:.75rem;font-weight:800;margin:4px 4px 0 0}
+@media(max-width:560px){.libraryGrid{grid-template-columns:1fr}}
+
 </style>
 </head>
 <body>
@@ -149,6 +158,12 @@ animation:splashAutoHide .55s ease 1.8s forwards}
   <div id="medalBox" class="notice good"></div>
  </div>
 
+
+ <div class="card">
+  <div class="sectionHead"><div><h2>Nuevas rutinas</h2><div class="small">Fuerza, equilibrio, flexibilidad y cardio ligero.</div></div><div style="font-size:26px">✨</div></div>
+  <button class="btn ghost full" onclick="show('library',document.querySelector('[data-view=&quot;library&quot;]'))">Abrir biblioteca de rutinas</button>
+ </div>
+
  <div class="card">
   <h2>Plan para hoy</h2>
   <div class="planCards">
@@ -194,6 +209,30 @@ animation:splashAutoHide .55s ease 1.8s forwards}
  <div class="card"><h3>Registro de salud</h3><div class="grid3"><input id="logWeight" inputmode="decimal" placeholder="Peso (lb)"><input id="logSys" inputmode="numeric" placeholder="Sistólica"><input id="logDia" inputmode="numeric" placeholder="Diastólica"></div><button class="btn full" style="margin-top:10px" onclick="saveLog()">Guardar</button><div id="logHistory" style="margin-top:10px"></div></div>
 </section>
 
+
+<section id="library" class="view">
+ <div class="card">
+  <div class="sectionHead"><div><h2>Biblioteca de rutinas</h2><div class="small">Rutinas adicionales adaptadas de tu archivo Vitalidad 50.</div></div><div style="font-size:28px">📚</div></div>
+  <div class="libraryGrid">
+   <button class="libraryCard" onclick="openLibraryRoutine('strength')">💪 <strong>Fuerza suave</strong><div class="small">Piernas y core · 20 min · nivel bajo</div></button>
+   <button class="libraryCard" onclick="openLibraryRoutine('balance')">⚖️ <strong>Equilibrio</strong><div class="small">Estabilidad · 12 min · bajo-medio</div></button>
+   <button class="libraryCard" onclick="openLibraryRoutine('flex')">🌿 <strong>Flexibilidad</strong><div class="small">Relajación y movilidad · 18 min</div></button>
+   <button class="libraryCard" onclick="openLibraryRoutine('cardio')">🚶‍♀️ <strong>Cardio ligero</strong><div class="small">Bajo impacto · 18 min</div></button>
+  </div>
+ </div>
+
+ <div class="card" id="libraryRoutineCard">
+  <h3 id="libTitle">Selecciona una rutina</h3>
+  <div class="small" id="libIntro">Aquí verás los ejercicios, adaptaciones y precauciones.</div>
+  <div id="libExercises" style="margin-top:10px"></div>
+  <button id="libStartBtn" class="btn full hidden" onclick="startLibraryRoutine()">Usar esta rutina</button>
+ </div>
+
+ <div class="notice">
+  <strong>Adaptación automática:</strong> si tu perfil indica movilidad principalmente sentada o seleccionas molestias de rodilla, espalda u hombro, la app sustituirá o excluirá los ejercicios menos apropiados.
+ </div>
+</section>
+
 <section id="settings" class="view">
  <div class="card"><h2>Guía durante el ejercicio</h2>
   <div class="switch"><div><strong>Voz</strong><div class="small">Dice el ejercicio y las instrucciones.</div></div><div id="voiceToggle" class="toggle on" onclick="toggleSetting('voice')"></div></div>
@@ -205,9 +244,10 @@ animation:splashAutoHide .55s ease 1.8s forwards}
 </main>
 </div>
 
-<nav class="bottom"><div class="bottomInner">
+<nav class="bottom"><div class="bottomInner" style="grid-template-columns:repeat(5,1fr)">
 <button class="nav active" data-view="home" onclick="show('home',this)"><span>⌂</span>Inicio</button>
 <button class="nav" data-view="routine" onclick="show('routine',this)"><span>▶</span>Rutina</button>
+<button class="nav" data-view="library" onclick="show('library',this)"><span>▦</span>Biblioteca</button>
 <button class="nav" data-view="progress" onclick="show('progress',this)"><span>▥</span>Progreso</button>
 <button class="nav" data-view="settings" onclick="show('settings',this)"><span>⚙</span>Ajustes</button>
 </div></nav>
@@ -269,6 +309,112 @@ function updateSuggestion(){let e=energy.value,m=mobility.value; suggestedTime.t
 energy.onchange=updateSuggestion;mobility.onchange=updateSuggestion;
 function bpOk(){let s=Number(sys.value||0),d=Number(dia.value||0);if(!s&&!d){bpMessage.innerHTML="";return true}if(s>180||d>120){bpMessage.innerHTML='<div class="notice danger"><strong>Lectura severamente elevada.</strong> Espera al menos 1 minuto y repite la presión. No inicies la rutina automática. Si sigue así, contacta a tu profesional de salud; si además hay síntomas de alarma, busca atención de emergencia.</div>';return false}bpMessage.innerHTML='<div class="notice good">Lectura registrada. Respeta siempre los límites específicos indicados por tu profesional de salud.</div>';return true}
 sys.oninput=bpOk;dia.oninput=bpOk;
+
+
+const libraryRoutines={
+ strength:{
+  title:"Fuerza suave – Piernas y core",
+  duration:20,
+  level:"Bajo",
+  exercises:[
+   {n:"Sentadillas en silla",s:60,i:"🪑",c:"Baja y sube desde una silla firme. Usa los brazos si los necesitas.",a:"chair",rep:"10–12 repeticiones",avoid:["chairOnlySevere"],tags:["Fuerza","Piernas"],prec:"Exhala durante el esfuerzo; no aguantes la respiración."},
+   {n:"Elevación de brazos con banda",s:60,i:"💪",c:"Eleva los brazos lateralmente con banda muy ligera o sin peso.",a:"arms",rep:"10 repeticiones por lado",avoid:["shoulder"],tags:["Fuerza","Hombros"],prec:"Usa rango corto si hay molestias; no aguantes la respiración."},
+   {n:"Puente de glúteos",s:60,i:"🌉",c:"Acostada boca arriba, eleva la cadera suavemente y vuelve a bajar.",a:"balance",rep:"10 repeticiones",avoid:["chair","back"],tags:["Core","Glúteos"],prec:"No contener la respiración. Evitar si cuesta acostarse o levantarse del suelo."},
+   {n:"Elevación de talones",s:60,i:"🦶",c:"Con apoyo estable, sube y baja sobre las puntas de los pies.",a:"calf",rep:"15 repeticiones",avoid:[],tags:["Pantorrilla","Equilibrio"],prec:"Mantén un apoyo cercano."},
+   {n:"Remo sentada con banda",s:60,i:"🧘‍♀️",c:"Sentada, lleva los codos hacia atrás con banda suave o sin resistencia.",a:"arms",rep:"10 repeticiones",avoid:["shoulder"],tags:["Espalda","Brazos"],prec:"Mantén el cuello relajado y exhala al tirar."}
+  ]
+ },
+ balance:{
+  title:"Equilibrio y estabilidad",
+  duration:12,
+  level:"Bajo–Medio",
+  exercises:[
+   {n:"Apoyo en un pie",s:30,i:"⚖️",c:"Junto a una silla, descarga parcialmente un pie. No es necesario soltar las manos.",a:"balance",rep:"20–30 s por lado",avoid:["chair"],tags:["Equilibrio"],prec:"Siempre con apoyo estable. Detén si hay mareo."},
+   {n:"Caminata talón-punta",s:60,i:"👣",c:"Camina despacio colocando el talón cerca de la punta del otro pie, con pared o apoyo cercano.",a:"march",rep:"10 pasos",avoid:["chair","knee"],tags:["Equilibrio","Marcha"],prec:"No realizar sin apoyo si hay inestabilidad."},
+   {n:"Círculos de tobillo y cadera",s:60,i:"🔄",c:"Haz círculos pequeños y lentos de tobillos. Para cadera, mueve dentro de un rango cómodo.",a:"calf",rep:"10 por lado",avoid:[],tags:["Movilidad"],prec:"Evita movimientos amplios si hay dolor."},
+   {n:"Flamenco modificado",s:30,i:"🦩",c:"Con ambas manos disponibles para apoyo, eleva apenas un pie del suelo.",a:"balance",rep:"15–20 s por lado",avoid:["chair"],tags:["Equilibrio"],prec:"No soltar la silla si no te sientes totalmente estable."}
+  ]
+ },
+ flex:{
+  title:"Flexibilidad y relajación",
+  duration:18,
+  level:"Bajo",
+  exercises:[
+   {n:"Cuello y hombros",s:45,i:"🌿",c:"Inclina la cabeza suavemente a cada lado y realiza círculos pequeños de hombros.",a:"arms",rep:"30 s por lado",avoid:[],tags:["Movilidad"],prec:"Sin rebotes ni movimientos bruscos."},
+   {n:"Gato-vaca",s:60,i:"🐈",c:"En cuatro apoyos, arquea y redondea la espalda con movimiento suave.",a:"balance",rep:"8–10 repeticiones",avoid:["chair","back","knee"],tags:["Columna"],prec:"Solo si entrar y salir del suelo es seguro y cómodo."},
+   {n:"Postura del niño",s:45,i:"🧘‍♀️",c:"Desde apoyo cómodo, lleva el tronco hacia atrás sin forzar rodillas ni bajar la cabeza bruscamente.",a:"balance",rep:"30–60 s",avoid:["chair","knee","back"],tags:["Relajación"],prec:"Evitar si hay dificultad para levantarse del suelo."},
+   {n:"Torsión suave sentada",s:45,i:"🪑",c:"Sentada, gira el tronco suavemente hacia cada lado sin forzar.",a:"chair",rep:"20 s por lado",avoid:["back"],tags:["Movilidad"],prec:"Movimiento pequeño y sin dolor."},
+   {n:"Respiración diafragmática",s:60,i:"🌬️",c:"Inhala por la nariz llevando el aire hacia el abdomen y exhala lentamente.",a:"balance",rep:"5–8 respiraciones",avoid:[],tags:["Respiración"],prec:"No fuerces inspiraciones profundas si producen mareo."}
+  ]
+ },
+ cardio:{
+  title:"Cardio ligero",
+  duration:18,
+  level:"Bajo–Medio",
+  exercises:[
+   {n:"Marcha en el sitio",s:120,i:"🚶‍♀️",c:"Marcha a ritmo suave. Puedes hacerla sentada si lo necesitas.",a:"march",rep:"3–5 min",avoid:[],tags:["Cardio"],prec:"Mantén ritmo conversacional."},
+   {n:"Paso lateral",s:90,i:"↔️",c:"Da pasos laterales cortos con apoyo cercano.",a:"side",rep:"3–5 min",avoid:["chair","knee"],tags:["Cardio","Equilibrio"],prec:"Sin cruzar los pies."},
+   {n:"Bicicleta estática",s:180,i:"🚲",c:"Pedalea a ritmo cómodo y constante si dispones de bicicleta estática.",a:"march",rep:"5–8 min",avoid:["chairNoBike"],tags:["Cardio"],prec:"Usa resistencia baja al inicio."},
+   {n:"Baile suave",s:120,i:"🎵",c:"Movimiento libre y suave al ritmo de música tranquila, con apoyo si lo necesitas.",a:"side",rep:"3–5 min",avoid:["chair","knee"],tags:["Cardio"],prec:"Evita giros rápidos."}
+  ]
+ }
+};
+
+let selectedLibraryKey=null;
+
+function libraryAdaptExercise(x){
+  let m=mobility.value;
+  if(x.avoid?.includes("chair") && m==="chair") return null;
+  if(x.avoid?.includes("knee") && pains.has("knee")) return null;
+  if(x.avoid?.includes("back") && pains.has("back")) return null;
+  if(x.avoid?.includes("shoulder") && pains.has("shoulder")) return null;
+
+  let y={...x};
+
+  // Seated substitutions
+  if(m==="chair"){
+    if(y.n==="Marcha en el sitio"){y.n="Marcha sentada";y.c="Alterna un pie y otro desde una silla firme.";y.a="chair";}
+    if(y.n==="Elevación de talones"){y.n="Talones y puntas sentada";y.c="Sentada, alterna elevación de talones y puntas.";y.a="chair";}
+  }
+  if(pains.has("knee") && y.n==="Sentadillas en silla"){
+    y.n="Extensión de rodilla sentada";y.c="Estira una pierna y luego la otra sin bloquear la rodilla.";y.a="chair";y.rep="8–10 por lado";
+  }
+  if(pains.has("shoulder") && y.n.includes("brazos")){
+    y.c="Sin banda y con rango corto, manteniendo los codos bajos.";
+  }
+  return y;
+}
+
+function openLibraryRoutine(key){
+  selectedLibraryKey=key;
+  const r=libraryRoutines[key];
+  const adapted=r.exercises.map(libraryAdaptExercise).filter(Boolean);
+  libTitle.textContent=r.title;
+  libIntro.textContent=`${r.duration} min · Nivel ${r.level} · ${adapted.length} ejercicios disponibles para tu perfil actual`;
+  libExercises.innerHTML=adapted.map(x=>`
+    <div class="exerciseDetail">
+      <div class="title">${x.i} ${x.n}</div>
+      <div>${x.c}</div>
+      <div class="meta">${x.rep}</div>
+      <div><span class="safetyTag">${x.prec}</span>${(x.tags||[]).map(t=>`<span class="safetyTag">${t}</span>`).join("")}</div>
+    </div>`).join("") || '<div class="notice danger">Con las limitaciones actuales no hay ejercicios apropiados de esta rutina. Usa la rutina diaria adaptada.</div>';
+  libStartBtn.classList.toggle("hidden",adapted.length===0);
+}
+
+function startLibraryRoutine(){
+  if(!selectedLibraryKey)return;
+  if(symptoms.value==="yes"){alert("No iniciaré una rutina automática porque indicaste síntomas nuevos o importantes.");show("home");return}
+  if(!bpOk()){show("home");return}
+  const r=libraryRoutines[selectedLibraryKey];
+  routine=r.exercises.map(libraryAdaptExercise).filter(Boolean).map(x=>({
+    n:x.n,s:x.s,i:x.i,c:x.c,a:x.a
+  }));
+  idx=0;remain=routine[0]?.s||0;elapsed=0;
+  clearInterval(timerId);timerId=null;
+  routineTitle.textContent=r.title;
+  routineSub.textContent=`Biblioteca · Nivel ${r.level} · Adaptada a tu perfil`;
+  renderList();renderPlayer();show("routine");
+}
 
 let routine=[],idx=0,remain=0,timerId=null,elapsed=0;
 function adaptedList(){
