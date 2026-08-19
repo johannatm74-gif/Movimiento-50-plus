@@ -44,3 +44,13 @@ NOVEDADES V6
 - Sustituciones sentadas y exclusión de ejercicios de suelo cuando corresponde.
 - Acceso directo a la biblioteca desde Inicio.
 - Conserva seguridad previa por síntomas y presión arterial.
+
+NOVEDADES V7
+- Pantalla de ejercicio guiado más grande.
+- Ilustraciones animadas simples según tipo de movimiento.
+- Guía paso a paso para cada ejercicio.
+- Indicaciones de respiración y precauciones.
+- Contador Ejercicio X de Y y barra de progreso de rutina.
+- Aviso por voz al comenzar cada ejercicio y cuando quedan 10 segundos.
+- Descansos automáticos de 20 segundos con opción de saltar.
+- Conserva Biblioteca, adaptación por movilidad/molestias y seguridad por síntomas/presión arterial.

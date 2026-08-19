@@ -1,7 +1,7 @@
 {
   "name": "Movimiento 50+ Pro",
   "short_name": "Movimiento 50+",
-  "description": "Rutinas adaptativas de movilidad, fuerza, equilibrio, flexibilidad y cardio para mujeres 50+.",
+  "description": "Rutinas guiadas y adaptativas de movilidad, fuerza, equilibrio, flexibilidad y cardio para mujeres 50+.",
   "start_url": "./index.html",
   "scope": "./",
   "display": "standalone",

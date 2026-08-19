@@ -86,6 +86,51 @@ animation:splashAutoHide .55s ease 1.8s forwards}
 .safetyTag{display:inline-block;padding:5px 8px;border-radius:999px;background:#f4eef8;color:#604c74;font-size:.75rem;font-weight:800;margin:4px 4px 0 0}
 @media(max-width:560px){.libraryGrid{grid-template-columns:1fr}}
 
+
+/* ===== V7 Guided workout experience ===== */
+.guideCard{background:linear-gradient(180deg,#fff,#fbf7fd);border:1px solid var(--line);border-radius:22px;padding:16px;margin-top:12px}
+.exerciseVisual{height:230px;border-radius:24px;background:linear-gradient(180deg,#f6ecfb,#efe1f8);position:relative;overflow:hidden;display:flex;align-items:center;justify-content:center;margin:12px 0}
+.exerciseVisual .floorLine{position:absolute;left:10%;right:10%;bottom:32px;height:4px;border-radius:4px;background:#c7b0d7}
+.exerciseVisual .chairViz{position:absolute;bottom:34px;left:18%;width:84px;height:92px;border:5px solid #896aa3;border-top-width:7px;border-radius:10px 10px 4px 4px}
+.exerciseVisual .chairViz:before{content:"";position:absolute;left:-6px;right:-6px;top:44px;height:6px;background:#896aa3}
+.exerciseVisual .chairViz:after{content:"";position:absolute;left:8px;bottom:-34px;width:6px;height:34px;background:#896aa3;box-shadow:54px 0 0 #896aa3}
+.stick{position:absolute;width:120px;height:170px;left:50%;top:22px;transform:translateX(-50%)}
+.stick .head{position:absolute;width:38px;height:38px;border-radius:50%;background:#7b5d99;left:41px;top:5px}
+.stick .body{position:absolute;width:8px;height:70px;background:#7b5d99;left:57px;top:42px;border-radius:5px;transform-origin:top}
+.stick .arm,.stick .leg{position:absolute;width:8px;background:#7b5d99;border-radius:6px;transform-origin:top}
+.stick .arm{height:64px;top:48px;left:58px}
+.stick .leg{height:76px;top:104px;left:58px}
+.stick .arm.l{transform:rotate(40deg)} .stick .arm.r{transform:rotate(-40deg)}
+.stick .leg.l{transform:rotate(24deg)} .stick .leg.r{transform:rotate(-24deg)}
+.exerciseVisual.march .leg.l{animation:v7marchL 1s infinite ease-in-out}.exerciseVisual.march .leg.r{animation:v7marchR 1s infinite ease-in-out}
+.exerciseVisual.arms .arm.l{animation:v7armL 1.4s infinite ease-in-out}.exerciseVisual.arms .arm.r{animation:v7armR 1.4s infinite ease-in-out}
+.exerciseVisual.calf .stick{animation:v7calf 1.2s infinite ease-in-out}
+.exerciseVisual.side .stick{animation:v7side 1.5s infinite ease-in-out}
+.exerciseVisual.balance .stick{animation:v7balance 2s infinite ease-in-out}
+.exerciseVisual.chair .stick{left:58%;top:52px;transform:translateX(-50%) scale(.92)}
+.exerciseVisual.chair .body{transform:rotate(18deg)}
+.exerciseVisual.chair .leg.l{height:62px;transform:rotate(72deg)} .exerciseVisual.chair .leg.r{height:62px;transform:rotate(58deg)}
+@keyframes v7marchL{0%,100%{transform:rotate(24deg)}50%{transform:rotate(72deg)}} 
+@keyframes v7marchR{0%,100%{transform:rotate(-24deg)}50%{transform:rotate(-72deg)}}
+@keyframes v7armL{0%,100%{transform:rotate(40deg)}50%{transform:rotate(112deg)}} 
+@keyframes v7armR{0%,100%{transform:rotate(-40deg)}50%{transform:rotate(-112deg)}}
+@keyframes v7calf{0%,100%{transform:translateX(-50%) translateY(0)}50%{transform:translateX(-50%) translateY(-12px)}}
+@keyframes v7side{0%,100%{transform:translateX(-65%)}50%{transform:translateX(-35%)}}
+@keyframes v7balance{0%,100%{transform:translateX(-50%) rotate(-2deg)}50%{transform:translateX(-50%) rotate(2deg)}}
+.stepList{display:grid;gap:8px;margin:12px 0}
+.stepItem{display:flex;gap:10px;align-items:flex-start;background:#faf7fc;border:1px solid var(--line);border-radius:14px;padding:10px 12px}
+.stepNum{min-width:28px;height:28px;border-radius:50%;background:#8266a1;color:white;display:flex;align-items:center;justify-content:center;font-weight:900;font-size:.82rem}
+.breathBox{background:#f3eef8;border-radius:14px;padding:11px 12px;margin-top:10px}
+.progressHeader{display:flex;justify-content:space-between;align-items:center;gap:10px;margin-bottom:8px}
+.progressTrack{height:10px;border-radius:999px;background:#eee5f3;overflow:hidden}
+.progressFill{height:100%;background:#8064a4;width:0%;transition:width .35s ease}
+.restOverlay{position:absolute;inset:0;background:rgba(250,247,252,.94);z-index:20;display:none;align-items:center;justify-content:center;text-align:center;padding:20px}
+.restOverlay.show{display:flex}.restOverlay .restBig{font-size:3rem;font-weight:900;color:#6b4e83}
+.guideControls{display:grid;grid-template-columns:1fr 1.2fr 1fr;gap:8px;margin-top:12px}
+.guideControls button{min-height:52px}
+.voiceNote{font-size:.82rem;color:var(--muted);margin-top:8px}
+@media(max-width:560px){.exerciseVisual{height:205px}.guideControls{grid-template-columns:1fr 1fr 1fr}.guideControls .btn{padding:10px 6px;font-size:.9rem}}
+
 </style>
 </head>
 <body>
@@ -183,18 +228,57 @@ animation:splashAutoHide .55s ease 1.8s forwards}
   <div id="exerciseList"></div>
  </div>
 
- <div class="card player">
-  <div class="stage" id="stage">
-   <div class="chairShape"></div><div class="floor"></div>
-   <div class="person"><div class="head"></div><div class="torso"></div><div class="arm l"></div><div class="arm r"></div><div class="leg l"></div><div class="leg r"></div></div>
+ 
+<div class="card player">
+  <div class="progressHeader">
+    <div><div class="small">Progreso de la rutina</div><strong id="exerciseCounter">Ejercicio 0 de 0</strong></div>
+    <div class="small" id="routineElapsed">0 min</div>
   </div>
-  <div class="small">Ahora</div><div class="playerTitle" id="currentName">Lista para comenzar</div><div class="small" id="currentCue">Presiona Iniciar cuando estés cómoda.</div>
-  <div class="timer" id="timer">00:00</div><div class="bar"><span id="barFill"></span></div>
-  <div class="controls"><button class="btn secondary" onclick="prevEx()">◀</button><button class="btn" id="play" onclick="toggleTimer()">▶ Iniciar</button><button class="btn secondary" onclick="nextEx()">▶</button></div>
-  <div class="controls" style="margin-top:8px"><button class="btn ghost" onclick="rest30()">+ 30 s descanso</button><button class="btn ghost" onclick="finishRoutine()">✓ Terminar</button></div>
- </div>
+  <div class="progressTrack"><div class="progressFill" id="routineProgressFill"></div></div>
 
- <div class="card"><h3>Escala de esfuerzo</h3><div class="small">Busca un esfuerzo aproximado de <strong>2–4 sobre 10</strong>: notas que estás trabajando, pero todavía puedes hablar. Si hoy el esfuerzo se siente claramente mayor, reduce el ritmo o pasa a la versión sentada.</div></div>
+  <div class="exerciseVisual" id="exerciseVisual">
+    <div class="floorLine"></div>
+    <div class="chairViz hidden" id="chairViz"></div>
+    <div class="stick">
+      <div class="head"></div><div class="body"></div>
+      <div class="arm l"></div><div class="arm r"></div>
+      <div class="leg l"></div><div class="leg r"></div>
+    </div>
+    <div class="restOverlay" id="restOverlay">
+      <div>
+        <div class="small">Descanso</div>
+        <div class="restBig" id="restCountdown">20</div>
+        <div>Respira con calma y prepárate para el siguiente ejercicio.</div>
+        <button class="btn ghost" style="margin-top:12px" onclick="skipRest()">Saltar descanso</button>
+      </div>
+    </div>
+  </div>
+
+  <div class="small">Ahora</div>
+  <div class="playerTitle" id="playerTitle">Elige una rutina</div>
+  <div class="timer" id="timer">00:00</div>
+  <div class="bar"><div id="barFill"></div></div>
+
+  <div class="guideCard">
+    <h3 style="margin-top:0">Cómo hacerlo</h3>
+    <div class="stepList" id="stepList"></div>
+    <div class="breathBox"><strong>Respiración:</strong> <span id="breathTip">Respira con naturalidad.</span></div>
+    <div class="notice" id="safetyTip" style="margin-top:10px">Muévete dentro de un rango cómodo.</div>
+  </div>
+
+  <div class="guideControls">
+    <button class="btn secondary" onclick="prevEx()">Anterior</button>
+    <button class="btn" id="mainTimerBtn" onclick="toggleTimer()">Iniciar / Pausar</button>
+    <button class="btn secondary" onclick="nextEx()">Siguiente</button>
+  </div>
+  <div class="controls" style="margin-top:8px">
+    <button class="btn ghost" onclick="rest30()">Descanso 30 s</button>
+    <button class="btn ghost" onclick="finishRoutine()">Terminar rutina</button>
+  </div>
+  <div class="voiceNote">🔊 Si Voz está activada en Ajustes, la app anunciará el ejercicio, avisará cuando queden 10 segundos y guiará los descansos.</div>
+</div>
+
+<div class="card"><h3>Escala de esfuerzo</h3><div class="small">Busca un esfuerzo aproximado de <strong>2–4 sobre 10</strong>: notas que estás trabajando, pero todavía puedes hablar. Si hoy el esfuerzo se siente claramente mayor, reduce el ritmo o pasa a la versión sentada.</div></div>
 </section>
 
 <section id="progress" class="view">
@@ -409,11 +493,199 @@ function startLibraryRoutine(){
   routine=r.exercises.map(libraryAdaptExercise).filter(Boolean).map(x=>({
     n:x.n,s:x.s,i:x.i,c:x.c,a:x.a
   }));
-  idx=0;remain=routine[0]?.s||0;elapsed=0;
+  idx=0;remain=routine[0]?.s||0;elapsed=0;routineStartedAt=null;
   clearInterval(timerId);timerId=null;
   routineTitle.textContent=r.title;
   routineSub.textContent=`Biblioteca · Nivel ${r.level} · Adaptada a tu perfil`;
   renderList();renderPlayer();show("routine");
+}
+
+
+const V7_GUIDE={
+ "Respiración y postura":{
+  steps:["Apoya bien la espalda y los pies.","Relaja los hombros.","Inhala por la nariz y exhala lentamente."],
+  breath:"Inhala suave por la nariz y exhala más lento de lo que inhalas.",
+  safety:"No hagas respiraciones forzadas si sientes mareo."
+ },
+ "Marcha sentada":{
+  steps:["Siéntate al fondo de una silla firme.","Eleva un pie pocos centímetros.","Baja y alterna con el otro pie a ritmo cómodo."],
+  breath:"Respira de forma continua; evita contener el aire.",
+  safety:"Mantén ambos glúteos apoyados y no aceleres si te falta el aire."
+ },
+ "Marcha en el sitio":{
+  steps:["Ponte de pie con apoyo cercano.","Eleva una rodilla suavemente.","Alterna las piernas manteniendo un ritmo conversacional."],
+  breath:"Exhala suavemente durante el esfuerzo.",
+  safety:"Ten una silla o pared cerca si tu equilibrio es limitado."
+ },
+ "Talones y puntas sentada":{
+  steps:["Siéntate con ambos pies apoyados.","Eleva primero los talones.","Baja y luego eleva las puntas."],
+  breath:"Respira con normalidad.",
+  safety:"No fuerces el tobillo si hay dolor."
+ },
+ "Elevación de talones":{
+  steps:["Colócate con apoyo estable.","Sube lentamente sobre las puntas.","Baja de forma controlada."],
+  breath:"Exhala al subir e inhala al bajar.",
+  safety:"Mantén una mano cerca de un apoyo estable."
+ },
+ "Extensión de rodilla sentada":{
+  steps:["Siéntate con la espalda apoyada.","Estira una pierna sin bloquear la rodilla.","Baja lentamente y cambia de lado."],
+  breath:"Exhala al estirar e inhala al regresar.",
+  safety:"Detén si aparece dolor agudo en la rodilla."
+ },
+ "Sentadillas en silla":{
+  steps:["Coloca los pies separados al ancho de caderas.","Inclina ligeramente el tronco y ponte de pie con ayuda de los brazos si hace falta.","Vuelve a sentarte de forma lenta y controlada."],
+  breath:"Exhala al levantarte e inhala al sentarte.",
+  safety:"No aguantes la respiración. Usa una silla firme y estable."
+ },
+ "Elevación de brazos con banda":{
+  steps:["Mantén los hombros relajados.","Eleva los brazos solo hasta un rango cómodo.","Baja lentamente sin dejar caer los brazos."],
+  breath:"Exhala al elevar e inhala al bajar.",
+  safety:"Usa banda muy ligera o sin resistencia si hay molestia."
+ },
+ "Remo sentada con banda":{
+  steps:["Siéntate erguida con hombros relajados.","Lleva los codos suavemente hacia atrás.","Regresa despacio a la posición inicial."],
+  breath:"Exhala al llevar los codos atrás.",
+  safety:"No eleves los hombros hacia las orejas."
+ },
+ "Puente de glúteos":{
+  steps:["Acuéstate boca arriba con rodillas flexionadas.","Aprieta suavemente glúteos y eleva la cadera.","Baja despacio hasta apoyar nuevamente."],
+  breath:"Exhala al subir e inhala al bajar.",
+  safety:"Solo si entrar y salir del suelo es seguro y cómodo."
+ },
+ "Apoyo en un pie":{
+  steps:["Colócate junto a una silla firme.","Descarga parcialmente el peso de un pie.","Mantén la posición y cambia de lado."],
+  breath:"Respira de forma lenta y continua.",
+  safety:"No sueltes el apoyo si no te sientes completamente estable."
+ },
+ "Caminata talón-punta":{
+  steps:["Colócate cerca de una pared o baranda.","Da un paso colocando el talón cerca de la punta del otro pie.","Continúa despacio mirando al frente."],
+  breath:"Respira con normalidad.",
+  safety:"No la hagas sin apoyo si tienes inestabilidad."
+ },
+ "Círculos de tobillo y cadera":{
+  steps:["Haz círculos pequeños con un tobillo.","Cambia de lado.","Mueve la cadera suavemente dentro de un rango cómodo."],
+  breath:"Respira relajadamente.",
+  safety:"Evita círculos amplios si producen dolor."
+ },
+ "Flamenco modificado":{
+  steps:["Coloca ambas manos cerca de un apoyo.","Eleva apenas un pie del suelo.","Mantén unos segundos y cambia de lado."],
+  breath:"Respira de manera lenta.",
+  safety:"No retires las manos del apoyo si no estás totalmente estable."
+ },
+ "Cuello y hombros":{
+  steps:["Inclina la cabeza suavemente hacia un lado.","Vuelve al centro y cambia de lado.","Realiza círculos pequeños con los hombros."],
+  breath:"Exhala al relajar hombros y cuello.",
+  safety:"Sin rebotes ni movimientos bruscos."
+ },
+ "Gato-vaca":{
+  steps:["Colócate en cuatro apoyos.","Redondea suavemente la espalda.","Luego vuelve a una posición neutra y abre el pecho sin forzar."],
+  breath:"Exhala al redondear e inhala al abrir.",
+  safety:"Solo si entrar y salir del suelo es seguro."
+ },
+ "Postura del niño":{
+  steps:["Desde cuatro apoyos, lleva la cadera hacia atrás.","Extiende los brazos al frente si es cómodo.","Mantén sin forzar rodillas ni espalda."],
+  breath:"Respira lento y profundo sin forzar.",
+  safety:"Evitar si cuesta levantarse del suelo o hay dolor de rodillas."
+ },
+ "Torsión suave sentada":{
+  steps:["Siéntate erguida.","Gira el tronco suavemente hacia un lado.","Vuelve al centro y repite hacia el otro lado."],
+  breath:"Exhala durante el giro e inhala al volver.",
+  safety:"Mantén el movimiento pequeño y sin dolor."
+ },
+ "Respiración diafragmática":{
+  steps:["Apoya una mano sobre el abdomen.","Inhala por la nariz dejando que el abdomen se expanda.","Exhala lentamente por la boca."],
+  breath:"Haz la exhalación un poco más larga que la inhalación.",
+  safety:"Detén si aparece mareo."
+ },
+ "Paso lateral":{
+  steps:["Colócate con apoyo cercano.","Da un paso corto hacia un lado.","Junta el otro pie sin cruzarlo y repite."],
+  breath:"Respira de forma continua.",
+  safety:"No cruces los pies y mantén pasos cortos."
+ },
+ "Bicicleta estática":{
+  steps:["Ajusta el asiento para pedalear cómodamente.","Comienza con resistencia baja.","Mantén un ritmo constante y conversacional."],
+  breath:"Respira con normalidad; evita contener el aire.",
+  safety:"Detén si aparece dolor en el pecho, mareo o falta de aire fuera de lo habitual."
+ },
+ "Baile suave":{
+  steps:["Empieza con movimientos pequeños.","Desplaza el peso de un lado a otro.","Añade brazos solo si es cómodo."],
+  breath:"Respira de forma natural.",
+  safety:"Evita giros rápidos y mantén apoyo cercano si lo necesitas."
+ }
+};
+
+let restTimerId=null, restRemaining=0, routineStartedAt=null;
+
+function guideForExercise(name, fallback){
+  const exact=V7_GUIDE[name];
+  if(exact) return exact;
+  const low=name.toLowerCase();
+  if(low.includes("marcha")) return V7_GUIDE["Marcha en el sitio"];
+  if(low.includes("talon")||low.includes("talón")) return V7_GUIDE["Elevación de talones"];
+  if(low.includes("remo")) return V7_GUIDE["Remo sentada con banda"];
+  if(low.includes("brazo")) return V7_GUIDE["Elevación de brazos con banda"];
+  if(low.includes("equilibr")) return V7_GUIDE["Apoyo en un pie"];
+  return {
+    steps:[
+      "Adopta una posición estable y cómoda.",
+      fallback || "Realiza el movimiento lentamente.",
+      "Regresa a la posición inicial de forma controlada."
+    ],
+    breath:"Respira de manera continua y evita contener el aire.",
+    safety:"Detén el ejercicio si aparece dolor agudo, mareo o falta de aire fuera de lo habitual."
+  };
+}
+
+function updateGuidedPanel(){
+  if(!routine.length){return}
+  const x=routine[idx];
+  exerciseCounter.textContent=`Ejercicio ${idx+1} de ${routine.length}`;
+  routineProgressFill.style.width=`${((idx+1)/routine.length)*100}%`;
+  if(routineStartedAt){
+    const mins=Math.floor((Date.now()-routineStartedAt)/60000);
+    routineElapsed.textContent=`${mins} min`;
+  } else routineElapsed.textContent="0 min";
+
+  const g=guideForExercise(x.n,x.c);
+  stepList.innerHTML=g.steps.map((s,i)=>`<div class="stepItem"><div class="stepNum">${i+1}</div><div>${s}</div></div>`).join("");
+  breathTip.textContent=g.breath;
+  safetyTip.textContent=g.safety;
+
+  exerciseVisual.className="exerciseVisual "+(x.a||"");
+  chairViz.classList.toggle("hidden",x.a!=="chair");
+}
+
+function startAutoRest(seconds=20){
+  if(restTimerId)clearInterval(restTimerId);
+  clearInterval(timerId);timerId=null;
+  restRemaining=seconds;
+  restCountdown.textContent=restRemaining;
+  restOverlay.classList.add("show");
+  if(settings.voice)speak(`Descansa ${seconds} segundos. Respira con calma.`);
+  restTimerId=setInterval(()=>{
+    restRemaining--;
+    restCountdown.textContent=restRemaining;
+    if(restRemaining===10 && settings.voice)speak("Quedan 10 segundos de descanso.");
+    if(restRemaining<=0){
+      clearInterval(restTimerId);restTimerId=null;
+      restOverlay.classList.remove("show");
+      if(settings.voice)speak("Prepárate. Comenzamos el siguiente ejercicio.");
+      renderPlayer();
+    }
+  },1000);
+}
+
+function skipRest(){
+  if(restTimerId)clearInterval(restTimerId);
+  restTimerId=null;restOverlay.classList.remove("show");
+  renderPlayer();
+}
+
+function announceCurrentExercise(){
+  if(!routine.length||!settings.voice)return;
+  const x=routine[idx];
+  const g=guideForExercise(x.n,x.c);
+  speak(`${x.n}. ${g.steps[0]}. ${g.breath}`);
 }
 
 let routine=[],idx=0,remain=0,timerId=null,elapsed=0;
@@ -428,7 +700,7 @@ function adaptedList(){
 function buildRoutine(){
  if(symptoms.value==="yes"){alert("No iniciaré una rutina automática porque indicaste síntomas nuevos o importantes. Busca orientación médica según el tipo e intensidad del síntoma.");show("home");return}
  if(!bpOk()){show("home");return}
- routine=adaptedList();idx=0;remain=routine[0]?.s||0;elapsed=0;clearInterval(timerId);timerId=null;
+ routine=adaptedList();idx=0;remain=routine[0]?.s||0;elapsed=0;routineStartedAt=null;clearInterval(timerId);timerId=null;
  routineTitle.textContent=mobility.value==="chair"?"Rutina sentada":mobility.value==="support"?"Rutina con apoyo":"Rutina de movilidad y caminata";
  routineSub.textContent=(energy.value==="low"?"Día de energía baja · ":"")+(pains.size?"Adaptada a molestias seleccionadas · ":"")+"Bajo impacto";
  renderList();renderPlayer();show("routine")
@@ -436,12 +708,12 @@ function buildRoutine(){
 function renderList(){exerciseList.innerHTML=routine.map((x,i)=>`<div class="exercise"><div class="exIcon">${x.i}</div><div><div class="exName">${i+1}. ${x.n}</div><div class="exMeta">${x.c}</div></div><div class="badge">${Math.ceil(x.s/60)} min</div></div>`).join("")}
 function fmt(s){return String(Math.floor(s/60)).padStart(2,"0")+":"+String(s%60).padStart(2,"0")}
 function animClass(a){return {"march":"anim-march","arms":"anim-arms","calf":"anim-calf","balance":"anim-balance","chair":"anim-chair","side":"anim-side"}[a]||"anim-balance"}
-function renderPlayer(){if(!routine.length){timer.textContent="00:00";return}let x=routine[idx];currentName.textContent=x.n;currentCue.textContent=x.c;timer.textContent=fmt(remain);barFill.style.width=((idx/routine.length)*100)+"%";play.textContent=timerId?"⏸ Pausar":"▶ Iniciar";stage.className="stage "+animClass(x.a)}
+function renderPlayer(){if(!routine.length){timer.textContent="00:00";exerciseCounter.textContent="Ejercicio 0 de 0";routineProgressFill.style.width="0%";return}let x=routine[idx];currentName.textContent=x.n;currentCue.textContent=x.c;timer.textContent=fmt(remain);barFill.style.width=((idx/routine.length)*100)+"%";play.textContent=timerId?"⏸ Pausar":"▶ Iniciar";stage.className="stage "+animClass(x.a)}
 function speak(t){if(settings.voice&&"speechSynthesis"in window){speechSynthesis.cancel();let u=new SpeechSynthesisUtterance(t);u.lang="es-GT";u.rate=.9;speechSynthesis.speak(u)}}
 function cue(){if(settings.vibrate&&navigator.vibrate)navigator.vibrate(120);if(settings.sound){try{let a=new AudioContext(),o=a.createOscillator(),g=a.createGain();o.connect(g);g.connect(a.destination);o.frequency.value=640;g.gain.value=.04;o.start();o.stop(a.currentTime+.12)}catch(e){}}}
 function toggleTimer(){if(!routine.length){buildRoutine();return}if(timerId){clearInterval(timerId);timerId=null;renderPlayer();return}speak(routine[idx].n+". "+routine[idx].c);timerId=setInterval(()=>{remain--;elapsed++;if(remain===10)speak("Diez segundos.");if(remain<=0){clearInterval(timerId);timerId=null;cue();if(idx<routine.length-1){idx++;remain=routine[idx].s;speak("Muy bien. Siguiente: "+routine[idx].n);setTimeout(toggleTimer,850)}else finishRoutine(true)}renderPlayer()},1000);renderPlayer()}
-function nextEx(){if(!routine.length)return;clearInterval(timerId);timerId=null;if(idx<routine.length-1)idx++;remain=routine[idx].s;renderPlayer();speak(routine[idx].n)}
-function prevEx(){if(!routine.length)return;clearInterval(timerId);timerId=null;if(idx>0)idx--;remain=routine[idx].s;renderPlayer()}
+function nextEx(){if(!routine.length)return;if(restTimerId)skipRest();clearInterval(timerId);timerId=null;if(idx<routine.length-1)idx++;remain=routine[idx].s;renderPlayer();speak(routine[idx].n)}
+function prevEx(){if(!routine.length)return;if(restTimerId)skipRest();clearInterval(timerId);timerId=null;if(idx>0)idx--;remain=routine[idx].s;renderPlayer()}
 function rest30(){if(!routine.length)return;clearInterval(timerId);timerId=null;remain+=30;renderPlayer();speak("Tómate treinta segundos más. Respira con calma.")}
 function finishRoutine(){clearInterval(timerId);timerId=null;if(!routine.length)return;let mins=Math.max(1,Math.round((elapsed||routine.reduce((a,x)=>a+x.s,0))/60));let p=JSON.parse(localStorage.getItem("m50progress")||'{"sessions":0,"minutes":0,"dates":[]}');p.sessions++;p.minutes+=mins;let d=new Date().toISOString().slice(0,10);if(!p.dates.includes(d))p.dates.push(d);localStorage.setItem("m50progress",JSON.stringify(p));routine=[];refresh();speak("Rutina completada. Muy bien. Recupera con calma.");alert("Rutina completada. Sumaste "+mins+" minutos de movimiento.");show("progress")}
 function streak(ds){if(!ds.length)return 0;let set=new Set(ds),d=new Date(),n=0;while(set.has(d.toISOString().slice(0,10))){n++;d.setDate(d.getDate()-1)}return n}
