@@ -1,4 +1,4 @@
-MOVIMIENTO 50+ PRO — VERSIÓN 8
+MOVIMIENTO 50+ PRO — VERSIÓN 11
 
 MEJORAS
 - Perfil: edad, peso, estatura y nivel de movilidad.
@@ -86,3 +86,11 @@ VERSIÓN 10
 - Respiración/recuperación con movimiento lento.
 - Flecha y texto corto indican la dirección del movimiento.
 - Conserva voz, temporizador, descansos, biblioteca, progreso y adaptación.
+
+
+VERSIÓN 11 · AVATARES 3D
+- Figura humana 3D estilizada con volumen, luces y sombras.
+- Movimiento continuo de torso, brazos y piernas según ejercicio.
+- Silla 3D para ejercicios sentados y sentadillas.
+- Marcha, sentadilla, extensión de rodilla, talones, brazos, remo, equilibrio y paso lateral con animación.
+- Conserva temporizador, voz, descansos, biblioteca, progreso y adaptación automática.
