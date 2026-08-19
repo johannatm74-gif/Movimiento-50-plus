@@ -75,3 +75,14 @@ VERSIÓN 9
 - Silla o apoyo representados cuando corresponde.
 - Texto breve bajo la ilustración explicando el gesto principal.
 - Conserva voz, temporizador, descansos y adaptación de la versión 8.
+
+
+VERSIÓN 10
+- Avatares con movimiento real y continuo durante la demostración.
+- Sentadilla en silla: sentarse, levantarse y regresar.
+- Marcha sentada y marcha de pie con alternancia de piernas.
+- Extensión de rodilla, elevación de talones, remo y brazos animados.
+- Paso lateral y equilibrio con trayectoria visible.
+- Respiración/recuperación con movimiento lento.
+- Flecha y texto corto indican la dirección del movimiento.
+- Conserva voz, temporizador, descansos, biblioteca, progreso y adaptación.

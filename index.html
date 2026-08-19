@@ -131,6 +131,158 @@ animation:splashAutoHide .55s ease 1.8s forwards}
 .voiceNote{font-size:.82rem;color:var(--muted);margin-top:8px}
 @media(max-width:560px){.exerciseVisual{height:205px}.guideControls{grid-template-columns:1fr 1fr 1fr}.guideControls .btn{padding:10px 6px;font-size:.9rem}}
 
+
+/* ===== V10: avatares realmente animados ===== */
+.motionCue{
+  position:absolute;top:10px;left:12px;z-index:4;
+  background:rgba(255,255,255,.9);border:1px solid #e2d4eb;
+  color:#684e80;border-radius:999px;padding:6px 10px;
+  font-size:.76rem;font-weight:850
+}
+.motionArrow{
+  position:absolute;right:18px;top:44%;z-index:4;
+  color:#cf6799;font-size:2.1rem;font-weight:900;
+  animation:v10Arrow 1.5s ease-in-out infinite
+}
+@keyframes v10Arrow{0%,100%{opacity:.35;transform:scale(.9)}50%{opacity:1;transform:scale(1.12)}}
+
+.exerciseVisual .stick,
+.exerciseVisual .stick .body,
+.exerciseVisual .stick .arm,
+.exerciseVisual .stick .leg{
+  will-change:transform;
+}
+.exerciseVisual .stick .body,
+.exerciseVisual .stick .arm,
+.exerciseVisual .stick .leg{
+  transform-origin:50% 0%;
+}
+
+/* Marcha sentada: alternate knees visibly */
+.exerciseVisual.v10-seated-march .chairViz{display:block}
+.exerciseVisual.v10-seated-march .stick{left:56%;top:48px;transform:translateX(-50%) scale(.9)}
+.exerciseVisual.v10-seated-march .leg.l{animation:v10SeatMarchL 1.45s ease-in-out infinite}
+.exerciseVisual.v10-seated-march .leg.r{animation:v10SeatMarchR 1.45s ease-in-out infinite}
+.exerciseVisual.v10-seated-march .arm.l{animation:v10SeatArmL 1.45s ease-in-out infinite}
+.exerciseVisual.v10-seated-march .arm.r{animation:v10SeatArmR 1.45s ease-in-out infinite}
+@keyframes v10SeatMarchL{0%,100%{transform:rotate(62deg)}50%{transform:rotate(15deg) translateY(-7px)}}
+@keyframes v10SeatMarchR{0%,100%{transform:rotate(-15deg) translateY(-7px)}50%{transform:rotate(-62deg)}}
+@keyframes v10SeatArmL{0%,100%{transform:rotate(32deg)}50%{transform:rotate(10deg)}}
+@keyframes v10SeatArmR{0%,100%{transform:rotate(-10deg)}50%{transform:rotate(-32deg)}}
+
+/* Sit-to-stand: the whole avatar rises and returns to the chair */
+.exerciseVisual.v10-sitstand .chairViz{display:block}
+.exerciseVisual.v10-sitstand .stick{
+  left:57%;top:55px;transform:translateX(-50%) translateY(28px) scale(.9);
+  animation:v10SitStandWhole 3.1s ease-in-out infinite
+}
+.exerciseVisual.v10-sitstand .body{animation:v10SitStandTorso 3.1s ease-in-out infinite}
+.exerciseVisual.v10-sitstand .leg.l{animation:v10SitStandLegL 3.1s ease-in-out infinite}
+.exerciseVisual.v10-sitstand .leg.r{animation:v10SitStandLegR 3.1s ease-in-out infinite}
+.exerciseVisual.v10-sitstand .arm.l{animation:v10SitStandArmL 3.1s ease-in-out infinite}
+.exerciseVisual.v10-sitstand .arm.r{animation:v10SitStandArmR 3.1s ease-in-out infinite}
+@keyframes v10SitStandWhole{
+  0%,16%,84%,100%{transform:translateX(-50%) translateY(30px) scale(.9)}
+  44%,60%{transform:translateX(-43%) translateY(-22px) scale(.95)}
+}
+@keyframes v10SitStandTorso{
+  0%,16%,84%,100%{transform:rotate(18deg)}
+  44%,60%{transform:rotate(0deg)}
+}
+@keyframes v10SitStandLegL{
+  0%,16%,84%,100%{transform:rotate(68deg)}
+  44%,60%{transform:rotate(13deg)}
+}
+@keyframes v10SitStandLegR{
+  0%,16%,84%,100%{transform:rotate(-48deg)}
+  44%,60%{transform:rotate(-13deg)}
+}
+@keyframes v10SitStandArmL{
+  0%,16%,84%,100%{transform:rotate(50deg)}
+  44%,60%{transform:rotate(20deg)}
+}
+@keyframes v10SitStandArmR{
+  0%,16%,84%,100%{transform:rotate(-50deg)}
+  44%,60%{transform:rotate(-20deg)}
+}
+
+/* Knee extension while seated */
+.exerciseVisual.v10-knee-extension .chairViz{display:block}
+.exerciseVisual.v10-knee-extension .stick{left:56%;top:48px;transform:translateX(-50%) scale(.9)}
+.exerciseVisual.v10-knee-extension .leg.l{animation:v10KneeExtension 2s ease-in-out infinite}
+@keyframes v10KneeExtension{0%,100%{transform:rotate(62deg)}50%{transform:rotate(88deg)}}
+
+/* Heel raises */
+.exerciseVisual.v10-heelraise .stick{animation:v10HeelWhole 1.8s ease-in-out infinite}
+@keyframes v10HeelWhole{
+  0%,100%{transform:translateX(-50%) translateY(0)}
+  50%{transform:translateX(-50%) translateY(-16px)}
+}
+
+/* Arm raise / shoulder mobility */
+.exerciseVisual.v10-armraise .arm.l{animation:v10ArmRaiseL 2s ease-in-out infinite}
+.exerciseVisual.v10-armraise .arm.r{animation:v10ArmRaiseR 2s ease-in-out infinite}
+@keyframes v10ArmRaiseL{0%,100%{transform:rotate(38deg)}50%{transform:rotate(118deg)}}
+@keyframes v10ArmRaiseR{0%,100%{transform:rotate(-38deg)}50%{transform:rotate(-118deg)}}
+
+/* Row: elbows travel back */
+.exerciseVisual.v10-row .chairViz{display:block}
+.exerciseVisual.v10-row .stick{left:56%;top:48px;transform:translateX(-50%) scale(.9)}
+.exerciseVisual.v10-row .arm.l{animation:v10RowL 1.9s ease-in-out infinite}
+.exerciseVisual.v10-row .arm.r{animation:v10RowR 1.9s ease-in-out infinite}
+@keyframes v10RowL{0%,100%{transform:rotate(58deg)}50%{transform:rotate(14deg)}}
+@keyframes v10RowR{0%,100%{transform:rotate(-58deg)}50%{transform:rotate(-14deg)}}
+
+/* Side stepping */
+.exerciseVisual.v10-side .stick{animation:v10SideWhole 2.7s ease-in-out infinite}
+.exerciseVisual.v10-side .leg.l{animation:v10SideLegL 2.7s ease-in-out infinite}
+.exerciseVisual.v10-side .leg.r{animation:v10SideLegR 2.7s ease-in-out infinite}
+@keyframes v10SideWhole{
+  0%,100%{transform:translateX(-72%)}
+  50%{transform:translateX(-28%)}
+}
+@keyframes v10SideLegL{0%,100%{transform:rotate(18deg)}50%{transform:rotate(48deg)}}
+@keyframes v10SideLegR{0%,100%{transform:rotate(-18deg)}50%{transform:rotate(-8deg)}}
+
+/* Standing march */
+.exerciseVisual.v10-march .leg.l{animation:v10MarchL 1.45s ease-in-out infinite}
+.exerciseVisual.v10-march .leg.r{animation:v10MarchR 1.45s ease-in-out infinite}
+.exerciseVisual.v10-march .arm.l{animation:v10MarchArmL 1.45s ease-in-out infinite}
+.exerciseVisual.v10-march .arm.r{animation:v10MarchArmR 1.45s ease-in-out infinite}
+@keyframes v10MarchL{0%,100%{transform:rotate(22deg)}50%{transform:rotate(68deg) translateY(-6px)}}
+@keyframes v10MarchR{0%,100%{transform:rotate(-68deg) translateY(-6px)}50%{transform:rotate(-22deg)}}
+@keyframes v10MarchArmL{0%,100%{transform:rotate(38deg)}50%{transform:rotate(12deg)}}
+@keyframes v10MarchArmR{0%,100%{transform:rotate(-12deg)}50%{transform:rotate(-38deg)}}
+
+/* Balance: one leg lifts and holds briefly */
+.exerciseVisual.v10-balance .leg.r{animation:v10BalanceLeg 2.8s ease-in-out infinite}
+.exerciseVisual.v10-balance .stick{animation:v10BalanceBody 2.8s ease-in-out infinite}
+@keyframes v10BalanceLeg{
+  0%,18%,82%,100%{transform:rotate(-20deg)}
+  42%,60%{transform:rotate(-72deg)}
+}
+@keyframes v10BalanceBody{
+  0%,100%{transform:translateX(-50%) rotate(-1deg)}
+  50%{transform:translateX(-50%) rotate(1deg)}
+}
+
+/* Slow breathing / recovery */
+.exerciseVisual.v10-breath .stick{animation:v10BreathWhole 3.8s ease-in-out infinite}
+.exerciseVisual.v10-breath .arm.l{animation:v10BreathArmL 3.8s ease-in-out infinite}
+.exerciseVisual.v10-breath .arm.r{animation:v10BreathArmR 3.8s ease-in-out infinite}
+@keyframes v10BreathWhole{0%,100%{transform:translateX(-50%) scale(.96)}50%{transform:translateX(-50%) scale(1.04)}}
+@keyframes v10BreathArmL{0%,100%{transform:rotate(30deg)}50%{transform:rotate(55deg)}}
+@keyframes v10BreathArmR{0%,100%{transform:rotate(-30deg)}50%{transform:rotate(-55deg)}}
+
+/* Keep animations comfortable */
+@media (prefers-reduced-motion: reduce){
+  .exerciseVisual .stick,
+  .exerciseVisual .arm,
+  .exerciseVisual .leg,
+  .exerciseVisual .body,
+  .motionArrow{animation:none!important}
+}
+
 </style>
 </head>
 <body>
@@ -239,6 +391,8 @@ animation:splashAutoHide .55s ease 1.8s forwards}
   <div class="exerciseVisual" id="exerciseVisual">
     <div class="floorLine"></div>
     <div class="chairViz hidden" id="chairViz"></div>
+    <div class="motionCue" id="motionCue">Observa el movimiento</div>
+    <div class="motionArrow" id="motionArrow">↕</div>
     <div class="stick">
       <div class="head"></div><div class="body"></div>
       <div class="arm l"></div><div class="arm r"></div>
@@ -648,6 +802,22 @@ function guideForExercise(name, fallback){
   };
 }
 
+
+function v10VisualClass(x){
+  const n=(x.n||"").toLowerCase();
+  if(n.includes("sentadillas") || n.includes("sentarse y levantarse")) return ["v10-sitstand","Levántate y vuelve a sentarte","↕"];
+  if(n.includes("marcha sentada")) return ["v10-seated-march","Alterna una rodilla y luego la otra","↕"];
+  if(n.includes("extensión de rodilla") || n.includes("extension de rodilla")) return ["v10-knee-extension","Estira una pierna y regresa","→"];
+  if(n.includes("talones") || n.includes("elevación de talones") || n.includes("elevacion de talones")) return ["v10-heelraise","Sube a puntas y baja con control","↕"];
+  if(n.includes("remo")) return ["v10-row","Lleva los codos hacia atrás y regresa","↔"];
+  if(n.includes("apertura de brazos") || n.includes("elevación de brazos") || n.includes("elevacion de brazos") || n.includes("hombros")) return ["v10-armraise","Eleva o abre los brazos lentamente","↗"];
+  if(n.includes("paso lateral")) return ["v10-side","Da un paso corto hacia un lado","↔"];
+  if(n.includes("equilibrio") || n.includes("apoyo en un pie") || n.includes("flamenco")) return ["v10-balance","Eleva un pie con apoyo cercano","↑"];
+  if(n.includes("respiración") || n.includes("respiracion") || n.includes("recuperación") || n.includes("recuperacion") || n.includes("enfriamiento")) return ["v10-breath","Respira lento y relaja hombros","↕"];
+  if(n.includes("marcha") || n.includes("caminata")) return ["v10-march","Alterna piernas a un ritmo cómodo","↕"];
+  return ["v10-breath","Movimiento lento y controlado","↕"];
+}
+
 function updateGuidedPanel(){
   if(!routine.length){return}
   const x=routine[idx];
@@ -663,8 +833,12 @@ function updateGuidedPanel(){
   breathTip.textContent=g.breath;
   safetyTip.textContent=g.safety;
 
-  exerciseVisual.className="exerciseVisual "+(x.a||"");
-  chairViz.classList.toggle("hidden",x.a!=="chair");
+  const vd=v10VisualClass(x);
+  exerciseVisual.className="exerciseVisual "+vd[0];
+  motionCue.textContent=vd[1];
+  motionArrow.textContent=vd[2];
+  const needsChair=["v10-seated-march","v10-sitstand","v10-knee-extension","v10-row"].includes(vd[0]);
+  chairViz.classList.toggle("hidden",!needsChair);
 }
 
 function startAutoRest(seconds=20){
