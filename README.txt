@@ -1,4 +1,4 @@
-MOVIMIENTO 50+ PRO — VERSIÓN 12
+MOVIMIENTO 50+ PRO — VERSIÓN 13
 
 MEJORAS
 - Perfil: edad, peso, estatura y nivel de movilidad.
@@ -102,3 +102,17 @@ VERSIÓN 12 · MANIQUÍ HUMANO 3D
 - Animaciones más naturales para marcha, sentadillas, extensión de rodilla, talones, brazos, remo, equilibrio y paso lateral.
 - Mantiene silla 3D cuando el ejercicio es sentado.
 - Conserva voz, temporizador, descansos, biblioteca, progreso y adaptación automática.
+
+
+VERSIÓN 13 · FIGURAS HUMANAS 3D
+- Sustituye el muñeco esquemático por figuras humanas 3D renderizadas.
+- Marcha sentada, sentadilla y respiración utilizan escenas humanas específicas.
+- Cuello/hombros y otras rutinas usan una figura humana coherente con la interfaz.
+- Las figuras incorporan movimiento visual suave y mantienen las indicaciones de dirección.
+- Conserva voz, temporizador, descansos, biblioteca, progreso y adaptación automática.
+
+
+AJUSTE V13-RAÍZ
+- Las imágenes humanas 3D ahora se cargan directamente desde la raíz del repositorio.
+- Ya no es necesaria la carpeta assets.
+- Nombres esperados: human_breath.jpg, human_march.jpg, human_seated.jpg, human_squat.jpg.

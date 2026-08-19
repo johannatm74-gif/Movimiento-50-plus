@@ -608,6 +608,65 @@ animation:splashAutoHide .55s ease 1.8s forwards}
   .human3d,.human3d *{animation:none!important}
 }
 
+
+/* ===== V13 · Figuras humanas 3D renderizadas ===== */
+.exerciseHumanWrap{
+  position:absolute;inset:18px 24px 22px 24px;
+  border-radius:28px;overflow:hidden;
+  background:linear-gradient(180deg,#f9f4fc,#efe4f6);
+  box-shadow:inset 0 0 0 1px rgba(119,84,147,.08);
+}
+.exerciseHumanImg{
+  width:100%;height:100%;object-fit:contain;
+  display:block;transform-origin:50% 80%;
+  filter:drop-shadow(0 14px 16px rgba(71,45,88,.16));
+}
+.exerciseVisual.v13 .human3d,
+.exerciseVisual.v13 .avatar3d,
+.exerciseVisual.v13 .stick,
+.exerciseVisual.v13 .chairV12,
+.exerciseVisual.v13 .chair3d,
+.exerciseVisual.v13 .chairViz{
+  display:none!important;
+}
+.exerciseVisual.v13 .floorLine{display:none!important}
+
+/* Movement cues over the rendered figure */
+.exerciseVisual.v13-march .exerciseHumanImg{animation:v13March 1.5s ease-in-out infinite}
+.exerciseVisual.v13-squat .exerciseHumanImg{animation:v13Squat 2.8s ease-in-out infinite}
+.exerciseVisual.v13-breath .exerciseHumanImg{animation:v13Breath 3.8s ease-in-out infinite}
+.exerciseVisual.v13-arms .exerciseHumanImg{animation:v13Arms 2.1s ease-in-out infinite}
+.exerciseVisual.v13-balance .exerciseHumanImg{animation:v13Balance 2.6s ease-in-out infinite}
+.exerciseVisual.v13-side .exerciseHumanImg{animation:v13Side 2.5s ease-in-out infinite}
+
+@keyframes v13March{
+  0%,100%{transform:translateY(2px) rotate(.3deg)}
+  50%{transform:translateY(-6px) rotate(-.3deg)}
+}
+@keyframes v13Squat{
+  0%,15%,85%,100%{transform:translateY(18px) scale(.96)}
+  45%,60%{transform:translateY(-10px) scale(1.02)}
+}
+@keyframes v13Breath{
+  0%,100%{transform:scale(.98)}
+  50%{transform:scale(1.035)}
+}
+@keyframes v13Arms{
+  0%,100%{transform:rotate(-1deg) translateY(1px)}
+  50%{transform:rotate(1deg) translateY(-5px)}
+}
+@keyframes v13Balance{
+  0%,100%{transform:rotate(-1deg)}
+  50%{transform:rotate(1deg)}
+}
+@keyframes v13Side{
+  0%,100%{transform:translateX(-10px)}
+  50%{transform:translateX(10px)}
+}
+@media(prefers-reduced-motion:reduce){
+  .exerciseHumanImg{animation:none!important}
+}
+
 </style>
 </head>
 <body>
@@ -749,6 +808,10 @@ animation:splashAutoHide .55s ease 1.8s forwards}
   <div class="shin l"><div class="foot"></div></div>
   <div class="shin r"><div class="foot"></div></div>
   <div class="shadow"></div>
+</div>
+
+<div class="exerciseHumanWrap" id="exerciseHumanWrap">
+  <img class="exerciseHumanImg" id="exerciseHumanImg" src="human_march.jpg" alt="Demostración humana 3D del ejercicio">
 </div>
 <div class="restOverlay" id="restOverlay">
       <div>
@@ -1202,6 +1265,19 @@ function v12VisualClass(x){
   return ["v12 v12-breath",false,"Movimiento lento, estable y sin dolor","↕"];
 }
 
+
+function v13HumanAsset(x){
+  const n=(x.n||"").toLowerCase();
+  if(n.includes("sentadilla")||n.includes("sentarse y levantarse")) return ["human_squat.jpg","v13 v13-squat","Figura 3D · ponte de pie y vuelve a sentarte","↕"];
+  if(n.includes("marcha sentada")) return ["human_march.jpg","v13 v13-march","Figura 3D · alterna una rodilla y luego la otra","↕"];
+  if(n.includes("respiración")||n.includes("respiracion")||n.includes("recuperación")||n.includes("recuperacion")||n.includes("enfriamiento")) return ["human_breath.jpg","v13 v13-breath","Figura 3D · respira lento y profundo","↕"];
+  if(n.includes("brazo")||n.includes("hombro")||n.includes("cuello")) return ["human_seated.jpg","v13 v13-arms","Figura 3D · movimiento suave de brazos y hombros","↗"];
+  if(n.includes("equilibrio")||n.includes("apoyo en un pie")||n.includes("flamenco")) return ["human_squat.jpg","v13 v13-balance","Figura 3D · mantén apoyo cercano y controla la postura","↑"];
+  if(n.includes("paso lateral")) return ["human_squat.jpg","v13 v13-side","Figura 3D · desplázate con pasos cortos","↔"];
+  if(n.includes("bicicleta")) return ["human_march.jpg","v13 v13-march","Figura 3D · pedaleo continuo y cómodo","↻"];
+  return ["human_march.jpg","v13 v13-march","Figura 3D · sigue el movimiento con control","↕"];
+}
+
 function updateGuidedPanel(){
   if(!routine.length){return}
   const x=routine[idx];
@@ -1217,11 +1293,13 @@ function updateGuidedPanel(){
   breathTip.textContent=g.breath;
   safetyTip.textContent=g.safety;
 
-  const vd=v12VisualClass(x);
-  exerciseVisual.className="exerciseVisual "+vd[0];
-  motionCue.textContent="3D humano · "+vd[2];
+  const vd=v13HumanAsset(x);
+  exerciseVisual.className="exerciseVisual "+vd[1];
+  exerciseHumanImg.src=vd[0];
+  exerciseHumanImg.alt="Demostración humana 3D de "+x.n;
+  motionCue.textContent=vd[2];
   motionArrow.textContent=vd[3];
-  chairV12.classList.toggle("hidden",!vd[1]);
+  if(typeof chairV12!=="undefined") chairV12.classList.add("hidden");
   if(typeof chair3d!=="undefined") chair3d.classList.add("hidden");
   if(typeof chairViz!=="undefined") chairViz.classList.add("hidden");
 }
