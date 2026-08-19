@@ -1,4 +1,4 @@
-MOVIMIENTO 50+ PRO — VERSIÓN 3
+MOVIMIENTO 50+ PRO — VERSIÓN 8
 
 MEJORAS
 - Perfil: edad, peso, estatura y nivel de movilidad.
@@ -54,3 +54,15 @@ NOVEDADES V7
 - Aviso por voz al comenzar cada ejercicio y cuando quedan 10 segundos.
 - Descansos automáticos de 20 segundos con opción de saltar.
 - Conserva Biblioteca, adaptación por movilidad/molestias y seguridad por síntomas/presión arterial.
+
+
+VERSIÓN 8
+- Entrenamiento guiado corregido para el nuevo reproductor visual.
+- Pausa y reanudación.
+- Cuenta regresiva por voz en los últimos 3 segundos.
+- Descanso automático de 20 segundos entre ejercicios.
+- Descanso manual de 30 segundos.
+- Inicio automático del siguiente ejercicio después del descanso.
+- Escala de esfuerzo al terminar.
+- Adaptación local de la siguiente rutina según esfuerzo percibido.
+- Registro de sesiones, minutos y progreso conservado.

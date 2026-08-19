@@ -279,6 +279,18 @@ animation:splashAutoHide .55s ease 1.8s forwards}
 </div>
 
 <div class="card"><h3>Escala de esfuerzo</h3><div class="small">Busca un esfuerzo aproximado de <strong>2–4 sobre 10</strong>: notas que estás trabajando, pero todavía puedes hablar. Si hoy el esfuerzo se siente claramente mayor, reduce el ritmo o pasa a la versión sentada.</div></div>
+<div class="card hidden" id="effortCard">
+  <h3>¿Cómo se sintió esta sesión?</h3>
+  <div class="small">Selecciona tu esfuerzo percibido. Esto ayudará a adaptar la próxima rutina en este dispositivo.</div>
+  <div style="display:grid;grid-template-columns:repeat(5,1fr);gap:8px;margin:14px 0">
+    <button class="btn ghost" onclick="saveEffort(2)">2</button>
+    <button class="btn ghost" onclick="saveEffort(3)">3</button>
+    <button class="btn ghost" onclick="saveEffort(4)">4</button>
+    <button class="btn ghost" onclick="saveEffort(5)">5</button>
+    <button class="btn ghost" onclick="saveEffort(6)">6+</button>
+  </div>
+  <div class="small"><strong>2–4:</strong> objetivo habitual · <strong>5:</strong> algo intenso · <strong>6+:</strong> demasiado intenso para la próxima sesión.</div>
+</div>
 </section>
 
 <section id="progress" class="view">
@@ -671,6 +683,7 @@ function startAutoRest(seconds=20){
       restOverlay.classList.remove("show");
       if(settings.voice)speak("Prepárate. Comenzamos el siguiente ejercicio.");
       renderPlayer();
+      setTimeout(beginCurrentExercise,900);
     }
   },1000);
 }
@@ -691,6 +704,8 @@ function announceCurrentExercise(){
 let routine=[],idx=0,remain=0,timerId=null,elapsed=0;
 function adaptedList(){
  let m=mobility.value, e=energy.value, factor=e==="low"?.75:e==="good"?1.1:1;
+ let adapt=JSON.parse(localStorage.getItem("m50adapt")||'{"factor":1}');
+ factor*=Math.max(.7,Math.min(1.1,Number(adapt.factor)||1));
  let arr=base[m].map(x=>({n:x[0],s:Math.max(30,Math.round(x[1]*factor/15)*15),i:x[2],c:x[3],a:x[4]}));
  if(pains.has("knee")) arr=arr.filter(x=>!x.n.toLowerCase().includes("sentarse")&&!x.n.toLowerCase().includes("paso lateral")).map(x=>x.n.includes("Marcha")?{...x,s:Math.max(30,x.s-15)}:x);
  if(pains.has("back")) arr=arr.map(x=>x.n.includes("Remo")?{...x,c:"Movimiento pequeño. Mantén el tronco erguido y detente si aumenta la molestia."}:x);
@@ -698,6 +713,7 @@ function adaptedList(){
  return arr;
 }
 function buildRoutine(){
+ effortCard?.classList.add("hidden");
  if(symptoms.value==="yes"){alert("No iniciaré una rutina automática porque indicaste síntomas nuevos o importantes. Busca orientación médica según el tipo e intensidad del síntoma.");show("home");return}
  if(!bpOk()){show("home");return}
  routine=adaptedList();idx=0;remain=routine[0]?.s||0;elapsed=0;routineStartedAt=null;clearInterval(timerId);timerId=null;
@@ -708,14 +724,129 @@ function buildRoutine(){
 function renderList(){exerciseList.innerHTML=routine.map((x,i)=>`<div class="exercise"><div class="exIcon">${x.i}</div><div><div class="exName">${i+1}. ${x.n}</div><div class="exMeta">${x.c}</div></div><div class="badge">${Math.ceil(x.s/60)} min</div></div>`).join("")}
 function fmt(s){return String(Math.floor(s/60)).padStart(2,"0")+":"+String(s%60).padStart(2,"0")}
 function animClass(a){return {"march":"anim-march","arms":"anim-arms","calf":"anim-calf","balance":"anim-balance","chair":"anim-chair","side":"anim-side"}[a]||"anim-balance"}
-function renderPlayer(){if(!routine.length){timer.textContent="00:00";exerciseCounter.textContent="Ejercicio 0 de 0";routineProgressFill.style.width="0%";return}let x=routine[idx];currentName.textContent=x.n;currentCue.textContent=x.c;timer.textContent=fmt(remain);barFill.style.width=((idx/routine.length)*100)+"%";play.textContent=timerId?"⏸ Pausar":"▶ Iniciar";stage.className="stage "+animClass(x.a)}
-function speak(t){if(settings.voice&&"speechSynthesis"in window){speechSynthesis.cancel();let u=new SpeechSynthesisUtterance(t);u.lang="es-GT";u.rate=.9;speechSynthesis.speak(u)}}
-function cue(){if(settings.vibrate&&navigator.vibrate)navigator.vibrate(120);if(settings.sound){try{let a=new AudioContext(),o=a.createOscillator(),g=a.createGain();o.connect(g);g.connect(a.destination);o.frequency.value=640;g.gain.value=.04;o.start();o.stop(a.currentTime+.12)}catch(e){}}}
-function toggleTimer(){if(!routine.length){buildRoutine();return}if(timerId){clearInterval(timerId);timerId=null;renderPlayer();return}speak(routine[idx].n+". "+routine[idx].c);timerId=setInterval(()=>{remain--;elapsed++;if(remain===10)speak("Diez segundos.");if(remain<=0){clearInterval(timerId);timerId=null;cue();if(idx<routine.length-1){idx++;remain=routine[idx].s;speak("Muy bien. Siguiente: "+routine[idx].n);setTimeout(toggleTimer,850)}else finishRoutine(true)}renderPlayer()},1000);renderPlayer()}
-function nextEx(){if(!routine.length)return;if(restTimerId)skipRest();clearInterval(timerId);timerId=null;if(idx<routine.length-1)idx++;remain=routine[idx].s;renderPlayer();speak(routine[idx].n)}
-function prevEx(){if(!routine.length)return;if(restTimerId)skipRest();clearInterval(timerId);timerId=null;if(idx>0)idx--;remain=routine[idx].s;renderPlayer()}
-function rest30(){if(!routine.length)return;clearInterval(timerId);timerId=null;remain+=30;renderPlayer();speak("Tómate treinta segundos más. Respira con calma.")}
-function finishRoutine(){clearInterval(timerId);timerId=null;if(!routine.length)return;let mins=Math.max(1,Math.round((elapsed||routine.reduce((a,x)=>a+x.s,0))/60));let p=JSON.parse(localStorage.getItem("m50progress")||'{"sessions":0,"minutes":0,"dates":[]}');p.sessions++;p.minutes+=mins;let d=new Date().toISOString().slice(0,10);if(!p.dates.includes(d))p.dates.push(d);localStorage.setItem("m50progress",JSON.stringify(p));routine=[];refresh();speak("Rutina completada. Muy bien. Recupera con calma.");alert("Rutina completada. Sumaste "+mins+" minutos de movimiento.");show("progress")}
+function renderPlayer(){
+ if(!routine.length){
+   timer.textContent="00:00";
+   exerciseCounter.textContent="Ejercicio 0 de 0";
+   routineProgressFill.style.width="0%";
+   playerTitle.textContent="Elige una rutina";
+   mainTimerBtn.textContent="▶ Iniciar";
+   return;
+ }
+ let x=routine[idx];
+ playerTitle.textContent=x.n;
+ timer.textContent=fmt(remain);
+ barFill.style.width=`${Math.max(0,Math.min(100,100*(1-remain/x.s)))}%`;
+ mainTimerBtn.textContent=timerId?"⏸ Pausar":"▶ Iniciar";
+ updateGuidedPanel();
+}
+function speak(t){
+ if(settings.voice&&"speechSynthesis"in window){
+   speechSynthesis.cancel();
+   let u=new SpeechSynthesisUtterance(t);
+   u.lang="es-GT"; u.rate=.9;
+   speechSynthesis.speak(u);
+ }
+}
+function cue(){
+ if(settings.vibrate&&navigator.vibrate)navigator.vibrate([100,60,100]);
+ if(settings.sound){
+   try{
+     let a=new AudioContext(),o=a.createOscillator(),g=a.createGain();
+     o.connect(g);g.connect(a.destination);o.frequency.value=640;g.gain.value=.04;
+     o.start();o.stop(a.currentTime+.14)
+   }catch(e){}
+ }
+}
+function beginCurrentExercise(){
+ if(!routine.length || restTimerId)return;
+ if(!routineStartedAt)routineStartedAt=Date.now();
+ announceCurrentExercise();
+ timerId=setInterval(()=>{
+   remain--; elapsed++;
+   if(remain===10)speak("Quedan diez segundos.");
+   if(remain===3)speak("Tres");
+   if(remain===2)speak("Dos");
+   if(remain===1)speak("Uno");
+   if(remain<=0){
+     clearInterval(timerId);timerId=null;cue();
+     if(idx<routine.length-1){
+       idx++;
+       remain=routine[idx].s;
+       renderPlayer();
+       startAutoRest(20);
+     }else{
+       finishRoutine(true);
+       return;
+     }
+   }
+   renderPlayer();
+ },1000);
+ renderPlayer();
+}
+function toggleTimer(){
+ if(!routine.length){buildRoutine();return}
+ if(restTimerId)return;
+ if(timerId){
+   clearInterval(timerId);timerId=null;
+   speak("Pausa.");
+   renderPlayer();
+   return;
+ }
+ beginCurrentExercise();
+}
+function nextEx(){
+ if(!routine.length)return;
+ if(restTimerId)skipRest();
+ clearInterval(timerId);timerId=null;
+ if(idx<routine.length-1)idx++;
+ remain=routine[idx].s;
+ renderPlayer();
+ announceCurrentExercise();
+}
+function prevEx(){
+ if(!routine.length)return;
+ if(restTimerId)skipRest();
+ clearInterval(timerId);timerId=null;
+ if(idx>0)idx--;
+ remain=routine[idx].s;
+ renderPlayer();
+}
+function rest30(){
+ if(!routine.length)return;
+ clearInterval(timerId);timerId=null;
+ startAutoRest(30);
+}
+function finishRoutine(auto=false){
+ clearInterval(timerId);timerId=null;
+ if(restTimerId){clearInterval(restTimerId);restTimerId=null}
+ restOverlay.classList.remove("show");
+ if(!routine.length)return;
+ let mins=Math.max(1,Math.round((elapsed||routine.reduce((a,x)=>a+x.s,0))/60));
+ let p=JSON.parse(localStorage.getItem("m50progress")||'{"sessions":0,"minutes":0,"dates":[]}');
+ p.sessions++;p.minutes+=mins;
+ let d=new Date().toISOString().slice(0,10);
+ if(!p.dates.includes(d))p.dates.push(d);
+ localStorage.setItem("m50progress",JSON.stringify(p));
+ localStorage.setItem("m50lastmins",String(mins));
+ clearInterval(timerId);timerId=null;
+ refresh();
+ speak("Rutina completada. Muy bien. Ahora dinos cómo se sintió el esfuerzo.");
+ effortCard.classList.remove("hidden");
+ effortCard.scrollIntoView({behavior:"smooth",block:"center"});
+}
+function saveEffort(score){
+ let factor=1, message="La próxima rutina mantendrá una intensidad similar.";
+ if(score>=6){factor=.8;message="La próxima rutina será más suave y un poco más corta."}
+ else if(score===5){factor=.9;message="La próxima rutina reducirá ligeramente la intensidad."}
+ else if(score<=2){factor=1.05;message="La próxima rutina podrá aumentar muy suavemente, sin superar el nivel de bajo impacto."}
+ localStorage.setItem("m50adapt",JSON.stringify({factor,score,date:new Date().toISOString()}));
+ effortCard.classList.add("hidden");
+ routine=[];
+ refresh();
+ alert("Esfuerzo guardado. "+message);
+ show("progress");
+}
 function streak(ds){if(!ds.length)return 0;let set=new Set(ds),d=new Date(),n=0;while(set.has(d.toISOString().slice(0,10))){n++;d.setDate(d.getDate()-1)}return n}
 function refresh(){let p=JSON.parse(localStorage.getItem("m50progress")||'{"sessions":0,"minutes":0,"dates":[]}');sessions.textContent=hsessions.textContent=p.sessions;minutes.textContent=hminutes.textContent=p.minutes;hstreak.textContent=streak(p.dates||[]);weekNum.textContent=Math.min(12,Math.max(1,Math.ceil((p.sessions||1)/4)));renderCalendar()}
 function makeWeeks(){for(let i=1;i<=12;i++){let b=document.createElement("button");b.textContent=i;b.onclick=()=>showWeek(i,b);weeks.appendChild(b)}showWeek(1,weeks.firstChild)}
