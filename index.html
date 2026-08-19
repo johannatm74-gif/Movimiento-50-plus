@@ -440,6 +440,174 @@ animation:splashAutoHide .55s ease 1.8s forwards}
   .avatar3d,.avatar3d *{animation:none!important}
 }
 
+
+/* ===== V12 · Maniquí humano 3D anatómico estilizado ===== */
+.exerciseVisual{
+  perspective:1000px;
+  overflow:hidden;
+}
+.human3d{
+  position:absolute;
+  left:50%; top:26px;
+  width:190px; height:220px;
+  transform:translateX(-50%);
+  transform-style:preserve-3d;
+  filter:drop-shadow(0 20px 18px rgba(84,54,105,.18));
+}
+.human3d .pelvis{
+  position:absolute;left:70px;top:113px;width:50px;height:28px;border-radius:44% 44% 38% 38%;
+  background:linear-gradient(90deg,#5f4677,#8b69a4 35%,#c2a9d3 55%,#72548d);
+  box-shadow:inset 5px 3px 7px rgba(255,255,255,.22),inset -6px -5px 8px rgba(60,37,76,.22);
+}
+.human3d .chest{
+  position:absolute;left:57px;top:53px;width:76px;height:72px;border-radius:40px 40px 28px 28px;
+  background:
+    radial-gradient(circle at 38% 28%,rgba(255,255,255,.45),transparent 24%),
+    linear-gradient(90deg,#654a7d,#8f6bab 30%,#cbb5da 52%,#82619d 72%,#5f4575);
+  box-shadow:inset 8px 6px 11px rgba(255,255,255,.22),inset -8px -7px 12px rgba(55,34,69,.22);
+  transform-origin:50% 92%;
+}
+.human3d .abdomen{
+  position:absolute;left:72px;top:111px;width:48px;height:28px;border-radius:14px;
+  background:linear-gradient(90deg,#6b507f,#b39ac2 52%,#75578d);
+}
+.human3d .neck{
+  position:absolute;left:84px;top:39px;width:22px;height:20px;border-radius:9px;
+  background:linear-gradient(90deg,#795b90,#c6add4 50%,#75578c);
+}
+.human3d .head{
+  position:absolute;left:69px;top:0;width:52px;height:52px;border-radius:50% 48% 50% 46%;
+  background:
+    radial-gradient(circle at 37% 30%,#fbf6ff 0 8%,#dcc8e8 30%,#b393c8 58%,#76568f 100%);
+  box-shadow:inset 7px 6px 11px rgba(255,255,255,.34),inset -8px -8px 11px rgba(54,32,68,.18);
+}
+.human3d .upperArm,.human3d .foreArm,.human3d .thigh,.human3d .shin{
+  position:absolute;
+  border-radius:999px;
+  background:linear-gradient(90deg,#5d4473,#8c6aa4 38%,#c8b0d6 58%,#6f5187);
+  box-shadow:inset 4px 3px 7px rgba(255,255,255,.18),inset -5px -6px 8px rgba(50,30,63,.19);
+  transform-origin:50% 8%;
+}
+.human3d .upperArm{width:22px;height:66px;top:62px}
+.human3d .foreArm{width:18px;height:60px;top:116px}
+.human3d .thigh{width:28px;height:78px;top:133px}
+.human3d .shin{width:23px;height:76px;top:196px}
+.human3d .upperArm.l{left:39px;transform:rotate(23deg)}
+.human3d .upperArm.r{right:39px;transform:rotate(-23deg)}
+.human3d .foreArm.l{left:25px;transform:rotate(18deg)}
+.human3d .foreArm.r{right:25px;transform:rotate(-18deg)}
+.human3d .thigh.l{left:63px;transform:rotate(7deg)}
+.human3d .thigh.r{right:63px;transform:rotate(-7deg)}
+.human3d .shin.l{left:52px;transform:rotate(4deg)}
+.human3d .shin.r{right:52px;transform:rotate(-4deg)}
+.human3d .hand,.human3d .foot{
+  position:absolute;background:radial-gradient(circle at 35% 30%,#e6d7ee,#b092c2 60%,#73568b);
+  box-shadow:inset -3px -3px 5px rgba(62,38,78,.15),inset 3px 3px 5px rgba(255,255,255,.25)
+}
+.human3d .hand{width:21px;height:25px;border-radius:45% 45% 55% 55%;bottom:-11px;left:-2px}
+.human3d .foot{width:38px;height:18px;border-radius:65% 65% 45% 45%;bottom:-7px;left:-7px}
+.human3d .joint{
+  position:absolute;width:15px;height:15px;border-radius:50%;
+  background:radial-gradient(circle at 35% 35%,#d7c2e4,#8b68a4 70%);
+  box-shadow:0 2px 5px rgba(77,51,93,.16)
+}
+.human3d .joint.shoulderL{left:48px;top:58px}
+.human3d .joint.shoulderR{right:48px;top:58px}
+.human3d .joint.hipL{left:73px;top:127px}
+.human3d .joint.hipR{right:73px;top:127px}
+.human3d .shadow{
+  position:absolute;left:30px;right:30px;bottom:-38px;height:22px;border-radius:50%;
+  background:radial-gradient(ellipse,rgba(80,51,96,.28),rgba(80,51,96,0) 72%);
+  transform:rotateX(74deg)
+}
+.chairV12{
+  position:absolute;left:12%;bottom:34px;width:120px;height:132px;transform:rotateY(-7deg);
+  transform-style:preserve-3d;
+}
+.chairV12 .back{position:absolute;left:8px;top:0;width:92px;height:78px;border-radius:15px;
+  background:linear-gradient(90deg,#6c527f,#9d80b2 50%,#75568d);
+  box-shadow:inset 6px 6px 10px rgba(255,255,255,.2),0 8px 13px rgba(76,50,90,.14)}
+.chairV12 .seat{position:absolute;left:2px;top:74px;width:100px;height:20px;border-radius:9px;
+  background:linear-gradient(#c6b0d4,#8c6da5);transform:skewX(-6deg)}
+.chairV12 .leg{position:absolute;top:90px;width:11px;height:56px;border-radius:6px;background:linear-gradient(90deg,#674d78,#9b7caf)}
+.chairV12 .leg.a{left:15px}.chairV12 .leg.b{right:21px}
+.exerciseVisual.v12 .avatar3d,.exerciseVisual.v12 .stick,.exerciseVisual.v12 .chair3d{display:none!important}
+
+/* Specific motion */
+.exerciseVisual.v12-march .human3d .thigh.l{animation:v12MarchThighL 1.5s ease-in-out infinite}
+.exerciseVisual.v12-march .human3d .shin.l{animation:v12MarchShinL 1.5s ease-in-out infinite}
+.exerciseVisual.v12-march .human3d .thigh.r{animation:v12MarchThighR 1.5s ease-in-out infinite}
+.exerciseVisual.v12-march .human3d .shin.r{animation:v12MarchShinR 1.5s ease-in-out infinite}
+.exerciseVisual.v12-march .human3d .upperArm.l{animation:v12ArmL 1.5s ease-in-out infinite}
+.exerciseVisual.v12-march .human3d .upperArm.r{animation:v12ArmR 1.5s ease-in-out infinite}
+@keyframes v12MarchThighL{0%,100%{transform:rotate(8deg)}50%{transform:rotate(55deg) translateZ(20px) translateY(-8px)}}
+@keyframes v12MarchShinL{0%,100%{transform:rotate(4deg)}50%{transform:rotate(-28deg) translateZ(18px)}}
+@keyframes v12MarchThighR{0%,100%{transform:rotate(-55deg) translateZ(20px) translateY(-8px)}50%{transform:rotate(-8deg)}}
+@keyframes v12MarchShinR{0%,100%{transform:rotate(28deg) translateZ(18px)}50%{transform:rotate(-4deg)}}
+@keyframes v12ArmL{0%,100%{transform:rotate(24deg)}50%{transform:rotate(3deg)}}
+@keyframes v12ArmR{0%,100%{transform:rotate(-3deg)}50%{transform:rotate(-24deg)}}
+
+.exerciseVisual.v12-sit .human3d{animation:v12SitWhole 3.2s ease-in-out infinite;transform-origin:50% 85%}
+.exerciseVisual.v12-sit .human3d .chest{animation:v12SitChest 3.2s ease-in-out infinite}
+.exerciseVisual.v12-sit .human3d .thigh.l{animation:v12SitThighL 3.2s ease-in-out infinite}
+.exerciseVisual.v12-sit .human3d .thigh.r{animation:v12SitThighR 3.2s ease-in-out infinite}
+.exerciseVisual.v12-sit .human3d .shin.l{animation:v12SitShinL 3.2s ease-in-out infinite}
+.exerciseVisual.v12-sit .human3d .shin.r{animation:v12SitShinR 3.2s ease-in-out infinite}
+@keyframes v12SitWhole{0%,16%,84%,100%{transform:translateX(-35%) translateY(34px) scale(.92)}45%,58%{transform:translateX(-22%) translateY(-26px) scale(1)}}
+@keyframes v12SitChest{0%,16%,84%,100%{transform:rotate(15deg)}45%,58%{transform:rotate(0deg)}}
+@keyframes v12SitThighL{0%,16%,84%,100%{transform:rotate(68deg)}45%,58%{transform:rotate(7deg)}}
+@keyframes v12SitThighR{0%,16%,84%,100%{transform:rotate(-68deg)}45%,58%{transform:rotate(-7deg)}}
+@keyframes v12SitShinL{0%,16%,84%,100%{transform:rotate(-42deg)}45%,58%{transform:rotate(4deg)}}
+@keyframes v12SitShinR{0%,16%,84%,100%{transform:rotate(42deg)}45%,58%{transform:rotate(-4deg)}}
+
+.exerciseVisual.v12-knee .human3d .thigh.l{transform:rotate(62deg)}
+.exerciseVisual.v12-knee .human3d .shin.l{animation:v12Knee 2s ease-in-out infinite}
+@keyframes v12Knee{0%,100%{transform:rotate(-48deg)}50%{transform:rotate(-92deg) translateZ(14px)}}
+
+.exerciseVisual.v12-heels .human3d{animation:v12Heel 1.8s ease-in-out infinite}
+@keyframes v12Heel{0%,100%{transform:translateX(-50%) translateY(0)}50%{transform:translateX(-50%) translateY(-18px)}}
+
+.exerciseVisual.v12-arms .human3d .upperArm.l{animation:v12RaiseUL 2.1s ease-in-out infinite}
+.exerciseVisual.v12-arms .human3d .upperArm.r{animation:v12RaiseUR 2.1s ease-in-out infinite}
+.exerciseVisual.v12-arms .human3d .foreArm.l{animation:v12RaiseFL 2.1s ease-in-out infinite}
+.exerciseVisual.v12-arms .human3d .foreArm.r{animation:v12RaiseFR 2.1s ease-in-out infinite}
+@keyframes v12RaiseUL{0%,100%{transform:rotate(24deg)}50%{transform:rotate(108deg)}}
+@keyframes v12RaiseUR{0%,100%{transform:rotate(-24deg)}50%{transform:rotate(-108deg)}}
+@keyframes v12RaiseFL{0%,100%{transform:rotate(18deg)}50%{transform:rotate(88deg)}}
+@keyframes v12RaiseFR{0%,100%{transform:rotate(-18deg)}50%{transform:rotate(-88deg)}}
+
+.exerciseVisual.v12-row .human3d .upperArm.l{animation:v12RowUL 1.9s ease-in-out infinite}
+.exerciseVisual.v12-row .human3d .upperArm.r{animation:v12RowUR 1.9s ease-in-out infinite}
+.exerciseVisual.v12-row .human3d .foreArm.l{animation:v12RowFL 1.9s ease-in-out infinite}
+.exerciseVisual.v12-row .human3d .foreArm.r{animation:v12RowFR 1.9s ease-in-out infinite}
+@keyframes v12RowUL{0%,100%{transform:rotate(58deg)}50%{transform:rotate(8deg) translateZ(-12px)}}
+@keyframes v12RowUR{0%,100%{transform:rotate(-58deg)}50%{transform:rotate(-8deg) translateZ(-12px)}}
+@keyframes v12RowFL{0%,100%{transform:rotate(28deg)}50%{transform:rotate(3deg)}}
+@keyframes v12RowFR{0%,100%{transform:rotate(-28deg)}50%{transform:rotate(-3deg)}}
+
+.exerciseVisual.v12-side .human3d{animation:v12Side 2.7s ease-in-out infinite}
+@keyframes v12Side{0%,100%{transform:translateX(-72%)}50%{transform:translateX(-28%)}}
+
+.exerciseVisual.v12-balance .human3d .thigh.r{animation:v12BalThigh 2.8s ease-in-out infinite}
+.exerciseVisual.v12-balance .human3d .shin.r{animation:v12BalShin 2.8s ease-in-out infinite}
+.exerciseVisual.v12-balance .human3d{animation:v12BalBody 2.8s ease-in-out infinite}
+@keyframes v12BalThigh{0%,18%,82%,100%{transform:rotate(-8deg)}45%,58%{transform:rotate(-62deg) translateZ(18px)}}
+@keyframes v12BalShin{0%,18%,82%,100%{transform:rotate(-4deg)}45%,58%{transform:rotate(25deg)}}
+@keyframes v12BalBody{0%,100%{transform:translateX(-50%) rotateZ(-1.3deg)}50%{transform:translateX(-50%) rotateZ(1.3deg)}}
+
+.exerciseVisual.v12-breath .human3d{animation:v12Breath 3.8s ease-in-out infinite}
+.exerciseVisual.v12-breath .human3d .chest{animation:v12ChestBreath 3.8s ease-in-out infinite}
+@keyframes v12Breath{0%,100%{transform:translateX(-50%) scale(.97)}50%{transform:translateX(-50%) scale(1.035)}}
+@keyframes v12ChestBreath{0%,100%{transform:scaleX(.96)}50%{transform:scaleX(1.06)}}
+
+@media(max-width:560px){
+  .human3d{transform:translateX(-50%) scale(.88);transform-origin:50% top}
+  .chairV12{transform:scale(.9) rotateY(-7deg);transform-origin:left bottom}
+}
+@media(prefers-reduced-motion:reduce){
+  .human3d,.human3d *{animation:none!important}
+}
+
 </style>
 </head>
 <body>
@@ -567,7 +735,22 @@ animation:splashAutoHide .55s ease 1.8s forwards}
       <div class="arm l"></div><div class="arm r"></div>
       <div class="leg l"></div><div class="leg r"></div>
     </div>
-    <div class="restOverlay" id="restOverlay">
+    
+<div class="chairV12 hidden" id="chairV12">
+  <div class="back"></div><div class="seat"></div><div class="leg a"></div><div class="leg b"></div>
+</div>
+<div class="human3d" id="human3d">
+  <div class="head"></div><div class="neck"></div><div class="chest"></div><div class="abdomen"></div><div class="pelvis"></div>
+  <div class="joint shoulderL"></div><div class="joint shoulderR"></div><div class="joint hipL"></div><div class="joint hipR"></div>
+  <div class="upperArm l"><div class="hand"></div></div>
+  <div class="upperArm r"><div class="hand"></div></div>
+  <div class="foreArm l"></div><div class="foreArm r"></div>
+  <div class="thigh l"></div><div class="thigh r"></div>
+  <div class="shin l"><div class="foot"></div></div>
+  <div class="shin r"><div class="foot"></div></div>
+  <div class="shadow"></div>
+</div>
+<div class="restOverlay" id="restOverlay">
       <div>
         <div class="small">Descanso</div>
         <div class="restBig" id="restCountdown">20</div>
@@ -1003,6 +1186,22 @@ function v11VisualClass(x){
   return ["v11-3d v11-breath",false,"Movimiento lento y controlado","↕"];
 }
 
+
+function v12VisualClass(x){
+  const n=(x.n||"").toLowerCase();
+  if(n.includes("sentadilla")||n.includes("sentarse y levantarse")) return ["v12 v12-sit",true,"Levántate y vuelve a sentarte","↕"];
+  if(n.includes("marcha sentada")) return ["v12 v12-march",true,"Alterna una rodilla y luego la otra","↕"];
+  if(n.includes("extensión de rodilla")||n.includes("extension de rodilla")) return ["v12 v12-knee",true,"Estira la rodilla y vuelve con control","→"];
+  if(n.includes("talón")||n.includes("talon")) return ["v12 v12-heels",false,"Sube a puntas y baja lentamente","↕"];
+  if(n.includes("remo")) return ["v12 v12-row",true,"Lleva los codos hacia atrás","↔"];
+  if(n.includes("brazo")||n.includes("hombro")) return ["v12 v12-arms",false,"Eleva o abre los brazos con control","↗"];
+  if(n.includes("paso lateral")) return ["v12 v12-side",false,"Desplázate de lado con pasos cortos","↔"];
+  if(n.includes("equilibrio")||n.includes("apoyo en un pie")||n.includes("flamenco")) return ["v12 v12-balance",false,"Eleva un pie manteniendo apoyo cercano","↑"];
+  if(n.includes("respiración")||n.includes("respiracion")||n.includes("recuperación")||n.includes("recuperacion")||n.includes("enfriamiento")) return ["v12 v12-breath",false,"Respira lento y relaja hombros","↕"];
+  if(n.includes("marcha")||n.includes("caminata")||n.includes("bicicleta")) return ["v12 v12-march",false,"Mantén un ritmo cómodo y continuo","↕"];
+  return ["v12 v12-breath",false,"Movimiento lento, estable y sin dolor","↕"];
+}
+
 function updateGuidedPanel(){
   if(!routine.length){return}
   const x=routine[idx];
@@ -1018,11 +1217,12 @@ function updateGuidedPanel(){
   breathTip.textContent=g.breath;
   safetyTip.textContent=g.safety;
 
-  const vd=v11VisualClass(x);
+  const vd=v12VisualClass(x);
   exerciseVisual.className="exerciseVisual "+vd[0];
-  motionCue.textContent="3D · "+vd[2];
+  motionCue.textContent="3D humano · "+vd[2];
   motionArrow.textContent=vd[3];
-  chair3d.classList.toggle("hidden",!vd[1]);
+  chairV12.classList.toggle("hidden",!vd[1]);
+  if(typeof chair3d!=="undefined") chair3d.classList.add("hidden");
   if(typeof chairViz!=="undefined") chairViz.classList.add("hidden");
 }
 

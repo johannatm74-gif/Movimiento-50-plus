@@ -1,4 +1,4 @@
-MOVIMIENTO 50+ PRO — VERSIÓN 11
+MOVIMIENTO 50+ PRO — VERSIÓN 12
 
 MEJORAS
 - Perfil: edad, peso, estatura y nivel de movilidad.
@@ -94,3 +94,11 @@ VERSIÓN 11 · AVATARES 3D
 - Silla 3D para ejercicios sentados y sentadillas.
 - Marcha, sentadilla, extensión de rodilla, talones, brazos, remo, equilibrio y paso lateral con animación.
 - Conserva temporizador, voz, descansos, biblioteca, progreso y adaptación automática.
+
+
+VERSIÓN 12 · MANIQUÍ HUMANO 3D
+- Sustituye el avatar esquemático por una figura humana 3D estilizada más anatómica.
+- Segmentación visual de pecho, pelvis, brazos, antebrazos, muslos y piernas.
+- Animaciones más naturales para marcha, sentadillas, extensión de rodilla, talones, brazos, remo, equilibrio y paso lateral.
+- Mantiene silla 3D cuando el ejercicio es sentado.
+- Conserva voz, temporizador, descansos, biblioteca, progreso y adaptación automática.
