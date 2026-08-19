@@ -1,4 +1,4 @@
-MOVIMIENTO 50+ PRO — VERSIÓN 13
+MOVIMIENTO 50+ PRO — VERSIÓN 14
 
 MEJORAS
 - Perfil: edad, peso, estatura y nivel de movilidad.
@@ -116,3 +116,9 @@ AJUSTE V13-RAÍZ
 - Las imágenes humanas 3D ahora se cargan directamente desde la raíz del repositorio.
 - Ya no es necesaria la carpeta assets.
 - Nombres esperados: human_breath.jpg, human_march.jpg, human_seated.jpg, human_squat.jpg.
+
+
+VERSIÓN 14
+- Avatar 2D desactivado en todos los ejercicios.
+- Sistema humano 3D universal.
+- Torsión, cuello, brazos, marcha, bicicleta, sentadilla, rodilla, talones, paso lateral, equilibrio y respiración con animación específica.
