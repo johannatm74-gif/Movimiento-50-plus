@@ -1287,7 +1287,20 @@ background:linear-gradient(90deg,#5e4473,#8b68a5 32%,#c8b1d6 52%,#795a94 72%,#5a
 <button class="nav" data-view="settings" onclick="show('settings',this)"><span>⚙</span>Ajustes</button>
 </div></nav>
 
+
 <script>
+/* V20 Android compatibility: explicit DOM references for controls that some
+   mobile browsers do not expose as automatic global variables. */
+[
+  "mobility","energy","symptoms","sys","dia","bpMessage",
+  "routineTitle","routineSub","exerciseList","timer","exerciseCounter",
+  "routineProgressFill","playerTitle","mainTimerBtn","barFill",
+  "exerciseVisual","stepList","breathTip","safetyTip","effortCard",
+  "libTitle","libIntro","libExercises","libStartBtn"
+].forEach(function(id){
+  if (!window[id]) window[id] = document.getElementById(id);
+});
+
 let pains=new Set();
 let settings=JSON.parse(localStorage.getItem("m50settings")||'{"voice":true,"vibrate":true,"sound":true}');
 const weeks=[
@@ -1437,18 +1450,63 @@ function openLibraryRoutine(key){
 }
 
 function startLibraryRoutine(){
-  if(!selectedLibraryKey)return;
-  if(symptoms.value==="yes"){alert("No iniciaré una rutina automática porque indicaste síntomas nuevos o importantes.");show("home");return}
-  if(!bpOk()){show("home");return}
-  const r=libraryRoutines[selectedLibraryKey];
-  routine=r.exercises.map(libraryAdaptExercise).filter(Boolean).map(x=>({
-    n:x.n,s:x.s,i:x.i,c:x.c,a:x.a
-  }));
-  idx=0;remain=routine[0]?.s||0;elapsed=0;routineStartedAt=null;
-  clearInterval(timerId);timerId=null;
-  routineTitle.textContent=r.title;
-  routineSub.textContent=`Biblioteca · Nivel ${r.level} · Adaptada a tu perfil`;
-  renderList();renderPlayer();show("routine");
+  try{
+    if(!selectedLibraryKey){
+      alert("Selecciona primero una rutina.");
+      return;
+    }
+
+    const symptomEl=document.getElementById("symptoms");
+    if(symptomEl && symptomEl.value==="yes"){
+      alert("No iniciaré una rutina automática porque indicaste síntomas nuevos o importantes.");
+      show("home");
+      return;
+    }
+
+    // Pressure safety check using explicit elements (Android-safe).
+    const sEl=document.getElementById("sys");
+    const dEl=document.getElementById("dia");
+    const msg=document.getElementById("bpMessage");
+    const s=Number((sEl&&sEl.value)||0);
+    const d=Number((dEl&&dEl.value)||0);
+    if((s && s>180) || (d && d>120)){
+      if(msg) msg.innerHTML='<div class="notice danger"><strong>Lectura severamente elevada.</strong> Espera al menos 1 minuto y repite la presión. No inicies la rutina automática.</div>';
+      show("home");
+      return;
+    }
+
+    const r=libraryRoutines[selectedLibraryKey];
+    if(!r || !Array.isArray(r.exercises)){
+      alert("No pude cargar esta rutina. Vuelve a seleccionarla.");
+      return;
+    }
+
+    routine=r.exercises.map(libraryAdaptExercise).filter(Boolean).map(x=>({
+      n:x.n,s:Number(x.s)||60,i:x.i,c:x.c,a:x.a
+    }));
+
+    if(!routine.length){
+      alert("No hay ejercicios disponibles para tu perfil actual.");
+      return;
+    }
+
+    idx=0;
+    remain=routine[0].s;
+    elapsed=0;
+    routineStartedAt=null;
+    clearInterval(timerId);
+    timerId=null;
+
+    document.getElementById("routineTitle").textContent=r.title;
+    document.getElementById("routineSub").textContent=`Biblioteca · Nivel ${r.level} · Adaptada a tu perfil`;
+
+    renderList();
+    renderPlayer();
+    show("routine",document.querySelector('[data-view="routine"]'));
+  }catch(err){
+    console.error("startLibraryRoutine error:",err);
+    alert("No pude abrir la rutina. Actualiza la página e inténtalo de nuevo.");
+  }
 }
 
 
