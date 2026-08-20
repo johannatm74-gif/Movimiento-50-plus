@@ -1815,11 +1815,14 @@ function updateGuidedPanel(){
   v15arrow.textContent=mv15[3];
 
   const g17=v17GifFor(routine[idx]||routine[0]||{n:""});
-  if(typeof v17gif!=="undefined"){
-    if(v17gif.getAttribute("src")!==g17[0]) v17gif.setAttribute("src",g17[0]+"?v=17");
-    v17gif.alt="Demostración animada de "+((routine[idx]||{}).n||"ejercicio");
-    v17gifLabel.textContent=g17[1];
+  const gifEl=document.getElementById("v17gif");
+  const gifLabelEl=document.getElementById("v17gifLabel");
+  if(gifEl){
+    const wanted=g17[0]+"?v=23";
+    if(gifEl.getAttribute("src")!==wanted) gifEl.setAttribute("src",wanted);
+    gifEl.alt="Demostración animada de "+((routine[idx]||{}).n||"ejercicio");
   }
+  if(gifLabelEl) gifLabelEl.textContent=g17[1];
 }
 
 function startAutoRest(seconds=20){
