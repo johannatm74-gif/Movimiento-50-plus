@@ -1260,7 +1260,7 @@ background:linear-gradient(90deg,#5e4473,#8b68a5 32%,#c8b1d6 52%,#795a94 72%,#5a
   <h3 id="libTitle">Selecciona una rutina</h3>
   <div class="small" id="libIntro">Aquí verás los ejercicios, adaptaciones y precauciones.</div>
   <div id="libExercises" style="margin-top:10px"></div>
-  <button id="libStartBtn" class="btn full hidden" onclick="startLibraryRoutine()">Usar esta rutina</button>
+  <button id="libStartBtn" type="button" class="btn full hidden">Usar esta rutina</button>
  </div>
 
  <div class="notice">
@@ -1287,20 +1287,7 @@ background:linear-gradient(90deg,#5e4473,#8b68a5 32%,#c8b1d6 52%,#795a94 72%,#5a
 <button class="nav" data-view="settings" onclick="show('settings',this)"><span>⚙</span>Ajustes</button>
 </div></nav>
 
-
 <script>
-/* V20 Android compatibility: explicit DOM references for controls that some
-   mobile browsers do not expose as automatic global variables. */
-[
-  "mobility","energy","symptoms","sys","dia","bpMessage",
-  "routineTitle","routineSub","exerciseList","timer","exerciseCounter",
-  "routineProgressFill","playerTitle","mainTimerBtn","barFill",
-  "exerciseVisual","stepList","breathTip","safetyTip","effortCard",
-  "libTitle","libIntro","libExercises","libStartBtn"
-].forEach(function(id){
-  if (!window[id]) window[id] = document.getElementById(id);
-});
-
 let pains=new Set();
 let settings=JSON.parse(localStorage.getItem("m50settings")||'{"voice":true,"vibrate":true,"sound":true}');
 const weeks=[
@@ -1411,15 +1398,14 @@ const libraryRoutines={
 let selectedLibraryKey=null;
 
 function libraryAdaptExercise(x){
-  let m=mobility.value;
+  const mobilityEl=document.getElementById("mobility");
+  const m=mobilityEl ? mobilityEl.value : "normal";
   if(x.avoid?.includes("chair") && m==="chair") return null;
   if(x.avoid?.includes("knee") && pains.has("knee")) return null;
   if(x.avoid?.includes("back") && pains.has("back")) return null;
   if(x.avoid?.includes("shoulder") && pains.has("shoulder")) return null;
 
   let y={...x};
-
-  // Seated substitutions
   if(m==="chair"){
     if(y.n==="Marcha en el sitio"){y.n="Marcha sentada";y.c="Alterna un pie y otro desde una silla firme.";y.a="chair";}
     if(y.n==="Elevación de talones"){y.n="Talones y puntas sentada";y.c="Sentada, alterna elevación de talones y puntas.";y.a="chair";}
@@ -1436,77 +1422,88 @@ function libraryAdaptExercise(x){
 function openLibraryRoutine(key){
   selectedLibraryKey=key;
   const r=libraryRoutines[key];
+  if(!r) return;
+
   const adapted=r.exercises.map(libraryAdaptExercise).filter(Boolean);
-  libTitle.textContent=r.title;
-  libIntro.textContent=`${r.duration} min · Nivel ${r.level} · ${adapted.length} ejercicios disponibles para tu perfil actual`;
-  libExercises.innerHTML=adapted.map(x=>`
+  const titleEl=document.getElementById("libTitle");
+  const introEl=document.getElementById("libIntro");
+  const exercisesEl=document.getElementById("libExercises");
+  const startEl=document.getElementById("libStartBtn");
+
+  if(titleEl) titleEl.textContent=r.title;
+  if(introEl) introEl.textContent=`${r.duration} min · Nivel ${r.level} · ${adapted.length} ejercicios disponibles para tu perfil actual`;
+  if(exercisesEl) exercisesEl.innerHTML=adapted.map(x=>`
     <div class="exerciseDetail">
       <div class="title">${x.i} ${x.n}</div>
       <div>${x.c}</div>
       <div class="meta">${x.rep}</div>
       <div><span class="safetyTag">${x.prec}</span>${(x.tags||[]).map(t=>`<span class="safetyTag">${t}</span>`).join("")}</div>
     </div>`).join("") || '<div class="notice danger">Con las limitaciones actuales no hay ejercicios apropiados de esta rutina. Usa la rutina diaria adaptada.</div>';
-  libStartBtn.classList.toggle("hidden",adapted.length===0);
+
+  if(startEl){
+    startEl.classList.toggle("hidden", adapted.length===0);
+    startEl.disabled = adapted.length===0;
+  }
 }
 
 function startLibraryRoutine(){
-  try{
-    if(!selectedLibraryKey){
-      alert("Selecciona primero una rutina.");
-      return;
-    }
-
-    const symptomEl=document.getElementById("symptoms");
-    if(symptomEl && symptomEl.value==="yes"){
-      alert("No iniciaré una rutina automática porque indicaste síntomas nuevos o importantes.");
-      show("home");
-      return;
-    }
-
-    // Pressure safety check using explicit elements (Android-safe).
-    const sEl=document.getElementById("sys");
-    const dEl=document.getElementById("dia");
-    const msg=document.getElementById("bpMessage");
-    const s=Number((sEl&&sEl.value)||0);
-    const d=Number((dEl&&dEl.value)||0);
-    if((s && s>180) || (d && d>120)){
-      if(msg) msg.innerHTML='<div class="notice danger"><strong>Lectura severamente elevada.</strong> Espera al menos 1 minuto y repite la presión. No inicies la rutina automática.</div>';
-      show("home");
-      return;
-    }
-
-    const r=libraryRoutines[selectedLibraryKey];
-    if(!r || !Array.isArray(r.exercises)){
-      alert("No pude cargar esta rutina. Vuelve a seleccionarla.");
-      return;
-    }
-
-    routine=r.exercises.map(libraryAdaptExercise).filter(Boolean).map(x=>({
-      n:x.n,s:Number(x.s)||60,i:x.i,c:x.c,a:x.a
-    }));
-
-    if(!routine.length){
-      alert("No hay ejercicios disponibles para tu perfil actual.");
-      return;
-    }
-
-    idx=0;
-    remain=routine[0].s;
-    elapsed=0;
-    routineStartedAt=null;
-    clearInterval(timerId);
-    timerId=null;
-
-    document.getElementById("routineTitle").textContent=r.title;
-    document.getElementById("routineSub").textContent=`Biblioteca · Nivel ${r.level} · Adaptada a tu perfil`;
-
-    renderList();
-    renderPlayer();
-    show("routine",document.querySelector('[data-view="routine"]'));
-  }catch(err){
-    console.error("startLibraryRoutine error:",err);
-    alert("No pude abrir la rutina. Actualiza la página e inténtalo de nuevo.");
+  if(!selectedLibraryKey){
+    alert("Selecciona primero una rutina.");
+    return;
   }
+
+  const symptomEl=document.getElementById("symptoms");
+  if(symptomEl && symptomEl.value==="yes"){
+    alert("No iniciaré una rutina automática porque indicaste síntomas nuevos o importantes.");
+    show("home");
+    return;
+  }
+
+  const sEl=document.getElementById("sys");
+  const dEl=document.getElementById("dia");
+  const msgEl=document.getElementById("bpMessage");
+  const s=Number((sEl && sEl.value) || 0);
+  const d=Number((dEl && dEl.value) || 0);
+
+  if((s && s>180) || (d && d>120)){
+    if(msgEl) msgEl.innerHTML='<div class="notice danger"><strong>Lectura severamente elevada.</strong> Espera al menos 1 minuto y repite la presión. No inicies la rutina automática.</div>';
+    show("home");
+    return;
+  }
+
+  const r=libraryRoutines[selectedLibraryKey];
+  if(!r){
+    alert("No pude encontrar la rutina seleccionada.");
+    return;
+  }
+
+  routine=r.exercises.map(libraryAdaptExercise).filter(Boolean).map(x=>({
+    n:x.n,
+    s:Number(x.s)||60,
+    i:x.i,
+    c:x.c,
+    a:x.a
+  }));
+
+  if(!routine.length){
+    alert("No hay ejercicios disponibles con tu configuración actual.");
+    return;
+  }
+
+  idx=0;
+  remain=routine[0].s;
+  elapsed=0;
+  routineStartedAt=null;
+  if(timerId){ clearInterval(timerId); timerId=null; }
+
+  const rt=document.getElementById("routineTitle");
+  const rs=document.getElementById("routineSub");
+  if(rt) rt.textContent=r.title;
+  if(rs) rs.textContent=`Biblioteca · Nivel ${r.level} · Adaptada a tu perfil`;
+
+  renderList();
+  renderPlayer();
+  show("routine", document.querySelector('[data-view="routine"]'));
 }
 
 
@@ -2182,6 +2179,19 @@ function v16Frame(now){
   requestAnimationFrame(v16Frame);
 }
 requestAnimationFrame(v16Frame);
+
+
+document.addEventListener("DOMContentLoaded", function(){
+  const startBtn=document.getElementById("libStartBtn");
+  if(startBtn && !startBtn.dataset.bound){
+    startBtn.dataset.bound="1";
+    startBtn.addEventListener("click", function(ev){
+      ev.preventDefault();
+      ev.stopPropagation();
+      startLibraryRoutine();
+    }, {passive:false});
+  }
+});
 
 </script>
 </body>
