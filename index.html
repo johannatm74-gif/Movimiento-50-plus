@@ -1260,7 +1260,7 @@ background:linear-gradient(90deg,#5e4473,#8b68a5 32%,#c8b1d6 52%,#795a94 72%,#5a
   <h3 id="libTitle">Selecciona una rutina</h3>
   <div class="small" id="libIntro">Aquí verás los ejercicios, adaptaciones y precauciones.</div>
   <div id="libExercises" style="margin-top:10px"></div>
-  <button id="libStartBtn" type="button" class="btn full hidden">Usar esta rutina</button>
+  <button id="libStartBtn" type="button" class="btn full hidden" onclick="return startLibraryRoutineV22(event)">Usar esta rutina · v22</button>
  </div>
 
  <div class="notice">
@@ -1289,6 +1289,10 @@ background:linear-gradient(90deg,#5e4473,#8b68a5 32%,#c8b1d6 52%,#795a94 72%,#5a
 
 <script>
 let pains=new Set();
+let routine=[],idx=0,remain=0,timerId=null,elapsed=0;
+
+let selectedLibraryKey=null;
+
 let settings=JSON.parse(localStorage.getItem("m50settings")||'{"voice":true,"vibrate":true,"sound":true}');
 const weeks=[
 ["8–12 min","4–5 días/semana. Movilidad suave, respiración, marcha sentada y fuerza básica."],
@@ -1398,14 +1402,15 @@ const libraryRoutines={
 let selectedLibraryKey=null;
 
 function libraryAdaptExercise(x){
-  const mobilityEl=document.getElementById("mobility");
-  const m=mobilityEl ? mobilityEl.value : "normal";
+  let m=mobility.value;
   if(x.avoid?.includes("chair") && m==="chair") return null;
   if(x.avoid?.includes("knee") && pains.has("knee")) return null;
   if(x.avoid?.includes("back") && pains.has("back")) return null;
   if(x.avoid?.includes("shoulder") && pains.has("shoulder")) return null;
 
   let y={...x};
+
+  // Seated substitutions
   if(m==="chair"){
     if(y.n==="Marcha en el sitio"){y.n="Marcha sentada";y.c="Alterna un pie y otro desde una silla firme.";y.a="chair";}
     if(y.n==="Elevación de talones"){y.n="Talones y puntas sentada";y.c="Sentada, alterna elevación de talones y puntas.";y.a="chair";}
@@ -1421,89 +1426,98 @@ function libraryAdaptExercise(x){
 
 function openLibraryRoutine(key){
   selectedLibraryKey=key;
+  const startBtnNow=document.getElementById("libStartBtn");
+  if(startBtnNow) startBtnNow.dataset.key=key;
   const r=libraryRoutines[key];
-  if(!r) return;
-
   const adapted=r.exercises.map(libraryAdaptExercise).filter(Boolean);
-  const titleEl=document.getElementById("libTitle");
-  const introEl=document.getElementById("libIntro");
-  const exercisesEl=document.getElementById("libExercises");
-  const startEl=document.getElementById("libStartBtn");
-
-  if(titleEl) titleEl.textContent=r.title;
-  if(introEl) introEl.textContent=`${r.duration} min · Nivel ${r.level} · ${adapted.length} ejercicios disponibles para tu perfil actual`;
-  if(exercisesEl) exercisesEl.innerHTML=adapted.map(x=>`
+  libTitle.textContent=r.title;
+  libIntro.textContent=`${r.duration} min · Nivel ${r.level} · ${adapted.length} ejercicios disponibles para tu perfil actual`;
+  libExercises.innerHTML=adapted.map(x=>`
     <div class="exerciseDetail">
       <div class="title">${x.i} ${x.n}</div>
       <div>${x.c}</div>
       <div class="meta">${x.rep}</div>
       <div><span class="safetyTag">${x.prec}</span>${(x.tags||[]).map(t=>`<span class="safetyTag">${t}</span>`).join("")}</div>
     </div>`).join("") || '<div class="notice danger">Con las limitaciones actuales no hay ejercicios apropiados de esta rutina. Usa la rutina diaria adaptada.</div>';
+  libStartBtn.classList.toggle("hidden",adapted.length===0);
+}
 
-  if(startEl){
-    startEl.classList.toggle("hidden", adapted.length===0);
-    startEl.disabled = adapted.length===0;
+
+function startLibraryRoutineV22(ev){
+  try{
+    if(ev){ev.preventDefault();ev.stopPropagation();}
+    const btn=document.getElementById("libStartBtn");
+    const key=(btn && btn.dataset.key) || selectedLibraryKey;
+    const r=libraryRoutines[key];
+
+    if(!r){
+      alert("No pude identificar la rutina seleccionada. Vuelve a tocar la tarjeta de la rutina.");
+      return false;
+    }
+
+    // Build routine directly from the selected library routine.
+    const adapted=r.exercises.map(function(x){
+      try{return libraryAdaptExercise(x);}catch(e){return x;}
+    }).filter(Boolean);
+
+    if(!adapted.length){
+      alert("Esta rutina no tiene ejercicios disponibles con la configuración actual.");
+      return false;
+    }
+
+    routine=adapted.map(function(x){
+      return {n:x.n,s:Number(x.s)||60,i:x.i||"•",c:x.c||"",a:x.a||"balance"};
+    });
+    idx=0;
+    remain=routine[0].s;
+    elapsed=0;
+    if(typeof routineStartedAt!=="undefined") routineStartedAt=null;
+    if(timerId){clearInterval(timerId);timerId=null;}
+
+    const rt=document.getElementById("routineTitle");
+    const rs=document.getElementById("routineSub");
+    if(rt) rt.textContent=r.title;
+    if(rs) rs.textContent="Biblioteca · Nivel "+r.level+" · Adaptada a tu perfil";
+
+    // Render without relying on implicit ID globals.
+    const list=document.getElementById("exerciseList");
+    if(list){
+      list.innerHTML=routine.map(function(x,i){
+        return '<div class="exercise"><div class="exIcon">'+x.i+'</div><div><div class="exName">'+(i+1)+'. '+x.n+'</div><div class="exMeta">'+x.c+'</div></div><div class="badge">'+Math.ceil(x.s/60)+' min</div></div>';
+      }).join("");
+    }
+
+    // Switch view directly; do not depend on show().
+    document.querySelectorAll(".view").forEach(function(v){v.classList.remove("active");});
+    const rv=document.getElementById("routine");
+    if(rv) rv.classList.add("active");
+    document.querySelectorAll(".nav").forEach(function(n){n.classList.remove("active");});
+    const nav=document.querySelector('[data-view="routine"]');
+    if(nav) nav.classList.add("active");
+
+    // Try normal player renderer after the view is already open.
+    try{ if(typeof renderPlayer==="function") renderPlayer(); }catch(e){ console.warn(e); }
+    window.scrollTo(0,0);
+    return false;
+  }catch(err){
+    alert("Error al abrir la rutina: "+(err && err.message ? err.message : err));
+    return false;
   }
 }
 
 function startLibraryRoutine(){
-  if(!selectedLibraryKey){
-    alert("Selecciona primero una rutina.");
-    return;
-  }
-
-  const symptomEl=document.getElementById("symptoms");
-  if(symptomEl && symptomEl.value==="yes"){
-    alert("No iniciaré una rutina automática porque indicaste síntomas nuevos o importantes.");
-    show("home");
-    return;
-  }
-
-  const sEl=document.getElementById("sys");
-  const dEl=document.getElementById("dia");
-  const msgEl=document.getElementById("bpMessage");
-  const s=Number((sEl && sEl.value) || 0);
-  const d=Number((dEl && dEl.value) || 0);
-
-  if((s && s>180) || (d && d>120)){
-    if(msgEl) msgEl.innerHTML='<div class="notice danger"><strong>Lectura severamente elevada.</strong> Espera al menos 1 minuto y repite la presión. No inicies la rutina automática.</div>';
-    show("home");
-    return;
-  }
-
+  if(!selectedLibraryKey)return;
+  if(symptoms.value==="yes"){alert("No iniciaré una rutina automática porque indicaste síntomas nuevos o importantes.");show("home");return}
+  if(!bpOk()){show("home");return}
   const r=libraryRoutines[selectedLibraryKey];
-  if(!r){
-    alert("No pude encontrar la rutina seleccionada.");
-    return;
-  }
-
   routine=r.exercises.map(libraryAdaptExercise).filter(Boolean).map(x=>({
-    n:x.n,
-    s:Number(x.s)||60,
-    i:x.i,
-    c:x.c,
-    a:x.a
+    n:x.n,s:x.s,i:x.i,c:x.c,a:x.a
   }));
-
-  if(!routine.length){
-    alert("No hay ejercicios disponibles con tu configuración actual.");
-    return;
-  }
-
-  idx=0;
-  remain=routine[0].s;
-  elapsed=0;
-  routineStartedAt=null;
-  if(timerId){ clearInterval(timerId); timerId=null; }
-
-  const rt=document.getElementById("routineTitle");
-  const rs=document.getElementById("routineSub");
-  if(rt) rt.textContent=r.title;
-  if(rs) rs.textContent=`Biblioteca · Nivel ${r.level} · Adaptada a tu perfil`;
-
-  renderList();
-  renderPlayer();
-  show("routine", document.querySelector('[data-view="routine"]'));
+  idx=0;remain=routine[0]?.s||0;elapsed=0;routineStartedAt=null;
+  clearInterval(timerId);timerId=null;
+  routineTitle.textContent=r.title;
+  routineSub.textContent=`Biblioteca · Nivel ${r.level} · Adaptada a tu perfil`;
+  renderList();renderPlayer();show("routine");
 }
 
 
@@ -1842,7 +1856,7 @@ function announceCurrentExercise(){
   speak(`${x.n}. ${g.steps[0]}. ${g.breath}`);
 }
 
-let routine=[],idx=0,remain=0,timerId=null,elapsed=0;
+
 function adaptedList(){
  let m=mobility.value, e=energy.value, factor=e==="low"?.75:e==="good"?1.1:1;
  let adapt=JSON.parse(localStorage.getItem("m50adapt")||'{"factor":1}');
@@ -2179,19 +2193,6 @@ function v16Frame(now){
   requestAnimationFrame(v16Frame);
 }
 requestAnimationFrame(v16Frame);
-
-
-document.addEventListener("DOMContentLoaded", function(){
-  const startBtn=document.getElementById("libStartBtn");
-  if(startBtn && !startBtn.dataset.bound){
-    startBtn.dataset.bound="1";
-    startBtn.addEventListener("click", function(ev){
-      ev.preventDefault();
-      ev.stopPropagation();
-      startLibraryRoutine();
-    }, {passive:false});
-  }
-});
 
 </script>
 </body>
