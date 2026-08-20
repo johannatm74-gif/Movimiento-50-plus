@@ -976,6 +976,33 @@ background:linear-gradient(90deg,#5e4473,#8b68a5 32%,#c8b1d6 52%,#795a94 72%,#5a
   border:1px solid rgba(118,89,140,.12);
 }
 
+
+/* ===== V17 · DEMOSTRACIONES GIF EN BUCLE ===== */
+.exerciseVisual .v15stage,
+.exerciseVisual .v14stage,
+.exerciseVisual .exerciseHumanWrap,
+.exerciseVisual .stick,
+.exerciseVisual .avatar3d,
+.exerciseVisual .human3d,
+.exerciseVisual .chairViz,
+.exerciseVisual .chair3d,
+.exerciseVisual .chairV12{display:none!important}
+
+.v17gifStage{
+ position:absolute;inset:12px 16px 18px;border-radius:28px;overflow:hidden;
+ background:linear-gradient(180deg,#fbf7fd,#f0e5f7);
+ display:flex;align-items:center;justify-content:center;
+}
+.v17gifStage img{
+ width:100%;height:100%;object-fit:contain;display:block;
+}
+.v17gifLabel{
+ position:absolute;left:14px;top:10px;z-index:4;
+ padding:7px 11px;border-radius:999px;
+ background:rgba(255,255,255,.95);border:1px solid #e4d7eb;
+ color:#674d7e;font-size:.78rem;font-weight:850;
+}
+
 </style>
 </head>
 <body>
@@ -1150,6 +1177,11 @@ background:linear-gradient(90deg,#5e4473,#8b68a5 32%,#c8b1d6 52%,#795a94 72%,#5a
   </div>
   <div class="v15shadow"></div>
   <div class="v15floor"></div><div class="v16status">Animación activa</div>
+</div>
+
+<div class="v17gifStage" id="v17gifStage">
+  <div class="v17gifLabel" id="v17gifLabel">Demostración animada</div>
+  <img id="v17gif" src="motions/breath.gif" alt="Demostración animada del ejercicio">
 </div>
 <div class="restOverlay" id="restOverlay">
       <div>
@@ -1652,6 +1684,23 @@ function v15Motion(x){
  return ["v15-breath",false,"Movimiento lento, estable y controlado","↕"];
 }
 
+
+function v17GifFor(x){
+ const n=(x.n||"").toLowerCase();
+ if(n.includes("torsión")||n.includes("torsion")) return ["motions/twist.gif","Torsión sentada · giro de lado a lado"];
+ if(n.includes("cuello")) return ["motions/neck.gif","Cuello · inclinación suave"];
+ if(n.includes("hombro")||n.includes("brazo")||n.includes("apertura")) return ["motions/arms.gif","Brazos y hombros · elevación controlada"];
+ if(n.includes("marcha")) return ["motions/march.gif","Marcha · alterna las piernas"];
+ if(n.includes("bicicleta")) return ["motions/bike.gif","Bicicleta · pedaleo continuo"];
+ if(n.includes("sentadilla")||n.includes("sentarse y levantarse")) return ["motions/squat.gif","Sentarse y levantarse · controlado"];
+ if(n.includes("extensión de rodilla")||n.includes("extension de rodilla")) return ["motions/knee.gif","Extensión de rodilla"];
+ if(n.includes("talón")||n.includes("talon")) return ["motions/heels.gif","Elevación de talones"];
+ if(n.includes("paso lateral")) return ["motions/side.gif","Paso lateral"];
+ if(n.includes("equilibrio")||n.includes("apoyo en un pie")||n.includes("flamenco")) return ["motions/balance.gif","Equilibrio · apoyo controlado"];
+ if(n.includes("respiración")||n.includes("respiracion")||n.includes("recuperación")||n.includes("recuperacion")||n.includes("enfriamiento")) return ["motions/breath.gif","Respiración · ritmo lento"];
+ return ["motions/breath.gif","Movimiento suave y controlado"];
+}
+
 function updateGuidedPanel(){
   const current15 = routine[idx] || routine[0];
   if(!current15) return;
@@ -1695,6 +1744,13 @@ function updateGuidedPanel(){
   v15chair.classList.toggle("hidden",!mv15[1]);
   v15label.textContent=mv15[2];
   v15arrow.textContent=mv15[3];
+
+  const g17=v17GifFor(routine[idx]||routine[0]||{n:""});
+  if(typeof v17gif!=="undefined"){
+    if(v17gif.getAttribute("src")!==g17[0]) v17gif.setAttribute("src",g17[0]+"?v=17");
+    v17gif.alt="Demostración animada de "+((routine[idx]||{}).n||"ejercicio");
+    v17gifLabel.textContent=g17[1];
+  }
 }
 
 function startAutoRest(seconds=20){

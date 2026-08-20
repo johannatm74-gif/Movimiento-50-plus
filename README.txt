@@ -1,4 +1,4 @@
-MOVIMIENTO 50+ PRO — VERSIÓN 16
+MOVIMIENTO 50+ PRO — VERSIÓN 17
 
 MEJORAS
 - Perfil: edad, peso, estatura y nivel de movilidad.
@@ -142,3 +142,12 @@ VERSIÓN 16 · MOTOR DE MOVIMIENTO JAVASCRIPT
 - Marcha: alternancia real de piernas.
 - Sentadilla: desplazamiento del cuerpo y flexión de piernas.
 - Rodilla, talones, equilibrio, bicicleta, paso lateral y respiración con movimiento propio.
+
+
+VERSIÓN 17 · ANIMACIONES EN BUCLE
+- Sustituye la figura 3D estática por GIFs animados reales.
+- Incluye animaciones específicas para marcha, sentarse/levantarse, torsión, bicicleta, brazos, cuello, rodilla, equilibrio, respiración, paso lateral y talones.
+- Los GIFs se reproducen automáticamente y no dependen del motor CSS/JS de animación del navegador.
+
+
+Versión v19: vistas previas PNG sustituidas por figuras humanas correspondientes a los GIF animados. No se modificó la lógica de la app.
